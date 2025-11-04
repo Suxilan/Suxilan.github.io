@@ -1,0 +1,26 @@
+# Hugo
+/public/
+/resources/_gen/
+/.hugo_build.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.bak
+*.tmp
+*.log
+
+# Node modules (如果使用)
+node_modules/
+package-lock.json
+

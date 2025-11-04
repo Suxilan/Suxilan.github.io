@@ -1,0 +1,12 @@
+将你的背景图片放在这里，命名为 background.jpg
+
+建议规格：
+- 尺寸：1920x1080px 或更大
+- 格式：JPG 或 WebP
+- 风格：选择不太花哨的图片，避免干扰文字阅读
+- 压缩：使用 TinyPNG 等工具压缩后再上传
+
+如果要更换背景图：
+1. 将图片放到 static/images/background.jpg
+2. 或在 assets/css/extended/custom.css 中修改第12行的路径
+

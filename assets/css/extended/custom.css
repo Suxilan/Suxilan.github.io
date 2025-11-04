@@ -1,0 +1,226 @@
+/* Profile Mode 全屏背景图片和毛玻璃效果 */
+
+/* 仅在首页完全隐藏所有滚动条并移除边距 */
+html:has(.profile),
+body:has(.profile) {
+  overflow: hidden;  /* 隐藏所有滚动条 */
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* 移除首页的所有默认边距和宽度限制 */
+body:has(.profile) * {
+  box-sizing: border-box;
+}
+
+body:has(.profile) .main,
+body:has(.profile) #main {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* 移除 header 的边距 */
+body:has(.profile) header {
+  margin: 0 !important;
+  padding: 0 1rem !important;
+  max-width: 100% !important;
+}
+
+/* 确保 profile 容器完全撑满 */
+body:has(.profile) .profile {
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* 其他页面美化滚动条样式 */
+body:not(:has(.profile))::-webkit-scrollbar {
+  width: 8px;
+}
+
+body:not(:has(.profile))::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body:not(:has(.profile))::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+body:not(:has(.profile))::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* 仅在首页显示全屏背景 - 完全覆盖 */
+.main .profile::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  background-image: url('/images/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  z-index: -999;
+}
+
+.profile {
+  position: relative;
+  margin: 0;
+  padding: 6rem 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* 内容区域 - 默认完全透明 */
+.profile .profile_inner {
+  position: relative;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  transition: all 0.3s ease;
+  box-shadow: none;
+  border: none;
+}
+
+/* 鼠标悬停在内容区域时，显示毛玻璃效果 */
+.profile .profile_inner:hover {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 暗黑模式 */
+.dark .profile .profile_inner:hover {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* 确保头像、文字、按钮在毛玻璃层之上 */
+.profile img,
+.profile h1,
+.profile span,
+.profile .buttons {
+  position: relative;
+  z-index: 1;
+}
+
+/* 调整头像样式 - 默认有轻微阴影 */
+.profile img {
+  border: 4px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.dark .profile img {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* 鼠标悬停在内容区域时，头像也有反馈 */
+.profile .profile_inner:hover img {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  transform: scale(1.05);
+}
+
+/* 按钮样式优化 - 默认透明 */
+.profile .buttons a {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.profile .buttons a:hover {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.dark .profile .buttons a {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.dark .profile .buttons a:hover {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* 社交图标样式优化 - 默认透明 */
+.profile .social-icons a {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.profile .social-icons a:hover {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.dark .profile .social-icons a {
+  background: transparent;
+  border: none;
+}
+
+.dark .profile .social-icons a:hover {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 隐藏面包屑导航中的 Home 链接 */
+.breadcrumbs a[href="/"],
+.breadcrumbs a[href="/zh/"] {
+  display: none;
+}
+
+/* 隐藏 Home 链接后的分隔符 */
+.breadcrumbs a[href="/"] + .breadcrumb_last,
+.breadcrumbs a[href="/zh/"] + .breadcrumb_last {
+  display: none;
+}
+
+/* 或者直接隐藏整个面包屑中的第一个链接 */
+.breadcrumbs a:first-child {
+  display: none;
+}
+
+.breadcrumbs a:first-child + span {
+  display: none;
+}
+
+/* 统一社交图标粗细 */
+.social-icons svg {
+  stroke-width: 1.5 !important;
+}
+
+/* QQ 图标特殊处理 - 它内部有独立的 stroke-width */
+.social-icons a[href*="qq"] svg path {
+  stroke-width: 30 !important;  /* 从50降到30 */
+}
