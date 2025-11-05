@@ -1,55 +1,168 @@
 /**
- * Giscus 自定义主题 - 深色模式
- * 基于 noborder_dark，仅修改主色调为橙色 #E58F74
- * 参考：https://github.com/giscus/giscus/blob/main/styles/themes/noborder_dark.css
+ * Giscus 自定义主题 - 深色模式（完整版）
+ * 基于 noborder_dark，将所有绿色替换为橙色 #E58F74
+ * 不使用 @import，直接包含完整样式以减少延迟
  */
 
-/* 导入 noborder_dark 基础样式 */
-@import url("https://giscus.app/themes/noborder_dark.css");
-
-/* ========== 仅覆盖颜色变量 ========== */
-
+/* ========== 移除默认边框 ========== */
 main {
-  /* 主色调 - 橙色 */
+  border: 0;
+}
+
+.gsc-main {
+  border: 0;
+}
+
+/* ========== 主题颜色变量 ========== */
+main {
+  /* 语法高亮 */
+  --color-prettylights-syntax-comment: #8b949e;
+  --color-prettylights-syntax-constant: #79c0ff;
+  --color-prettylights-syntax-entity: #d2a8ff;
+  --color-prettylights-syntax-storage-modifier-import: #c9d1d9;
+  --color-prettylights-syntax-entity-tag: #7ee787;
+  --color-prettylights-syntax-keyword: #ff7b72;
+  --color-prettylights-syntax-string: #a5d6ff;
+  --color-prettylights-syntax-variable: #ffa657;
+  --color-prettylights-syntax-brackethighlighter-unmatched: #f85149;
+  --color-prettylights-syntax-invalid-illegal-text: #f0f6fc;
+  --color-prettylights-syntax-invalid-illegal-bg: #8e1519;
+  --color-prettylights-syntax-carriage-return-text: #f0f6fc;
+  --color-prettylights-syntax-carriage-return-bg: #b62324;
+  --color-prettylights-syntax-string-regexp: #7ee787;
+  --color-prettylights-syntax-markup-list: #f2cc60;
+  --color-prettylights-syntax-markup-heading: #1f6feb;
+  --color-prettylights-syntax-markup-italic: #c9d1d9;
+  --color-prettylights-syntax-markup-bold: #c9d1d9;
+  --color-prettylights-syntax-markup-deleted-text: #ffdcd7;
+  --color-prettylights-syntax-markup-deleted-bg: #67060c;
+  --color-prettylights-syntax-markup-inserted-text: #aff5b4;
+  --color-prettylights-syntax-markup-inserted-bg: #033a16;
+  --color-prettylights-syntax-markup-changed-text: #ffdfb6;
+  --color-prettylights-syntax-markup-changed-bg: #5a1e02;
+  --color-prettylights-syntax-markup-ignored-text: #c9d1d9;
+  --color-prettylights-syntax-markup-ignored-bg: #1158c7;
+  --color-prettylights-syntax-meta-diff-range: #d2a8ff;
+  --color-prettylights-syntax-brackethighlighter-angle: #8b949e;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #484f58;
+  --color-prettylights-syntax-constant-other-reference-link: #a5d6ff;
+  
+  /* ========== 橙色主题（替换原来的绿色） ========== */
   --color-accent-fg: #E58F74;
   --color-accent-emphasis: #E58F74;
   --color-accent-muted: rgba(229, 143, 116, 0.2);
   --color-accent-subtle: rgba(229, 143, 116, 0.15);
   
-  /* 主按钮 - 橙色 */
+  /* 前景色 */
+  --color-fg-default: #e6edf3;
+  --color-fg-muted: #8b949e;
+  --color-fg-subtle: #6e7681;
+  --color-fg-on-emphasis: #ffffff;
+  
+  /* 画布 */
+  --color-canvas-default: #0d1117;
+  --color-canvas-overlay: #161b22;
+  --color-canvas-inset: #010409;
+  --color-canvas-subtle: #161b22;
+  
+  /* 边框 */
+  --color-border-default: #30363d;
+  --color-border-muted: #21262d;
+  --color-neutral-muted: rgba(110, 118, 129, 0.4);
+  
+  /* ========== 成功色（橙色替换绿色） ========== */
+  --color-success-fg: #E58F74;
+  --color-success-emphasis: #E58F74;
+  --color-success-muted: rgba(229, 143, 116, 0.2);
+  --color-success-subtle: rgba(229, 143, 116, 0.15);
+  
+  /* 按钮 */
+  --color-btn-text: #c9d1d9;
+  --color-btn-bg: #21262d;
+  --color-btn-border: rgba(240, 246, 252, 0.1);
+  --color-btn-shadow: 0 0 transparent;
+  --color-btn-inset-shadow: 0 0 transparent;
+  --color-btn-hover-bg: #30363d;
+  --color-btn-hover-border: #8b949e;
+  --color-btn-active-bg: hsla(212, 12%, 18%, 1);
+  --color-btn-active-border: #6e7681;
+  --color-btn-selected-bg: #161b22;
+  
+  /* ========== 主按钮（橙色） ========== */
   --color-btn-primary-text: #ffffff;
   --color-btn-primary-bg: #E58F74;
   --color-btn-primary-border: rgba(229, 143, 116, 0.1);
+  --color-btn-primary-shadow: 0 0 transparent;
+  --color-btn-primary-inset-shadow: 0 0 transparent;
   --color-btn-primary-hover-bg: #f09f87;
+  --color-btn-primary-hover-border: rgba(229, 143, 116, 0.1);
   --color-btn-primary-selected-bg: #c96d52;
+  --color-btn-primary-selected-shadow: 0 0 transparent;
+  --color-btn-primary-disabled-text: rgba(255, 255, 255, 0.6);
   --color-btn-primary-disabled-bg: rgba(229, 143, 116, 0.5);
+  --color-btn-primary-disabled-border: rgba(229, 143, 116, 0.1);
+  
+  /* 状态 */
+  --color-state-hover-primary-bg: #30363d;
 }
 
-/* ========== 额外的橙色覆盖 ========== */
-
-/* 链接颜色 */
+/* ========== 链接颜色（橙色） ========== */
 a {
-  color: #E58F74 !important;
+  color: #E58F74;
 }
 
 a:hover {
-  color: #f09f87 !important;
+  color: #f09f87;
 }
 
-/* 反应按钮高亮 */
-.gsc-reactions-button.has-reacted {
-  background: rgba(229, 143, 116, 0.2) !important;
-  border-color: #E58F74 !important;
-  color: #E58F74 !important;
+/* ========== 反应按钮（橙色） ========== */
+.gsc-reactions-button {
+  border-color: #30363d;
 }
 
 .gsc-reactions-button:hover {
-  background: rgba(229, 143, 116, 0.15) !important;
-  border-color: #E58F74 !important;
+  background: rgba(229, 143, 116, 0.15);
+  border-color: #E58F74;
 }
 
-/* 输入框聚焦边框 */
+.gsc-reactions-button.has-reacted,
+.gsc-reactions-button.has-reacted:hover {
+  background: rgba(229, 143, 116, 0.2);
+  border-color: #E58F74;
+  color: #E58F74;
+}
+
+/* ========== 评论输入框 ========== */
+.gsc-comment-box-tabs {
+  border-bottom: 0;
+}
+
+.gsc-comment-box-textarea {
+  background: #0d1117;
+  color: #e6edf3;
+  border-color: #30363d;
+}
+
 .gsc-comment-box-textarea:focus {
-  border-color: #E58F74 !important;
-  box-shadow: 0 0 0 3px rgba(229, 143, 116, 0.2) !important;
+  border-color: #E58F74;
+  box-shadow: 0 0 0 3px rgba(229, 143, 116, 0.2);
+}
+
+/* ========== 评论内容 ========== */
+.gsc-timeline-comment-text {
+  color: #e6edf3;
+}
+
+.gsc-comment-author-name {
+  color: #e6edf3;
+}
+
+/* ========== 评论卡片背景 ========== */
+.gsc-comment {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+.gsc-comment:hover {
+  background: #1c2128;
 }
