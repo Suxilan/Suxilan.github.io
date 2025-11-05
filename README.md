@@ -73,7 +73,11 @@ socialIcons:
 - [Hugo 操作指令](docs/hugo-commands.md)
 - [PaperMod 功能详解](docs/papermod-features.md)
 - [配置说明](docs/configuration.md)
-- [自定义配置指南](docs/customization-guide.md) - 社交图标、背景图、毛玻璃效果等
+- [自定义配置指南](docs/customization-guide.md)
+- [内容发布工作流](docs/content-workflow.md)
+- [评论系统配置](docs/comments-setup.md) - 评论配置详解
+- [评论系统和访问统计](docs/comments-analytics.md) - 完整实现指南
+- [Giscus 自定义配置](docs/giscus-customization.md) - 颜色、主题切换
 
 ## 参考
 

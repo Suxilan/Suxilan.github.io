@@ -87,7 +87,7 @@ params:
   # 显示阅读时间
   ShowReadingTime: true
   # 显示分享按钮
-  ShowShareButtons: true
+  ShowShareButtons: false  # 关闭文章底部的社交分享图标
   # 显示文章导航（上一篇/下一篇）
   ShowPostNavLinks: true
   # 显示面包屑导航
@@ -104,7 +104,7 @@ params:
   TocOpen: false
   
   # 评论系统（可选，多种选择）
-  comments: false
+  comments: false  # 全局默认不启用，在需要的文章中单独开启
   
   # Profile Mode - 首页个人资料模式
   profileMode:
@@ -132,7 +132,7 @@ params:
     
   - name: qq
     url: "/images/qrcode/qq-qrcode.jpg"
-    title: "QQ 临时会话"
+    title: "QQ二维码"
     
   - name: 500px
     url: "https://500px.com.cn/Asuka0312"

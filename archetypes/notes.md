@@ -8,6 +8,7 @@ series: []
 author: "Suxilan"
 showToc: true
 TocOpen: true
+comments: true  # 默认启用评论
 description: ""
 summary: ""
 weight: 1
