@@ -4,3 +4,10 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.jpg">
 <link rel="shortcut icon" href="/images/avatar.jpg">
 
+{{- /* 预加载 Giscus 主题 CSS（仅在评论页面） */ -}}
+{{- if .Params.comments }}
+{{- $baseURL := .Site.BaseURL | strings.TrimSuffix "/" -}}
+<link rel="preload" href="{{ $baseURL }}/giscus-light.css" as="style" crossorigin="anonymous">
+<link rel="preload" href="{{ $baseURL }}/giscus-dark.css" as="style" crossorigin="anonymous">
+{{- end }}
+
