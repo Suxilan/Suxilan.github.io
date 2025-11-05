@@ -80,17 +80,23 @@
     return true;
   }
   
-  // 更新主题
-  function updateTheme() {
+  // 更新主题（零延迟版）
+  let lastSentTheme = '';
+  function updateTheme(force) {
     const theme = getCurrentTheme();
-    setGiscusTheme(theme);
-    // 立即二次发送确保接收
-    setTimeout(function() {
-      setGiscusTheme(theme);
-    }, 5);
+    
+    // 主题切换时强制更新，忽略重复检查
+    if (!force && theme === lastSentTheme) return;
+    
+    lastSentTheme = theme;
+    
+    // 立即发送，无延迟
+    if (setGiscusTheme(theme)) {
+      console.log('[Giscus] 主题已切换至:', theme);
+    }
   }
   
-  // 等待 Giscus iframe 加载
+  // 等待 Giscus iframe 加载（零延迟版）
   function waitForGiscus() {
     let attempts = 0;
     const checkInterval = setInterval(function() {
@@ -98,20 +104,20 @@
       if (iframe) {
         clearInterval(checkInterval);
         giscusFrame = iframe;
-        // iframe 加载后立即同步主题
-        setTimeout(updateTheme, 150);
-      } else if (++attempts > 30) {
+        // 立即同步，无延迟
+        updateTheme(false);
+      } else if (++attempts > 40) {
         clearInterval(checkInterval);
       }
-    }, 100);
+    }, 25);  // 高频率检查
   }
   
   // 监听 PaperMod 主题变化（data-theme 属性）
   const observer = new MutationObserver(function(mutations) {
     for (let mutation of mutations) {
       if (mutation.attributeName === 'data-theme') {
-        // 立即更新，无延迟
-        updateTheme();
+        // 强制立即更新，零延迟
+        updateTheme(true);
         break;
       }
     }
@@ -122,12 +128,12 @@
     attributeFilter: ['data-theme']
   });
   
-  // 监听 Giscus 准备就绪消息
+  // 监听 Giscus 准备就绪消息（优化版）
   window.addEventListener('message', function(event) {
     if (event.origin !== 'https://giscus.app') return;
     if (event.data && event.data.giscus) {
-      // Giscus 准备就绪，同步主题
-      setTimeout(updateTheme, 50);
+      // Giscus 准备就绪，立即同步主题
+      updateTheme();
     }
   });
   
