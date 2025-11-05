@@ -194,27 +194,30 @@ body:not(:has(.profile))::-webkit-scrollbar-thumb:hover {
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* Giscus 评论区样式美化 - 极简风格 */
+/* ============================================
+   Giscus 评论区样式美化 - 优雅简洁风格
+   ============================================ */
+
 .comments-section {
-  margin-top: 5rem;
-  padding-top: 3rem;
-  border-top: 1px solid var(--border);
+  margin-top: 4rem;
+  padding-top: 2.5rem;
+  /* 柔和的分隔线 */
+  border-top: 2px solid var(--border);
+  position: relative;
 }
 
-/* 评论区标题 - 已移除 */
-/* 如果需要标题，取消下面的注释：
+/* 添加渐变装饰线（可选） */
 .comments-section::before {
-  content: "评论";
-  display: block;
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 2rem;
-  color: var(--content);
-  letter-spacing: 0.5px;
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary) 0%, transparent 100%);
 }
-*/
 
-/* Giscus 容器 - 无边框极简 */
+/* Giscus 容器基础样式 */
 .giscus, .giscus-frame {
   width: 100%;
   max-width: 100%;
@@ -222,17 +225,41 @@ body:not(:has(.profile))::-webkit-scrollbar-thumb:hover {
   background: transparent !important;
 }
 
-/* 完全移除边框和阴影 */
+/* iframe 样式优化 */
 .giscus-frame {
-  border-radius: 0 !important;
+  border-radius: 8px !important;
   box-shadow: none !important;
   padding: 0 !important;
   margin: 0 !important;
+  /* 平滑过渡效果 */
+  transition: opacity 0.3s ease;
+}
+
+/* 加载时的淡入效果 */
+.giscus-frame[data-loading="true"] {
+  opacity: 0.6;
 }
 
 /* 评论区与文章内容对齐 */
 .post-content + .comments-section {
   max-width: var(--post-width);
+}
+
+/* 深色模式下的微调 */
+.dark .comments-section {
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+  .comments-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+  }
+  
+  .comments-section::before {
+    width: 60px;
+  }
 }
 
 /* 隐藏面包屑导航中的 Home 链接 */

@@ -2,6 +2,8 @@ baseURL: https://Suxilan.github.io/
 languageCode: zh-cn
 title: Suxilan's Blog  # 你的网站标题
 theme: PaperMod
+# 时区设置为北京时间
+timeZone: Asia/Shanghai
 
 # 启用 emoji 支持
 enableEmoji: true
@@ -9,7 +11,7 @@ enableEmoji: true
 enableRobotsTXT: true
 # 构建草稿
 buildDrafts: false
-buildFuture: false
+buildFuture: true  # 允许构建未来时间的文章
 buildExpired: false
 
 # Google Analytics (可选)
