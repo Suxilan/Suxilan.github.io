@@ -14,8 +14,10 @@ buildDrafts: false
 buildFuture: true  # 允许构建未来时间的文章
 buildExpired: false
 
-# Google Analytics (可选)
-# googleAnalytics: UA-123-45
+# Google Analytics 4 (GA4)
+# 获取方法：https://analytics.google.com/ → 管理 → 数据流 → 衡量ID
+# 格式：G-XXXXXXXXXX
+googleAnalytics: G-4VWKRYTFHP # 替换为你的实际衡量ID
 
 # 每页显示的文章数
 pagination:
