@@ -26,8 +26,9 @@
     root.style.setProperty('--theme-color', color);
     root.style.setProperty('--theme-color-rgb', `${rgb.r}, ${rgb.g}, ${rgb.b}`);
 
-    // 更新 Giscus 评论区颜色（如果存在）
-    updateGiscusColor(color, rgb);
+    // ⚠️ 暂时禁用 Giscus 动态更新，避免样式丢失
+    // 如需修改评论区颜色，请编辑 static/giscus-light.css 和 static/giscus-dark.css
+    // updateGiscusColor(color, rgb);
 
     console.log('✅ 主题色已更新:', color);
   }
@@ -177,8 +178,8 @@ main {
       });
     }, 100);
 
-    // 等待 Giscus 加载后同步颜色
-    waitForGiscusAndSync(savedColor);
+    // ⚠️ 暂时禁用 Giscus 自动同步
+    // waitForGiscusAndSync(savedColor);
   });
 
   // ============================================
@@ -215,6 +216,8 @@ main {
   // ============================================
   // 监听主题切换（日夜模式）
   // ============================================
+  // ⚠️ 暂时禁用主题切换时的 Giscus 同步
+  /*
   const themeObserver = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       if (mutation.attributeName === 'data-theme') {
@@ -236,6 +239,7 @@ main {
     attributes: true,
     attributeFilter: ['data-theme']
   });
+  */
 
   // ============================================
   // 打开/关闭颜色选择器弹窗
