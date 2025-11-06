@@ -81,6 +81,7 @@ socialIcons:
 - [Markdown 渲染与美化](docs/markdown-rendering.md) - 代码高亮、样式自定义
 - [搜索页面功能说明](docs/search-page.md) - 搜索逻辑、Tags 云展示
 - [主题色自定义系统](docs/theme-color-customization.md) - 🎨 一键更换网站主题色
+- [主题色系统最终方案](docs/final-color-system.md) - 🛡️ 鲁棒、高性能的解决方案
 
 ### 功能扩展
 - [评论系统配置](docs/comments-setup.md) - 评论配置详解

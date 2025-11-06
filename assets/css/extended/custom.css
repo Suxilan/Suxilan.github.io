@@ -373,10 +373,15 @@ body:not(:has(.profile))::-webkit-scrollbar-thumb:hover {
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   z-index: 9999;
-  display: flex;
+  display: none; /* 默认隐藏 */
   align-items: center;
   justify-content: center;
   animation: fadeIn 0.2s ease;
+}
+
+/* 显示状态 */
+.color-modal.active {
+  display: flex;
 }
 
 @keyframes fadeIn {
@@ -572,6 +577,7 @@ body:not(:has(.profile))::-webkit-scrollbar-thumb:hover {
 }
 
 /* 底部按钮 */
+.color-modal-actions,
 .color-modal-footer {
   display: flex;
   gap: 1rem;
@@ -579,7 +585,9 @@ body:not(:has(.profile))::-webkit-scrollbar-thumb:hover {
   border-top: 1px solid var(--border);
 }
 
-.color-modal-footer button {
+.color-modal-actions button,
+.color-modal-footer button,
+.action-button {
   flex: 1;
   padding: 0.8em 1.5em;
   border: none;
@@ -588,23 +596,30 @@ body:not(:has(.profile))::-webkit-scrollbar-thumb:hover {
   cursor: pointer;
   transition: all 0.2s ease;
   font-size: 1em;
+  position: relative;
+  z-index: 10;
 }
 
-.color-btn-secondary {
+.color-btn-secondary,
+.action-button.secondary {
   background: var(--theme);
   color: var(--content);
 }
 
-.color-btn-secondary:hover {
+.color-btn-secondary:hover,
+.action-button.secondary:hover {
   background: var(--border);
+  transform: translateY(-2px);
 }
 
-.color-btn-primary {
+.color-btn-primary,
+.action-button.primary {
   background: var(--theme-color);
   color: white;
 }
 
-.color-btn-primary:hover {
+.color-btn-primary:hover,
+.action-button.primary:hover {
   background: var(--theme-color-hover);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(var(--theme-color-rgb), 0.3);
