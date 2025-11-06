@@ -28,6 +28,9 @@ minify:
   disableXML: true
   minifyOutput: true
 
+# 在 hugo.yaml 添加
+hasCJKLanguage: true  # 启用中文统计
+
 # 语言设置
 languages:
   zh:
@@ -37,29 +40,39 @@ languages:
       category: categories
       tag: tags
       series: series
-    menu:
-      main:
-        - name: 随笔
-          url: /posts/
-          weight: 1
-        - name: 笔记
-          url: /notes/
-          weight: 2
-        - name: 摄影
-          url: /photography/
-          weight: 3
-        - name: 关于
-          url: /about/
-          weight: 4
-        - name: 归档
-          url: /archives/
-          weight: 5
+menu:
+  main:
+    - identifier: posts
+      name: 随笔
+      url: /posts/
+      weight: 10
+    - identifier: notes
+      name: 笔记
+      url: /notes/
+      weight: 20
+    - identifier: photography
+      name: 摄影
+      url: /photography/
+      weight: 30
+    - identifier: about
+      name: 关于
+      url: /about/
+      weight: 40
+    - identifier: archives
+      name: 归档
+      url: /archives/
+      weight: 50
+    - identifier: search
+      name: 搜索
+      url: /search/
+      weight: 60
 
-# 输出格式
+# 输出格式（用于搜索功能）
 outputs:
   home:
     - HTML
     - RSS
+    - JSON
 
 # PaperMod 主题参数
 params:

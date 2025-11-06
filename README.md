@@ -70,14 +70,21 @@ socialIcons:
 
 ## 文档
 
+### 基础使用
 - [Hugo 操作指令](docs/hugo-commands.md)
 - [PaperMod 功能详解](docs/papermod-features.md)
 - [配置说明](docs/configuration.md)
-- [自定义配置指南](docs/customization-guide.md)
 - [内容发布工作流](docs/content-workflow.md)
+
+### 自定义和美化
+- [自定义配置指南](docs/customization-guide.md)
+- [Markdown 渲染与美化](docs/markdown-rendering.md) - 代码高亮、样式自定义
+- [搜索页面功能说明](docs/search-page.md) - 搜索逻辑、Tags 云展示
+- [主题色自定义系统](docs/theme-color-customization.md) - 🎨 一键更换网站主题色
+
+### 功能扩展
 - [评论系统配置](docs/comments-setup.md) - 评论配置详解
 - [评论系统和访问统计](docs/comments-analytics.md) - 完整实现指南
-- [Giscus 自定义配置](docs/giscus-customization.md) - 颜色、主题切换
 
 ## 参考
 

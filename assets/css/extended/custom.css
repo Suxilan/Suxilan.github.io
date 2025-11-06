@@ -1,4 +1,70 @@
-/* Profile Mode 全屏背景图片和毛玻璃效果 */
+/* ============================================
+   Header 按钮样式优化
+   ============================================ */
+
+
+/* 确保主题切换和颜色按钮对齐 */
+#theme-toggle,
+#color-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  padding: 0;
+  margin: 0;
+  min-width: 20px;  /* 确保按钮宽度一致 */
+  height: auto;
+}
+
+/* 按钮悬停效果优化 */
+#color-toggle:hover {
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+/* 五角星图标悬停时填充效果 */
+#color-toggle svg polygon {
+  transition: fill 0.3s ease;
+}
+
+#color-toggle:hover svg polygon {
+  fill: currentColor;
+  opacity: 0.15;
+}
+
+/* 确保 SVG 图标垂直居中且大小一致 */
+#theme-toggle svg,
+#color-toggle svg {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================================
+   主题色自定义系统 - CSS 变量定义
+   ============================================ */
+
+:root {
+  /* 主题色变量（默认橙色 #E58F74） */
+  --theme-color: #E58F74;
+  --theme-color-rgb: 229, 143, 116;
+  
+  /* 主题色的各种变体 */
+  --theme-color-light: rgba(var(--theme-color-rgb), 0.15);
+  --theme-color-lighter: rgba(var(--theme-color-rgb), 0.05);
+  --theme-color-hover: rgba(var(--theme-color-rgb), 0.85);
+  --theme-color-dark: rgba(var(--theme-color-rgb), 0.95);
+}
+
+/* 暗色模式下的微调 */
+.dark {
+  --theme-color-light: rgba(var(--theme-color-rgb), 0.2);
+  --theme-color-lighter: rgba(var(--theme-color-rgb), 0.1);
+}
+
+/* ============================================
+   Profile Mode 全屏背景图片和毛玻璃效果
+   ============================================ */
 
 /* 仅在首页完全隐藏所有滚动条并移除边距 */
 html:has(.profile),
@@ -291,4 +357,276 @@ body:not(:has(.profile))::-webkit-scrollbar-thumb:hover {
 /* QQ 图标特殊处理 - 它内部有独立的 stroke-width */
 .social-icons a[href*="qq"] svg path {
   stroke-width: 30 !important;  /* 从50降到30 */
+}
+
+/* ============================================
+   颜色选择器弹窗样式
+   ============================================ */
+
+.color-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.color-modal-content {
+  background: var(--entry);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow: hidden;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.color-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.color-modal-header h3 {
+  margin: 0;
+  font-size: 1.3em;
+  color: var(--content);
+}
+
+.color-modal-close {
+  background: none;
+  border: none;
+  font-size: 2em;
+  color: var(--content);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.color-modal-close:hover {
+  background: var(--theme);
+  color: var(--theme-color);
+}
+
+.color-modal-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  max-height: calc(90vh - 180px);
+}
+
+/* 预设颜色 */
+.color-presets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.color-preset {
+  width: 100%;
+  height: 50px;
+  border: 3px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.color-preset:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.color-preset.active {
+  border-color: var(--content);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.color-preset.active::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* 自定义颜色输入 */
+.color-custom {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--theme);
+  border-radius: 8px;
+}
+
+.color-custom label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--content);
+  font-weight: 500;
+}
+
+.color-custom input[type="color"] {
+  width: 100%;
+  height: 50px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* 预览区域 */
+.color-preview {
+  padding: 1rem;
+  background: var(--theme);
+  border-radius: 8px;
+}
+
+.color-preview p {
+  margin: 0 0 1rem 0;
+  color: var(--content);
+  font-weight: 500;
+}
+
+.preview-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.preview-button {
+  padding: 0.5em 1.5em;
+  background: var(--theme-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.preview-button:hover {
+  background: var(--theme-color-hover);
+  transform: translateY(-2px);
+}
+
+.preview-tag {
+  padding: 0.4em 1em;
+  background: var(--theme-color-light);
+  color: var(--theme-color);
+  border-radius: 6px;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.preview-link {
+  color: var(--theme-color);
+  text-decoration: none;
+  border-bottom: 2px solid var(--theme-color);
+  font-weight: 500;
+}
+
+.preview-link:hover {
+  color: var(--theme-color-hover);
+}
+
+/* 底部按钮 */
+.color-modal-footer {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.color-modal-footer button {
+  flex: 1;
+  padding: 0.8em 1.5em;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1em;
+}
+
+.color-btn-secondary {
+  background: var(--theme);
+  color: var(--content);
+}
+
+.color-btn-secondary:hover {
+  background: var(--border);
+}
+
+.color-btn-primary {
+  background: var(--theme-color);
+  color: white;
+}
+
+.color-btn-primary:hover {
+  background: var(--theme-color-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(var(--theme-color-rgb), 0.3);
+}
+
+/* 响应式调整 */
+@media (max-width: 600px) {
+  .color-modal-content {
+    width: 95%;
+    border-radius: 12px;
+  }
+  
+  .color-presets {
+    grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
+    gap: 0.6rem;
+  }
+  
+  .color-preset {
+    height: 45px;
+  }
+  
+  .color-modal-footer {
+    flex-direction: column;
+  }
 }

@@ -1,0 +1,238 @@
+{{- /* 主题色自定义系统的 JavaScript */ -}}
+<script>
+(function() {
+  'use strict';
+
+  // ============================================
+  // 工具函数：十六进制转 RGB
+  // ============================================
+  function hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+  }
+
+  // ============================================
+  // 应用主题色
+  // ============================================
+  function applyThemeColor(color) {
+    const rgb = hexToRgb(color);
+    if (!rgb) return;
+
+    const root = document.documentElement;
+    root.style.setProperty('--theme-color', color);
+    root.style.setProperty('--theme-color-rgb', `${rgb.r}, ${rgb.g}, ${rgb.b}`);
+
+    // 更新 Giscus 评论区颜色（如果存在）
+    updateGiscusColor(color, rgb);
+
+    console.log('✅ 主题色已更新:', color);
+  }
+
+  // ============================================
+  // 更新 Giscus 评论区颜色
+  // ============================================
+  function updateGiscusColor(color, rgb) {
+    // 检查是否有评论区
+    const giscusFrame = document.querySelector('iframe.giscus-frame');
+    if (!giscusFrame) return;
+
+    // 动态创建 style 标签来覆盖 Giscus 样式
+    let giscusStyle = document.getElementById('giscus-color-override');
+    if (!giscusStyle) {
+      giscusStyle = document.createElement('style');
+      giscusStyle.id = 'giscus-color-override';
+      document.head.appendChild(giscusStyle);
+    }
+
+    // 注入自定义 CSS（覆盖评论按钮颜色）
+    giscusStyle.textContent = `
+      /* 动态覆盖 Giscus 主题色 */
+      .gsc-comment-box-tabs button:hover,
+      .gsc-comment-box-tabs button[aria-selected="true"] {
+        border-bottom-color: ${color} !important;
+      }
+      
+      .gsc-comment-box .gsc-comment-box-tabs .tab button:hover {
+        color: ${color} !important;
+      }
+    `;
+
+    console.log('✅ Giscus 颜色已同步');
+  }
+
+  // ============================================
+  // 保存主题色到 localStorage
+  // ============================================
+  function saveThemeColor(color) {
+    localStorage.setItem('theme-color', color);
+    console.log('💾 主题色已保存到 localStorage:', color);
+  }
+
+  // ============================================
+  // 从 localStorage 加载主题色
+  // ============================================
+  function loadThemeColor() {
+    const savedColor = localStorage.getItem('theme-color');
+    if (savedColor) {
+      applyThemeColor(savedColor);
+      console.log('📂 已加载保存的主题色:', savedColor);
+      return savedColor;
+    }
+    return '#E58F74'; // 默认橙色
+  }
+
+  // ============================================
+  // 页面加载时恢复用户选择的颜色
+  // ============================================
+  document.addEventListener('DOMContentLoaded', function() {
+    const savedColor = loadThemeColor();
+
+    // 等待弹窗元素加载
+    setTimeout(() => {
+      const customColorInput = document.getElementById('custom-color-input');
+      if (customColorInput) {
+        customColorInput.value = savedColor;
+      }
+
+      // 更新预设颜色的激活状态
+      document.querySelectorAll('.color-preset').forEach(btn => {
+        if (btn.dataset.color === savedColor) {
+          btn.classList.add('active');
+        }
+      });
+    }, 100);
+  });
+
+  // ============================================
+  // 打开/关闭颜色选择器弹窗
+  // ============================================
+  const colorToggle = document.getElementById('color-toggle');
+  const colorModal = document.getElementById('color-picker-modal');
+  const colorModalClose = document.querySelector('.color-modal-close');
+
+  if (colorToggle && colorModal) {
+    // 打开弹窗
+    colorToggle.addEventListener('click', function() {
+      colorModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden'; // 防止背景滚动
+    });
+
+    // 关闭弹窗
+    function closeModal() {
+      colorModal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    colorModalClose?.addEventListener('click', closeModal);
+
+    // 点击背景关闭
+    colorModal.addEventListener('click', function(e) {
+      if (e.target === colorModal) {
+        closeModal();
+      }
+    });
+
+    // ESC 键关闭
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && colorModal.style.display === 'flex') {
+        closeModal();
+      }
+    });
+  }
+
+  // ============================================
+  // 预设颜色按钮
+  // ============================================
+  document.querySelectorAll('.color-preset').forEach(button => {
+    button.addEventListener('click', function() {
+      const color = this.dataset.color;
+      
+      // 更新所有按钮的激活状态
+      document.querySelectorAll('.color-preset').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      this.classList.add('active');
+
+      // 同步到自定义颜色输入框
+      const customColorInput = document.getElementById('custom-color-input');
+      if (customColorInput) {
+        customColorInput.value = color;
+      }
+
+      // 实时预览
+      applyThemeColor(color);
+    });
+  });
+
+  // ============================================
+  // 自定义颜色输入
+  // ============================================
+  const customColorInput = document.getElementById('custom-color-input');
+  if (customColorInput) {
+    customColorInput.addEventListener('input', function() {
+      const color = this.value;
+      
+      // 清除预设颜色的激活状态
+      document.querySelectorAll('.color-preset').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      // 实时预览
+      applyThemeColor(color);
+    });
+  }
+
+  // ============================================
+  // 应用按钮
+  // ============================================
+  const applyButton = document.getElementById('apply-color');
+  if (applyButton) {
+    applyButton.addEventListener('click', function() {
+      const color = customColorInput.value;
+      saveThemeColor(color);
+      
+      // 关闭弹窗
+      colorModal.style.display = 'none';
+      document.body.style.overflow = '';
+
+      // 显示成功提示（可选）
+      console.log('🎨 主题色应用成功！');
+    });
+  }
+
+  // ============================================
+  // 恢复默认按钮
+  // ============================================
+  const resetButton = document.getElementById('reset-color');
+  if (resetButton) {
+    resetButton.addEventListener('click', function() {
+      const defaultColor = '#E58F74';
+      
+      // 应用默认颜色
+      applyThemeColor(defaultColor);
+      saveThemeColor(defaultColor);
+      
+      // 更新 UI
+      if (customColorInput) {
+        customColorInput.value = defaultColor;
+      }
+      
+      document.querySelectorAll('.color-preset').forEach(btn => {
+        if (btn.dataset.color === defaultColor) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      console.log('🔄 已恢复默认主题色');
+    });
+  }
+
+})();
+</script>
+

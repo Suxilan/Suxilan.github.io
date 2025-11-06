@@ -254,7 +254,7 @@ disqusShortname: your-shortname
 
 **示例**：
 ```
-衡量 ID: G-ABC1234567
+衡量 ID: G-4VWKRYTFHP
 ```
 
 ---

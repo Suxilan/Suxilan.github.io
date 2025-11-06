@@ -1,0 +1,143 @@
+{{- define "main" }}
+
+<header class="page-header">
+    <h1>{{- (printf "%s&nbsp;" .Title ) | htmlUnescape -}}
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+    </h1>
+    {{- if .Description }}
+    <div class="post-description">
+        {{ .Description }}
+    </div>
+    {{- end }}
+    {{- if not (.Param "hideMeta") }}
+    <div class="post-meta">
+        {{- partial "translation_list.html" . -}}
+    </div>
+    {{- end }}
+</header>
+
+<div id="searchbox">
+    <input id="searchInput" autofocus placeholder="{{ .Params.placeholder | default (printf "%s ↵" .Title) }}"
+        aria-label="search" type="search" autocomplete="off" maxlength="64">
+    <ul id="searchResults" aria-label="search results"></ul>
+</div>
+
+{{- /* 显示所有 Tags */ -}}
+{{- if site.Taxonomies.tags }}
+<div class="tags-section">
+    <h3 class="tags-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" 
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+            <line x1="7" y1="7" x2="7.01" y2="7"></line>
+        </svg>
+        标签云
+    </h3>
+    <div class="tags-cloud">
+        {{- range $name, $taxonomy := site.Taxonomies.tags }}
+        {{- with site.GetPage (printf "/tags/%s" $name) }}
+        <a href="{{ .Permalink }}" class="tag-item" title="{{ $name }} ({{ $taxonomy.Count }} 篇)">
+            <span class="tag-name">{{ $name }}</span>
+            <span class="tag-count">{{ $taxonomy.Count }}</span>
+        </a>
+        {{- end }}
+        {{- end }}
+    </div>
+</div>
+{{- end }}
+
+<style>
+/* 标签云样式 */
+.tags-section {
+    margin-top: 3em;
+    padding-top: 2em;
+    border-top: 1px solid var(--border);
+}
+
+.tags-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 1.2em;
+    color: var(--content);
+    margin-bottom: 1.5em;
+    font-weight: 600;
+}
+
+.tags-title svg {
+    opacity: 0.7;
+}
+
+.tags-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8em;
+}
+
+.tag-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0.5em 1em;
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
+}
+
+.tag-item:hover {
+    background: var(--theme);
+    border-color: var(--theme-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--theme-color-light);
+}
+
+.tag-name {
+    color: var(--content);
+    font-weight: 500;
+}
+
+.tag-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5em;
+    height: 1.5em;
+    padding: 0 0.4em;
+    background: var(--theme-color-light);
+    color: var(--theme-color);
+    border-radius: 10px;
+    font-size: 0.85em;
+    font-weight: 600;
+}
+
+.tag-item:hover .tag-count {
+    background: var(--theme-color);
+    color: white;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .tags-section {
+        margin-top: 2em;
+    }
+    
+    .tags-cloud {
+        gap: 0.5em;
+    }
+    
+    .tag-item {
+        padding: 0.4em 0.8em;
+        font-size: 0.85em;
+    }
+}
+</style>
+
+{{- end }}{{/* end main */}}
+
