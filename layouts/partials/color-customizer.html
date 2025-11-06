@@ -38,30 +38,101 @@
   function updateGiscusColor(color, rgb) {
     // 检查是否有评论区
     const giscusFrame = document.querySelector('iframe.giscus-frame');
-    if (!giscusFrame) return;
-
-    // 动态创建 style 标签来覆盖 Giscus 样式
-    let giscusStyle = document.getElementById('giscus-color-override');
-    if (!giscusStyle) {
-      giscusStyle = document.createElement('style');
-      giscusStyle.id = 'giscus-color-override';
-      document.head.appendChild(giscusStyle);
+    if (!giscusFrame) {
+      console.log('⚠️ 未找到 Giscus iframe，可能当前页面没有评论区');
+      return;
     }
 
-    // 注入自定义 CSS（覆盖评论按钮颜色）
-    giscusStyle.textContent = `
-      /* 动态覆盖 Giscus 主题色 */
-      .gsc-comment-box-tabs button:hover,
-      .gsc-comment-box-tabs button[aria-selected="true"] {
-        border-bottom-color: ${color} !important;
-      }
-      
-      .gsc-comment-box .gsc-comment-box-tabs .tab button:hover {
-        color: ${color} !important;
-      }
-    `;
+    // 获取当前主题（亮色/暗色）
+    const isDark = document.documentElement.dataset.theme === 'dark';
+    
+    // 动态生成自定义主题 CSS
+    const customThemeCSS = generateGiscusThemeCSS(color, rgb, isDark);
+    
+    // 将 CSS 转换为 data URI
+    const cssDataUri = `data:text/css;base64,${btoa(unescape(encodeURIComponent(customThemeCSS)))}`;
+    
+    // 通过 postMessage 发送主题更新消息给 Giscus
+    giscusFrame.contentWindow.postMessage(
+      {
+        giscus: {
+          setConfig: {
+            theme: cssDataUri
+          }
+        }
+      },
+      'https://giscus.app'
+    );
 
-    console.log('✅ Giscus 颜色已同步');
+    console.log('✅ Giscus 颜色已同步:', color);
+  }
+
+  // ============================================
+  // 生成 Giscus 自定义主题 CSS
+  // ============================================
+  function generateGiscusThemeCSS(color, rgb, isDark) {
+    // 基础模板（基于 noborder_light/dark）
+    const baseColors = isDark ? {
+      bg: '22, 22, 24',
+      text: '235, 235, 245',
+      border: '48, 54, 61'
+    } : {
+      bg: '246, 246, 247',
+      text: '36, 41, 47',
+      border: '208, 215, 222'
+    };
+
+    return `
+/* Giscus 自定义主题 - 动态生成 */
+main {
+  --primary-default: ${rgb.r}, ${rgb.g}, ${rgb.b};
+  --bg-default: ${baseColors.bg};
+  --color-prettylights-syntax-entity-tag: ${color};
+  --color-prettylights-syntax-string-regexp: ${color};
+  --color-prettylights-syntax-markup-inserted-text: ${color};
+  --color-prettylights-syntax-markup-inserted-bg: ${isDark ? 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ', 0.15)' : 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ', 0.1)'};
+  --color-success-fg: ${color};
+  --color-scale-blue-1: rgba(var(--primary-default), 0.15);
+  --color-scale-blue-8: rgba(var(--primary-default), 0.15);
+}
+
+/* 按钮和链接颜色 */
+.gsc-comment-box-tabs button:hover,
+.gsc-comment-box-tabs button[aria-selected="true"] {
+  border-bottom-color: ${color} !important;
+}
+
+.gsc-comment-box .gsc-comment-box-tabs button:hover {
+  color: ${color} !important;
+}
+
+/* 反应按钮 */
+.gsc-reactions button:hover,
+.gsc-reactions button.has-reacted {
+  border-color: ${color} !important;
+}
+
+/* 回复按钮 */
+.gsc-reply-button:hover {
+  color: ${color} !important;
+}
+
+/* 主按钮 */
+.gsc-comment-box button.gsc-comment-box-preview-button:hover,
+.gsc-comment-box button.gsc-comment-box-write-button:hover {
+  color: ${color} !important;
+}
+
+/* 链接 */
+.gsc-comment a:hover {
+  color: ${color} !important;
+}
+
+/* 时间轴标记 */
+.gsc-timeline-marker {
+  background-color: ${color} !important;
+}
+    `.trim();
   }
 
   // ============================================
@@ -105,6 +176,65 @@
         }
       });
     }, 100);
+
+    // 等待 Giscus 加载后同步颜色
+    waitForGiscusAndSync(savedColor);
+  });
+
+  // ============================================
+  // 等待 Giscus 加载并同步颜色
+  // ============================================
+  function waitForGiscusAndSync(color) {
+    const rgb = hexToRgb(color);
+    if (!rgb) return;
+
+    let attempts = 0;
+    const maxAttempts = 50;
+    const checkInterval = 200; // 每 200ms 检查一次
+
+    const intervalId = setInterval(() => {
+      const giscusFrame = document.querySelector('iframe.giscus-frame');
+      
+      if (giscusFrame) {
+        // Giscus 已加载，等待 iframe 完全准备好
+        setTimeout(() => {
+          updateGiscusColor(color, rgb);
+          console.log('🎨 Giscus 初始颜色已同步');
+        }, 500);
+        clearInterval(intervalId);
+      } else if (attempts >= maxAttempts) {
+        // 超时，可能当前页面没有评论区
+        clearInterval(intervalId);
+        console.log('ℹ️ 当前页面无评论区');
+      }
+      
+      attempts++;
+    }, checkInterval);
+  }
+
+  // ============================================
+  // 监听主题切换（日夜模式）
+  // ============================================
+  const themeObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.attributeName === 'data-theme') {
+        // 主题切换了，重新同步 Giscus 颜色
+        const savedColor = localStorage.getItem('theme-color') || '#E58F74';
+        const rgb = hexToRgb(savedColor);
+        if (rgb) {
+          setTimeout(() => {
+            updateGiscusColor(savedColor, rgb);
+            console.log('🌓 主题切换，Giscus 颜色已同步');
+          }, 300);
+        }
+      }
+    });
+  });
+
+  // 开始观察 HTML 元素的 data-theme 属性
+  themeObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme']
   });
 
   // ============================================
