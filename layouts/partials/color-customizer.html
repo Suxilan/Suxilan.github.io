@@ -23,17 +23,546 @@
   }
 
   // ============================================
-  // 应用主题色
+  // 工具函数：RGB 转 HSL
+  // ============================================
+  function rgbToHsl(r, g, b) {
+    r /= 255;
+    g /= 255;
+    b /= 255;
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+
+    if (max === min) {
+      h = s = 0;
+    } else {
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+        case g: h = ((b - r) / d + 2) / 6; break;
+        case b: h = ((r - g) / d + 4) / 6; break;
+      }
+    }
+    return { h: h * 360, s: s * 100, l: l * 100 };
+  }
+
+  // ============================================
+  // 工具函数：HSL 转 RGB
+  // ============================================
+  function hslToRgb(h, s, l) {
+    h /= 360;
+    s /= 100;
+    l /= 100;
+    let r, g, b;
+
+    if (s === 0) {
+      r = g = b = l;
+    } else {
+      const hue2rgb = (p, q, t) => {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1/6) return p + (q - p) * 6 * t;
+        if (t < 1/2) return q;
+        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+        return p;
+      };
+      const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      const p = 2 * l - q;
+      r = hue2rgb(p, q, h + 1/3);
+      g = hue2rgb(p, q, h);
+      b = hue2rgb(p, q, h - 1/3);
+    }
+    return {
+      r: Math.round(r * 255),
+      g: Math.round(g * 255),
+      b: Math.round(b * 255)
+    };
+  }
+
+  // ============================================
+  // 工具函数：RGB 转十六进制
+  // ============================================
+  function rgbToHex(r, g, b) {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+  }
+
+  // ============================================
+  // 极简配色方案（4 套预设）
+  // ============================================
+  const MINIMAL_SCHEMES = {
+    github: {
+      name: 'GitHub',
+      base: '#6a737d', baseRgb: '106, 115, 125', baseRgba: (a) => `rgba(106, 115, 125, ${a})`,
+      bg1: '#f6f8fa', bg2: '#f6f8fa', bg3: '#dfe2e5', bg4: '#f6f8fa',
+      light1: '#e1e4e8', light2: '#e1e4e8', light3: '#e1e4e8', light4: '#f6f8fa',
+      medium1: '#6a737d', medium2: '#6a737d', medium3: '#d1d5da', medium4: '#959da5', medium5: '#6a737d', medium6: '#6a737d',
+      dark1: '#24292e', dark2: '#24292e', dark3: '#24292e', dark4: '#24292e', dark5: '#24292e', dark6: '#24292e',
+      darkest1: '#1b1f23', darkest2: '#1b1f23', darkest3: '#1b1f23',
+      vivid1: '#6a737d', vivid2: '#6a737d',
+      hoverP: 'rgba(106, 115, 125, 0.1)', codeBg: 'rgba(225, 228, 232, 0.5)',
+      delColor: 'rgba(106, 115, 125, 0.5)', delDeco: 'rgba(106, 115, 125, 0.7)',
+      tableTdHover: 'rgba(246, 248, 250, 0.7)',
+      gradientRgba1: 'rgba(246, 248, 250, 0)', gradientRgba2: 'rgba(106, 115, 125, 0)'
+    },
+    papermod: {
+      name: 'PaperMod',
+      base: '#757575', baseRgb: '117, 117, 117', baseRgba: (a) => `rgba(117, 117, 117, ${a})`,
+      bg1: '#fafafa', bg2: '#f5f5f5', bg3: '#e5e5e5', bg4: '#f0f0f0',
+      light1: '#e0e0e0', light2: '#e8e8e8', light3: '#ececec', light4: '#f5f5f5',
+      medium1: '#757575', medium2: '#757575', medium3: '#9e9e9e', medium4: '#858585', medium5: '#757575', medium6: '#757575',
+      dark1: '#424242', dark2: '#424242', dark3: '#424242', dark4: '#424242', dark5: '#424242', dark6: '#424242',
+      darkest1: '#212121', darkest2: '#212121', darkest3: '#212121',
+      vivid1: '#757575', vivid2: '#757575',
+      hoverP: 'rgba(117, 117, 117, 0.1)', codeBg: 'rgba(224, 224, 224, 0.5)',
+      delColor: 'rgba(117, 117, 117, 0.5)', delDeco: 'rgba(117, 117, 117, 0.7)',
+      tableTdHover: 'rgba(250, 250, 250, 0.7)',
+      gradientRgba1: 'rgba(250, 250, 250, 0)', gradientRgba2: 'rgba(117, 117, 117, 0)'
+    },
+    nord: {
+      name: 'Nord',
+      base: '#88c0d0', baseRgb: '136, 192, 208', baseRgba: (a) => `rgba(136, 192, 208, ${a})`,
+      bg1: '#eceff4', bg2: '#e5e9f0', bg3: '#d8dee9', bg4: '#eceff4',
+      light1: '#d8dee9', light2: '#d8dee9', light3: '#e5e9f0', light4: '#eceff4',
+      medium1: '#88c0d0', medium2: '#81a1c1', medium3: '#5e81ac', medium4: '#88c0d0', medium5: '#81a1c1', medium6: '#5e81ac',
+      dark1: '#4c566a', dark2: '#434c5e', dark3: '#3b4252', dark4: '#4c566a', dark5: '#434c5e', dark6: '#2e3440',
+      darkest1: '#2e3440', darkest2: '#2e3440', darkest3: '#2e3440',
+      vivid1: '#88c0d0', vivid2: '#81a1c1',
+      hoverP: 'rgba(136, 192, 208, 0.1)', codeBg: 'rgba(216, 222, 233, 0.5)',
+      delColor: 'rgba(76, 86, 106, 0.5)', delDeco: 'rgba(94, 129, 172, 0.7)',
+      tableTdHover: 'rgba(236, 239, 244, 0.7)',
+      gradientRgba1: 'rgba(236, 239, 244, 0)', gradientRgba2: 'rgba(136, 192, 208, 0)'
+    },
+    solarized: {
+      name: 'Solarized Light',
+      base: '#93a1a1', baseRgb: '147, 161, 161', baseRgba: (a) => `rgba(147, 161, 161, ${a})`,
+      bg1: '#fdf6e3', bg2: '#eee8d5', bg3: '#e3dcc4', bg4: '#fdf6e3',
+      light1: '#e3dcc4', light2: '#e3dcc4', light3: '#eee8d5', light4: '#fdf6e3',
+      medium1: '#93a1a1', medium2: '#839496', medium3: '#657b83', medium4: '#93a1a1', medium5: '#839496', medium6: '#657b83',
+      dark1: '#586e75', dark2: '#586e75', dark3: '#586e75', dark4: '#586e75', dark5: '#586e75', dark6: '#073642',
+      darkest1: '#073642', darkest2: '#073642', darkest3: '#073642',
+      vivid1: '#93a1a1', vivid2: '#839496',
+      hoverP: 'rgba(147, 161, 161, 0.1)', codeBg: 'rgba(227, 220, 196, 0.5)',
+      delColor: 'rgba(88, 110, 117, 0.5)', delDeco: 'rgba(101, 123, 131, 0.7)',
+      tableTdHover: 'rgba(253, 246, 227, 0.7)',
+      gradientRgba1: 'rgba(253, 246, 227, 0)', gradientRgba2: 'rgba(147, 161, 161, 0)'
+    }
+  };
+
+  // ============================================
+  // 完整颜色映射系统 - 基于原始 Spring.css 绿色系
+  // ============================================
+  // 原始绿色系完整列表（按色相 HSL 排序）：
+  // 参考色：#3ea174 (HSL: 155°, 47%, 44%) - 主参考色
+  
+  function generateColorPalette(baseColor) {
+    const rgb = hexToRgb(baseColor);
+    if (!rgb) return {};
+
+    const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+    const H = hsl.h;
+
+    // ========================================
+    // 完整配色方案（精确映射原始 Spring.css）
+    // ========================================
+    // 生成函数：根据 S/L 偏移生成新颜色
+    const gen = (s, l) => rgbToHex(...Object.values(hslToRgb(H, s, l)));
+    const genRgba = (s, l, a) => {
+      const rgb = hslToRgb(H, s, l);
+      return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${a})`;
+    };
+    
+    return {
+      // 基础
+      base: baseColor,
+      baseRgb: `${rgb.r}, ${rgb.g}, ${rgb.b}`,
+      baseRgba: (a) => `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${a})`,
+
+      // ========================================
+      // 极淡色系（背景）- L: 90-96%, S: 15-25%
+      // ========================================
+      bg1: gen(20, 96),      // #eff5f2 → 表头背景
+      bg2: gen(25, 94),      // #e8f4ee, #e8f4eb → H1背景、引用块背景
+      bg3: gen(15, 92),      // #def2e8 → 选择背景
+      bg4: gen(20, 90),      // #eaf3ec → 元数据背景
+      
+      // ========================================
+      // 淡色系（高亮、装饰）- L: 75-85%, S: 35-50%
+      // ========================================
+      light1: gen(45, 80),   // #aee6c3 → 高亮标记
+      light2: gen(40, 78),   // #caebdb → 侧边栏悬停
+      light3: gen(38, 82),   // #d4eee1 → auto-suggest
+      light4: gen(42, 76),   // rgba(239,245,242) → 表格悬停
+      
+      // ========================================
+      // 中色系（边框、表头）- L: 40-55%, S: 40-55%
+      // ========================================
+      medium1: gen(47, 44),  // #3ea174 → H2下划线（主参考）
+      medium2: gen(48, 46),  // #3b9457 → 引用块表头
+      medium3: gen(46, 42),  // #2f845e → 引用块边框、分隔线
+      medium4: gen(45, 48),  // #5ea67c → 分隔线渐变
+      medium5: gen(50, 50),  // #399b6f → 任务列表选中
+      medium6: gen(44, 45),  // #3f8a5f → 元数据文字
+      
+      // ========================================
+      // 深色系（文字、符号）- L: 20-35%, S: 70-85%
+      // ========================================
+      dark1: gen(80, 25),    // #087725 → 列表标记
+      dark2: gen(82, 22),    // #06621e → 粗体文字、表头文字
+      dark3: gen(75, 28),    // #006400 → 斜体悬停
+      dark4: gen(78, 30),    // rgb(9,156,70) → 下划线
+      dark5: gen(70, 32),    // #359d09 → 代码文字
+      dark6: gen(85, 20),    // #02502a → 链接悬停
+      
+      // ========================================
+      // 极深色系（装饰）- L: 10-20%, S: 85-95%
+      // ========================================
+      darkest1: gen(90, 18), // #015e19 → 代码块圆点（左）
+      darkest2: gen(88, 20), // #068f28 → 代码块圆点（中）
+      darkest3: gen(85, 22), // #1b5b3e → 滚动条渐变
+      
+      // ========================================
+      // 鲜艳色系（强调）- L: 50-60%, S: 60-75%
+      // ========================================
+      vivid1: gen(70, 58),   // rgb(116,219,38) → 代码块圆点（右）
+      vivid2: gen(65, 54),   // #4aad23 → 滚动条渐变开始
+      
+      // ========================================
+      // 半透明色系（用于动效）
+      // ========================================
+      // 段落悬停
+      hoverP: genRgba(42, 62, 0.1),          // rgba(123,181,147,0.1)
+      // 代码背景
+      codeBg: genRgba(35, 85, 0.5),          // rgba(221,235,213,0.5)
+      // 删除线
+      delColor: genRgba(40, 40, 0.5),        // rgba(50,100,50,0.5)
+      delDeco: genRgba(45, 55, 0.7),         // rgba(76,175,80,0.7)
+      // 表格悬停
+      tableTdHover: genRgba(40, 90, 0.7),    // rgba(239,245,242,0.7)
+      
+      // ========================================
+      // 特殊：rgba() 格式（用于渐变）
+      // ========================================
+      gradientRgba1: genRgba(50, 85, 0),     // rgba(152,251,152,0) → H1渐变
+      gradientRgba2: genRgba(40, 45, 0),     // rgba(106,158,69,0) → H2渐变
+    };
+  }
+
+  // ============================================
+  // 应用主题色（修复作用域问题）
   // ============================================
   function applyThemeColor(color) {
     const rgb = hexToRgb(color);
     if (!rgb) return;
 
     const root = document.documentElement;
+    
+    // ✅ 检查是否开启极简模式
+    const minimalMode = localStorage.getItem('minimal-mode') === 'true';
+    const minimalScheme = localStorage.getItem('minimal-scheme') || 'github';
+    
+    // 如果开启极简模式，使用预设配色；否则使用主题色生成配色
+    const palette = minimalMode ? MINIMAL_SCHEMES[minimalScheme] : generateColorPalette(color);
+
+    // ========================================
+    // 1. 基础主题色变量（用于 custom.css）
+    // ========================================
     root.style.setProperty('--theme-color', color);
     root.style.setProperty('--theme-color-rgb', `${rgb.r}, ${rgb.g}, ${rgb.b}`);
 
-    console.log('✅ 主题色已更新:', color);
+    // ========================================
+    // 2. Spring.css 智能配色（创建 <style> 标签，作用域为 .post-content）
+    // ✅ 关键：spring.css 的变量定义在 .post-content 内，必须用同样的选择器覆盖
+    // ✅ 支持 Light/Dark 模式：为两种模式分别生成配色
+    // ========================================
+    let springStyleTag = document.getElementById('spring-theme-colors');
+    if (!springStyleTag) {
+      springStyleTag = document.createElement('style');
+      springStyleTag.id = 'spring-theme-colors';
+      document.head.appendChild(springStyleTag);
+    }
+
+    // 获取当前主题模式
+    const currentTheme = document.documentElement.dataset.theme || 'light';
+    
+    // 🌓 根据主题模式调整调色板（暗色模式需要更亮的颜色以保持对比度）
+    const adjustPaletteForDarkMode = (lightPalette) => {
+      if (minimalMode) return lightPalette; // 极简模式不调整
+      
+      const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+      
+      // 暗色模式：增加亮度，降低饱和度
+      const darkHsl = {
+        h: hsl.h,
+        s: Math.max(hsl.s * 0.8, 30), // 降低饱和度，但保持至少30%
+        l: Math.min(hsl.l * 1.4, 70)   // 增加亮度，但不超过70%
+      };
+      
+      // 生成暗色模式调色板
+      const darkRgb = hslToRgb(darkHsl.h, darkHsl.s, darkHsl.l);
+      const darkColor = rgbToHex(darkRgb.r, darkRgb.g, darkRgb.b);
+      
+      return generateColorPalette(darkColor);
+    };
+    
+    // 为 Light 和 Dark 模式分别生成调色板
+    const lightPalette = palette;
+    const darkPalette = adjustPaletteForDarkMode(palette);
+    
+    // 生成 CSS 规则（为 Light 和 Dark 分别定义）
+    const generateSpringCSS = (p, selector) => `
+    ${selector} .post-content {
+      /* ========================================
+       * 文本选择
+       * ======================================== */
+      --selection-color: ${p.bg3} !important;
+      
+      /* ========================================
+       * H1/H2 标题
+       * ======================================== */
+      --write-h1-before-bg: linear-gradient(90deg, ${p.gradientRgba1}, ${p.bg2}, ${p.gradientRgba1}) !important;
+      --write-h2-after-bg: linear-gradient(90deg, ${p.gradientRgba2}, ${p.medium1}, ${p.gradientRgba2}) !important;
+      
+      /* ========================================
+       * 段落悬停（包含动效）
+       * ======================================== */
+      --p-hover-bg-color: ${p.hoverP} !important;
+      
+      /* ========================================
+       * 列表标记（含悬停）
+       * ======================================== */
+      --ul-marker-color: ${p.dark1} !important;
+      --ulul-marker-color: ${p.dark1} !important;
+      --ululul-marker-color: ${p.dark1} !important;
+      --ol-hover-marker-color: ${p.dark1} !important;
+      
+      /* ========================================
+       * 引用块
+       * ======================================== */
+      --blockquote-border-color: ${p.medium3} !important;
+      --blockquote-bg-color: ${p.bg2} !important;
+      --blockquote-hover-border-color: ${p.medium3} !important;
+      --blockquote-thead-bg-color: ${p.medium2} !important;
+      
+      /* ========================================
+       * Alert Tip（只替换绿色系）
+       * ======================================== */
+      --alert-tip-border-color: ${p.dark1} !important;
+      --alert-tip-bg-color: ${p.bg2} !important;
+      --alert-tip-hover-border-color: ${p.dark1} !important;
+      --alert-tip-thead-bg-color: ${p.medium2} !important;
+      
+      /* ========================================
+       * 分隔线
+       * ======================================== */
+      --hr-bg-image: linear-gradient(90deg, ${p.medium4}, ${p.medium3}, ${p.medium4}) !important;
+      
+      /* ========================================
+       * 表格
+       * ======================================== */
+      --table-thead-bg-color: ${p.bg1} !important;
+      --table-thead-text-color: ${p.dark2} !important;
+      --table-tbody-border-color: ${p.bg2} !important;
+      --table-edit-hover-bg-color: ${p.bg2} !important;
+      --table-td-hover-bg: ${p.tableTdHover} !important;
+      --blockquote-td-hover-bg: ${p.tableTdHover} !important;
+      --alert-tip-td-hover-bg: ${p.tableTdHover} !important;
+      --table-meta-block-bg-color: ${p.bg4} !important;
+      --table-meta-block-color: ${p.medium6} !important;
+      
+      /* ========================================
+       * 粗体/斜体（含悬停动效）
+       * ======================================== */
+      --strong-color: ${p.dark2} !important;
+      --strong-hover-color: ${p.darkest1} !important;
+      --strong-hover-shadow-color: ${p.baseRgba(0.3)} !important;
+      --em-hover-color: ${p.dark3} !important;
+      
+      /* ========================================
+       * 下划线（含悬停）
+       * ======================================== */
+      --u-border-color: ${p.dark4} !important;
+      --u-hover-border-color: ${p.darkest1} !important;
+      
+      /* ========================================
+       * 内联代码（含悬停动效）
+       * ======================================== */
+      --code-bg-color: ${p.codeBg} !important;
+      --code-color: ${p.dark5} !important;
+      --code-hover-bg-color: ${p.codeBg.replace('0.5', '1.0')} !important;
+      
+      /* ========================================
+       * 删除线（含悬停动效）
+       * ======================================== */
+      --del-color: ${p.delColor} !important;
+      --del-text-decoration-color: ${p.delDeco} !important;
+      --del-hover-color: ${p.delColor.replace('0.5', '1.0')} !important;
+      --del-hover-text-decoration-color: ${p.delDeco.replace('0.7', '1.0')} !important;
+      
+      /* ========================================
+       * 高亮标记（含悬停动效）
+       * ======================================== */
+      --mark-bg-color: ${p.light1} !important;
+      --mark-hover-bg-color: ${p.light1.replace(p.light1.slice(-2), String(parseInt(p.light1.slice(-2), 16) * 0.5).padStart(2, '0'))} !important;
+      
+      /* ========================================
+       * 链接
+       * ======================================== */
+      --a-hover-color: ${p.dark6} !important;
+      
+      /* ========================================
+       * 代码块装饰
+       * ======================================== */
+      --code-fences-before-bg: ${p.darkest1} !important;
+      --code-fences-before-box-shadow: 20px 0 ${p.darkest2}, 40px 0 ${p.vivid1} !important;
+      
+      /* ========================================
+       * 代码行号
+       * ======================================== */
+      --cm-s-inner-linenumber-color: ${p.medium3} !important;
+      
+      /* ========================================
+       * 滚动条
+       * ======================================== */
+      --scrollbar-thumb-bg: linear-gradient(to top right, ${p.vivid2}, ${p.darkest3}) !important;
+      
+      /* ========================================
+       * 任务列表
+       * ======================================== */
+      --task-list-input-checked-bg-color: ${p.medium5} !important;
+      
+      /* ========================================
+       * 侧边栏
+       * ======================================== */
+      --sidebar-bg-color: ${p.medium3} !important;
+      --file-tree-node-hover-border-color: ${p.medium3} !important;
+      --file-tree-node-active-border-color: ${p.medium3} !important;
+      --sidebar-content-file-list-item-active-border-color: ${p.medium3} !important;
+      --outline-item-hover-bg-color: ${p.bg2} !important;
+      --sidebar-footer-hover-bg-color: ${p.light2} !important;
+      --toc-hover-bg-color: ${p.light2} !important;
+      --auto-suggest-container-bg-color: ${p.light3} !important;
+    }
+    `;
+    
+    // 同时生成 Light 和 Dark 模式的 CSS（确保主题切换时颜色正确）
+    const springCSS = generateSpringCSS(lightPalette, '[data-theme="light"]') + '\n' + 
+                      generateSpringCSS(darkPalette, '[data-theme="dark"]');
+
+    // 写入 CSS
+    springStyleTag.textContent = springCSS;
+
+    console.log('✅ 主题色已应用:', color);
+    console.log('🎨 配色方案:', palette);
+    
+    // ========================================
+    // 3. 更新 Color Panel 中的预览区域
+    // ========================================
+    updateColorPreview(palette);
+  }
+
+  // ============================================
+  // 更新 Color Panel 中的预览区域
+  // ============================================
+  function updateColorPreview(p) {
+    const previewSection = document.querySelector('.color-preview-section');
+    if (!previewSection) return;
+
+    previewSection.innerHTML = `
+      <p style="margin-bottom: 10px; font-weight: bold;">完整配色方案（基于原始 Spring.css）：</p>
+      
+      <div style="margin-bottom: 12px;">
+        <small style="font-weight: bold; color: #666;">背景色系（4色）</small>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 6px;">
+          <div style="text-align: center;">
+            <div style="background: ${p.bg1}; border: 1px solid #ddd; border-radius: 4px; height: 30px;"></div>
+            <small style="font-size: 10px;">BG1</small>
+          </div>
+          <div style="text-align: center;">
+            <div style="background: ${p.bg2}; border: 1px solid #ddd; border-radius: 4px; height: 30px;"></div>
+            <small style="font-size: 10px;">BG2</small>
+          </div>
+          <div style="text-align: center;">
+            <div style="background: ${p.bg3}; border: 1px solid #ddd; border-radius: 4px; height: 30px;"></div>
+            <small style="font-size: 10px;">BG3</small>
+          </div>
+          <div style="text-align: center;">
+            <div style="background: ${p.bg4}; border: 1px solid #ddd; border-radius: 4px; height: 30px;"></div>
+            <small style="font-size: 10px;">BG4</small>
+          </div>
+        </div>
+      </div>
+      
+      <div style="margin-bottom: 12px;">
+        <small style="font-weight: bold; color: #666;">中等色系（6色）</small>
+        <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-top: 6px;">
+          <div style="text-align: center;">
+            <div style="background: ${p.medium1}; border: 1px solid #ddd; border-radius: 4px; height: 30px;"></div>
+            <small style="font-size: 10px;">M1</small>
+          </div>
+          <div style="text-align: center;">
+            <div style="background: ${p.medium2}; border: 1px solid #ddd; border-radius: 4px; height: 30px;"></div>
+            <small style="font-size: 10px;">M2</small>
+          </div>
+          <div style="text-align: center;">
+            <div style="background: ${p.medium3}; border: 1px solid #ddd; border-radius: 4px; height: 30px;"></div>
+            <small style="font-size: 10px;">M3</small>
+          </div>
+          <div style="text-align: center;">
+            <div style="background: ${p.medium4}; border: 1px solid #ddd; border-radius: 4px; height: 30px;"></div>
+            <small style="font-size: 10px;">M4</small>
+          </div>
+          <div style="text-align: center;">
+            <div style="background: ${p.medium5}; border: 1px solid #ddd; border-radius: 4px; height: 30px;"></div>
+            <small style="font-size: 10px;">M5</small>
+          </div>
+          <div style="text-align: center;">
+            <div style="background: ${p.medium6}; border: 1px solid #ddd; border-radius: 4px; height: 30px;"></div>
+            <small style="font-size: 10px;">M6</small>
+          </div>
+        </div>
+      </div>
+      
+      <div style="margin-bottom: 12px;">
+        <small style="font-weight: bold; color: #666;">深色系（6色）</small>
+        <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-top: 6px;">
+          <div style="text-align: center;">
+            <div style="background: ${p.dark1}; border: 1px solid #ddd; border-radius: 4px; height: 30px;"></div>
+            <small style="font-size: 10px;">D1</small>
+          </div>
+          <div style="text-align: center;">
+            <div style="background: ${p.dark2}; border: 1px solid #ddd; border-radius: 4px; height: 30px;"></div>
+            <small style="font-size: 10px;">D2</small>
+          </div>
+          <div style="text-align: center;">
+            <div style="background: ${p.dark3}; border: 1px solid #ddd; border-radius: 4px; height: 30px;"></div>
+            <small style="font-size: 10px;">D3</small>
+          </div>
+          <div style="text-align: center;">
+            <div style="background: ${p.dark4}; border: 1px solid #ddd; border-radius: 4px; height: 30px;"></div>
+            <small style="font-size: 10px;">D4</small>
+          </div>
+          <div style="text-align: center;">
+            <div style="background: ${p.dark5}; border: 1px solid #ddd; border-radius: 4px; height: 30px;"></div>
+            <small style="font-size: 10px;">D5</small>
+          </div>
+          <div style="text-align: center;">
+            <div style="background: ${p.dark6}; border: 1px solid #ddd; border-radius: 4px; height: 30px;"></div>
+            <small style="font-size: 10px;">D6</small>
+          </div>
+        </div>
+      </div>
+      
+      <p style="margin: 12px 0 8px 0; font-weight: bold;">预览效果：</p>
+      <div style="padding: 15px; background: ${p.bg1}; border-radius: 8px; border: 2px solid ${p.medium3};">
+        <button style="background: ${p.medium2}; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-right: 8px;">按钮样式</button>
+        <span style="background: ${p.light1}; color: ${p.dark2}; padding: 4px 12px; border-radius: 4px; font-size: 13px; margin-right: 8px;">标签样式</span>
+        <a href="#" style="color: ${p.dark6}; text-decoration: underline;">链接样式</a>
+        <p style="margin: 10px 0 0 0; padding: 8px; background: white; border-left: 3px solid ${p.medium3}; font-size: 13px;">
+          <strong style="color: ${p.dark2};">粗体文字</strong> 和 <code style="background: ${p.codeBg}; color: ${p.dark5}; padding: 2px 6px; border-radius: 3px;">代码样式</code>
+        </p>
+      </div>
+    `;
   }
 
   // ============================================
@@ -438,6 +967,65 @@ main .gsc-loading-image {
 
       // 实时预览
       applyThemeColor(color);
+    });
+  }
+
+  // ============================================
+  // 极简模式切换
+  // ============================================
+  const minimalModeToggle = document.getElementById('minimal-mode-toggle');
+  const minimalSchemesDiv = document.getElementById('minimal-schemes');
+  
+  if (minimalModeToggle && minimalSchemesDiv) {
+    // 恢复保存的状态
+    const savedMinimalMode = localStorage.getItem('minimal-mode') === 'true';
+    const savedScheme = localStorage.getItem('minimal-scheme') || 'github';
+    
+    minimalModeToggle.checked = savedMinimalMode;
+    minimalSchemesDiv.style.display = savedMinimalMode ? 'block' : 'none';
+    
+    // 切换事件
+    minimalModeToggle.addEventListener('change', function() {
+      const isEnabled = this.checked;
+      localStorage.setItem('minimal-mode', isEnabled);
+      minimalSchemesDiv.style.display = isEnabled ? 'block' : 'none';
+      
+      // 重新应用颜色
+      const currentColor = loadThemeColor();
+      applyThemeColor(currentColor);
+      
+      console.log('🎨 极简模式:', isEnabled ? '已开启' : '已关闭');
+    });
+    
+    // 方案选择按钮
+    document.querySelectorAll('.minimal-scheme-btn').forEach(btn => {
+      // 恢复激活状态
+      if (btn.dataset.scheme === savedScheme) {
+        btn.classList.add('active');
+        btn.style.borderColor = '#4CAF50';
+        btn.style.background = '#f0f8f0';
+      }
+      
+      btn.addEventListener('click', function() {
+        const scheme = this.dataset.scheme;
+        
+        // 更新按钮状态
+        document.querySelectorAll('.minimal-scheme-btn').forEach(b => {
+          b.classList.remove('active');
+          b.style.borderColor = '#ddd';
+          b.style.background = 'white';
+        });
+        this.classList.add('active');
+        this.style.borderColor = '#4CAF50';
+        this.style.background = '#f0f8f0';
+        
+        // 保存并应用
+        localStorage.setItem('minimal-scheme', scheme);
+        const currentColor = loadThemeColor();
+        applyThemeColor(currentColor);
+        
+        console.log('🎨 极简方案:', MINIMAL_SCHEMES[scheme].name);
+      });
     });
   }
 

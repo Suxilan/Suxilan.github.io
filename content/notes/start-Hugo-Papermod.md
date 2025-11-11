@@ -3,7 +3,7 @@ title: "Hugo + PaperMod 从零搭建教程"
 date: 2025-11-06T10:00:00+08:00
 draft: false
 tags: ["Hugo", "PaperMod", "教程", "博客搭建"]
-categories: ["技术笔记"]
+categories: ["教程笔记"]
 series: ["Hugo 博客搭建"]
 author: "Suxilan"
 showToc: true
@@ -13,7 +13,7 @@ description: "从零开始搭建 Hugo + PaperMod 博客的完整教程，记录�
 summary: "万恶之源 —— 记录我的博客搭建之路"
 ---
 
-## 一切的开始
+# 一切的开始
 
 最近在用 Gemini 2.5 Pro“**学习辅导**”的时候，总是发现有些问过的问题会一而再、再而三地询问，究其原因可能还是缺少了总结的环节。因此结合我十年寒窗苦读的经验，“**总结本**”和“**错题本**”还是必不可少的。加之最近与师兄同门学习后发现写博客或者笔记记录是一个非常好的习惯，于是狠下心来踩一下这个坑！
 

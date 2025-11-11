@@ -161,12 +161,70 @@
                 <label for="custom-color-input">自定义颜色：</label>
                 <input type="color" id="custom-color-input" value="#E58F74">
             </div>
-            <div class="color-preview">
-                <p>预览效果：</p>
-                <div class="preview-items">
-                    <button class="preview-button">按钮样式</button>
-                    <span class="preview-tag">标签样式</span>
-                    <a href="#" class="preview-link">链接样式</a>
+            
+            {{- /* 极简配色选择器 */ -}}
+            <div class="minimal-color-section" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
+                <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; cursor: pointer;">
+                    <input type="checkbox" id="minimal-mode-toggle" style="width: 16px; height: 16px; cursor: pointer;">
+                    <span style="font-weight: bold;">极简配色模式</span>
+                    <small style="color: #666; font-size: 11px;">（仅影响 Markdown 渲染，适合阅读）</small>
+                </label>
+                <div id="minimal-schemes" style="display: none;">
+                    <p style="font-size: 12px; color: #666; margin-bottom: 8px;">选择预设方案：</p>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+                        <button class="minimal-scheme-btn active" data-scheme="github" style="padding: 8px; border: 2px solid #ddd; border-radius: 6px; background: white; cursor: pointer; text-align: left; font-size: 12px; transition: all 0.2s;">
+                            <strong>GitHub</strong><br>
+                            <small style="color: #666;">经典黑灰</small>
+                        </button>
+                        <button class="minimal-scheme-btn" data-scheme="papermod" style="padding: 8px; border: 2px solid #ddd; border-radius: 6px; background: white; cursor: pointer; text-align: left; font-size: 12px; transition: all 0.2s;">
+                            <strong>PaperMod</strong><br>
+                            <small style="color: #666;">简约黑白</small>
+                        </button>
+                        <button class="minimal-scheme-btn" data-scheme="nord" style="padding: 8px; border: 2px solid #ddd; border-radius: 6px; background: white; cursor: pointer; text-align: left; font-size: 12px; transition: all 0.2s;">
+                            <strong>Nord</strong><br>
+                            <small style="color: #666;">冷色护眼</small>
+                        </button>
+                        <button class="minimal-scheme-btn" data-scheme="solarized" style="padding: 8px; border: 2px solid #ddd; border-radius: 6px; background: white; cursor: pointer; text-align: left; font-size: 12px; transition: all 0.2s;">
+                            <strong>Solarized</strong><br>
+                            <small style="color: #666;">暖色护眼</small>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="color-preview-section">
+                {{- /* 此区域将由 JavaScript 动态更新，展示 5 色系统和预览效果 */ -}}
+                <p style="margin-bottom: 10px; font-weight: bold;">智能配色方案（5色系统）：</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin-bottom: 15px;">
+                    <div style="text-align: center;">
+                        <div style="background: #eff5f2; border: 1px solid #ddd; border-radius: 4px; height: 40px; margin-bottom: 4px;"></div>
+                        <small style="font-size: 11px;">极淡色<br>#eff5f2</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="background: #d0e9da; border: 1px solid #ddd; border-radius: 4px; height: 40px; margin-bottom: 4px;"></div>
+                        <small style="font-size: 11px;">淡色<br>#d0e9da</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="background: #E58F74; border: 1px solid #ddd; border-radius: 4px; height: 40px; margin-bottom: 4px;"></div>
+                        <small style="font-size: 11px;">主题色<br>#E58F74</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="background: #643417; border: 1px solid #ddd; border-radius: 4px; height: 40px; margin-bottom: 4px;"></div>
+                        <small style="font-size: 11px;">深色<br>#643417</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="background: #401d08; border: 1px solid #ddd; border-radius: 4px; height: 40px; margin-bottom: 4px;"></div>
+                        <small style="font-size: 11px;">极深色<br>#401d08</small>
+                    </div>
+                </div>
+                <p style="margin-bottom: 8px; font-weight: bold;">预览效果：</p>
+                <div style="padding: 15px; background: #eff5f2; border-radius: 8px; border: 2px solid #E58F74;">
+                    <button style="background: #E58F74; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-right: 8px;">按钮样式</button>
+                    <span style="background: #d0e9da; color: #643417; padding: 4px 12px; border-radius: 4px; font-size: 13px; margin-right: 8px;">标签样式</span>
+                    <a href="#" style="color: #643417; text-decoration: underline;">链接样式</a>
+                    <p style="margin: 10px 0 0 0; padding: 8px; background: white; border-left: 3px solid #E58F74; font-size: 13px; color: #401d08;">
+                        <strong style="color: #643417;">粗体文字</strong> 和 <code style="background: rgba(229, 143, 116, 0.2); color: #643417; padding: 2px 6px; border-radius: 3px;">代码样式</code>
+                    </p>
                 </div>
             </div>
         </div>

@@ -83,6 +83,9 @@ params:
   keywords: [Blog, Portfolio, Photography, CV, Notes]
   author: Suxilan
   
+  # 数学公式支持（全局启用，可在文章中用 math: false 关闭）
+  math: true
+  
   # 图片设置
   images: ["/images/avatar.jpg"]  # 默认分享图片
   
@@ -188,7 +191,16 @@ params:
 markup:
   goldmark:
     renderer:
-      unsafe: true  # 允许 HTML
+      unsafe: true  # 允许 HTML（数学公式需要）
+    extensions:
+      passthrough:
+        delimiters:
+          block:
+            - ['\[', '\]']
+            - ['$$', '$$']
+          inline:
+            - ['\(', '\)']
+        enable: true
   highlight:
     anchorLineNos: false
     codeFences: true

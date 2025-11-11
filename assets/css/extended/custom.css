@@ -1,4 +1,42 @@
 /* ============================================
+   头像/Logo 悬停效果
+   ============================================ */
+
+/* 网站头像/Logo 悬停效果：圆形 → 方形
+ * 
+ * 这个效果来自 Typora Spring.css 的图片悬停效果
+ * 原理：border-radius 从 50%（圆形）过渡到 0（方形）
+ * 
+ * 应用范围：
+ * - .profile img: 主页 Profile Mode 的头像
+ * - .logo img: Header 中的 Logo
+ */
+
+/* 主页头像 (Profile Mode) */
+.profile img,
+.profile_inner img {
+  border-radius: 50%; /* 默认圆形 */
+  transition: transform 0.15s ease, border-radius 0.15s ease;
+}
+
+.profile img:hover,
+.profile_inner img:hover {
+  transform: scale(1.01); /* 轻微放大 */
+  border-radius: 0; /* 悬停时变为方形 */
+}
+
+/* Header Logo */
+.logo img {
+  border-radius: 50%; /* 默认圆形 */
+  transition: transform 0.15s ease, border-radius 0.15s ease;
+}
+
+.logo img:hover {
+  transform: scale(1.01); /* 轻微放大 */
+  border-radius: 0; /* 悬停时变为方形 */
+}
+
+/* ============================================
    Header 按钮样式优化
    ============================================ */
 

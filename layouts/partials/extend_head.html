@@ -11,3 +11,72 @@
 <link rel="preload" href="{{ $baseURL }}/giscus-dark.css" as="style" crossorigin="anonymous">
 {{- end }}
 
+{{- /* 数学公式渲染支持（MathJax 3） */ -}}
+{{- if or .Params.math (site.Params.math) }}
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],  // 行内公式：$...$ 或 \(...\)
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],  // 块级公式：$$...$$ 或 \[...\]
+      processEscapes: true,  // 允许转义符
+      processEnvironments: true,  // 支持 LaTeX 环境
+      tags: 'ams',  // AMS 公式编号
+      tagSide: 'right',  // 公式编号位置
+      tagIndent: '0.8em',  // 公式编号缩进
+      multlineWidth: '85%',  // 多行公式宽度
+      // 常用宏定义
+      macros: {
+        RR: "\\mathbb{R}",  // 实数集
+        NN: "\\mathbb{N}",  // 自然数集
+        ZZ: "\\mathbb{Z}",  // 整数集
+        QQ: "\\mathbb{Q}",  // 有理数集
+        CC: "\\mathbb{C}",  // 复数集
+        bm: ["\\boldsymbol{#1}", 1],  // 粗体
+        vec: ["\\mathbf{#1}", 1]  // 向量
+      }
+    },
+    svg: {
+      fontCache: 'global'  // 字体缓存优化
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],  // 跳过这些标签
+      ignoreHtmlClass: 'no-math',  // 忽略带 no-math 类的元素
+      processHtmlClass: 'math'  // 只处理带 math 类的元素（可选）
+    },
+    loader: {
+      load: ['[tex]/ams', '[tex]/mathtools', '[tex]/physics']  // 加载常用扩展
+    }
+  };
+</script>
+
+<!-- 加载 MathJax 3 核心库 -->
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<!-- 优化 MathJax 渲染样式 -->
+<style>
+  /* MathJax 公式容器样式 */
+  mjx-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  
+  /* 行内公式对齐 */
+  mjx-container[jax="CHTML"][display="true"] {
+    display: block;
+    text-align: center;
+    margin: 1em 0;
+  }
+  
+  /* 公式可选中（方便复制） */
+  .MathJax {
+    outline: 0;
+  }
+  
+  /* 公式加载时显示原始 LaTeX */
+  .MathJax_Preview {
+    color: #888;
+    font-style: italic;
+  }
+</style>
+{{- end }}
+
