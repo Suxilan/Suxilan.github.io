@@ -204,7 +204,7 @@ $$
 
 ### 推导情况三：最小二乘法 (MSE Loss)
 
-**问题**：损失函数 $L = ||\mathbf{y} - \mathbf{X} \mathbf{w}||^2$，其中 $\mathbf{y}$ ($m \times 1$), $\mathbf{X}$ ($m \times n$), $\mathbf{w}$ ($n \times 1$)。求 $\frac{\partial L}{\partial \mathbf{w}}$。
+**问题**：损失函数 $L = \Vert\mathbf{y} - \mathbf{X} \mathbf{w}\Vert^2$，其中 $\mathbf{y}$ ($m \times 1$), $\mathbf{X}$ ($m \times n$), $\mathbf{w}$ ($n \times 1$)。求 $\frac{\partial L}{\partial \mathbf{w}}$。
 
 > 这里$\mathbf{y}$可以理解为标签（$m$维），$\mathbf{X}$为输入的特征向量，$\mathbf{w}$为模型参数可以简单理解为一个线性层
 
@@ -224,10 +224,10 @@ $$
 **结论**：
 
 $$
-\frac{\partial ||\mathbf{y} - \mathbf{X} \mathbf{w}||^2}{\partial \mathbf{w}} = 2 \mathbf{X}^\mathrm{T} (\mathbf{X} \mathbf{w} - \mathbf{y})
+\frac{\partial \Vert\mathbf{y} - \mathbf{X} \mathbf{w}\Vert^2}{\partial \mathbf{w}} = 2 \mathbf{X}^\mathrm{T} (\mathbf{X} \mathbf{w} - \mathbf{y})
 $$
 
-> **notion**：在深度学习中，更常用 $\displaystyle L = \frac{1}{2} ||\mathbf{y} - \mathbf{X} \mathbf{w}||^2$ 作为损失，
+> **notion**：在深度学习中，更常用 $\displaystyle L = \frac{1}{2} \Vert\mathbf{y} - \mathbf{X} \mathbf{w}\Vert^2$ 作为损失，
 > 此时梯度为： $\frac{\partial L}{\partial \mathbf{w}} = \mathbf{X}^\mathrm{T} (\mathbf{X} \mathbf{w} - \mathbf{y})$，形式更简洁。
 
 ---
@@ -643,7 +643,7 @@ $$
 | $y = \mathbf{x}^\mathrm{T} \mathbf{x}$ | $2\mathbf{x}$ | **L2范数的平方** |
 | $y = \mathbf{x}^\mathrm{T} \mathbf{A} \mathbf{x}$ | $(\mathbf{A} + \mathbf{A}^\mathrm{T})\mathbf{x}$ | **二次型 (Quadratic Form)** |
 | $y = \mathbf{x}^\mathrm{T} \mathbf{A} \mathbf{x}$ | $2\mathbf{A}\mathbf{x}$ | **对称二次型**。**前提：$\mathbf{A}$ 是对称矩阵** ($\mathbf{A} = \mathbf{A}^\mathrm{T}$)。在PCA、协方差矩阵等推导中很常见。 |
-| $L = ||\mathbf{y} - \mathbf{X}\mathbf{w}||^2$ | $2 \mathbf{X}^\mathrm{T} (\mathbf{X}\mathbf{w} - \mathbf{y})$ | **最小二乘** |
+| $L = \Vert\mathbf{y} - \mathbf{X}\mathbf{w}\Vert^2$ | $2 \mathbf{X}^\mathrm{T} (\mathbf{X}\mathbf{w} - \mathbf{y})$ | **最小二乘** |
 | $L = \text{CE}(\text{softmax}(\mathbf{z}), \mathbf{y})$ | $\mathbf{p} - \mathbf{y}$ | **Softmax+交叉熵 组合梯度**。$\mathbf{z}$ 是logits (网络原始输出)，$\mathbf{p}=\text{softmax}(\mathbf{z})$ 是预测概率，$\mathbf{y}$ 是 one-hot 真实标签。这个 $\mathbf{p} - \mathbf{y}$ 的简洁形式是**多分类问题反向传播的核心**。 |
 
 ### 2. 矩阵求导 (标量对矩阵)
@@ -657,7 +657,7 @@ $$
 | $y = \text{tr}(\mathbf{W}^\mathrm{T} \mathbf{A})$ | $\mathbf{A}$ | **通过迹变换为第一条** |
 | $y = \text{tr}(\mathbf{W}^\mathrm{T} \mathbf{A} \mathbf{W})$ | $\mathbf{A} \mathbf{W} + \mathbf{A}^\mathrm{T} \mathbf{W}$ | **矩阵二次型** |
 | $y = \det(\mathbf{W})$ | $\det(\mathbf{W}) (\mathbf{W}^{-1})^\mathrm{T}$ | **行列式的导数**。在涉及行列式优化（如变分推断）时使用。**前提：$\mathbf{W}$ 是方阵且可逆** |
-| $f = \frac{1}{2} ||\mathbf{X}\mathbf{W} - \mathbf{Y}||_F^2$ | $\mathbf{X}^\mathrm{T} (\mathbf{X}\mathbf{W} - \mathbf{Y})$ | **矩阵最小二乘** |
+| $f = \frac{1}{2} \Vert\mathbf{X}\mathbf{W} - \mathbf{Y}\Vert_F^2$ | $\mathbf{X}^\mathrm{T} (\mathbf{X}\mathbf{W} - \mathbf{Y})$ | **矩阵最小二乘** |
 
 ### 3. 深度学习链式法则（反向传播）
 
