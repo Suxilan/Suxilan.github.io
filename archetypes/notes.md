@@ -6,8 +6,8 @@ tags: []
 categories: ["技术笔记"]
 series: []
 author: "Suxilan"
-showToc: true
-TocOpen: false
+ShowToc: true
+TocWide: true
 comments: true  # 默认启用评论
 description: ""
 summary: ""

@@ -323,10 +323,7 @@
      --dropdown-menu-li-a-hover-color: #e8f4ee;
      --dropdown-menu-divider-border-color: #fff;
 
-     --toc-bg-color: #fff;
-     --toc-webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-     --toc-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-     --toc-hover-bg-color: #caebdb;
+     /* ✅ 已删除 TOC 相关 CSS 变量（--toc-*），避免与 PaperMod 的 TOC 冲突 */
 
      --auto-suggest-container-bg-color: #d4eee1;
 
@@ -1019,10 +1016,7 @@ table tbody+tbody,
     margin-bottom: 2rem;
 }
 
-/* table of contents */
-.md-toc {
-    margin-bottom: 1.25rem;
-}
+/* ✅ 已删除 .md-toc 样式（Typora 特有，Hugo 不需要） */
 
 /* task list */
 .task-list-item>input::before {
@@ -1806,18 +1800,14 @@ table tbody+tbody,
     border-color: var(--dropdown-menu-divider-border-color);
 }
 
-/* sidebar-files-menu,toc-dropmenu,suggest common */
+/* sidebar-files-menu,suggest common */
+/* ✅ 已删除 #toc-dropmenu 样式（Typora 特有，Hugo 不需要） */
 #sidebar-files-menu,
-#toc-dropmenu,
 .auto-suggest-container {
-    background-color: var(--toc-bg-color);
-    -webkit-box-shadow: var(--toc-webkit-box-shadow);
-    box-shadow: var(--toc-box-shadow);
+    background-color: var(--auto-suggest-container-bg-color);
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     border: none;
-}
-
-#toc-dropmenu .outline-item:hover {
-    background-color: var(--toc-hover-bg-color) !important;
 }
 
 /* emoji,fences,word suggest */

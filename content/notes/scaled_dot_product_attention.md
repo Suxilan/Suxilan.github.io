@@ -6,8 +6,8 @@ tags: ["SDPA", "Transformer", "Attention", "数学推导"]
 categories: ["技术笔记"]
 series: []
 author: "Suxilan"
-showToc: true
-TocOpen: false
+ShowToc: true
+TocWide: true
 comments: true
 description: "深入推导 Scaled Dot-Product Attention 的设计哲学"
 summary: "严格的数学推导 + 教学性解释，揭示 SDPA 的设计精髓"

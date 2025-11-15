@@ -6,8 +6,8 @@ tags: ["Hugo", "PaperMod", "教程", "博客搭建"]
 categories: ["教程笔记"]
 series: ["Hugo 博客搭建"]
 author: "Suxilan"
-showToc: true
-TocOpen: false
+ShowToc: true
+TocWide: true
 comments: true
 description: "从零开始搭建 Hugo + PaperMod 博客的完整教程，记录踩坑经历"
 summary: "万恶之源 —— 记录我的博客搭建之路"

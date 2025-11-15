@@ -6,8 +6,8 @@ tags: ["Deep Learning", "矩阵微分", "Matrix Calculus", "反向传播"]
 categories: ["技术笔记"]
 series: []
 author: "Suxilan"
-showToc: true
-TocOpen: false
+ShowToc: true
+TocWide: true
 comments: true
 description: "矩阵微积分在深度学习中的应用：从布局约定到微分-迹法，完整推导反向传播的数学基础"
 summary: "常见的矩阵求导推导 + 速查表，掌握深度学习中梯度计算的数学原理"
