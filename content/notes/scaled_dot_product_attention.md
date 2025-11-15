@@ -466,7 +466,15 @@ $$
 $$
 
 > **证明**：
-> $$\text{Var}(cX) = \mathbb{E}[(cX - \mathbb{E}[cX])^2] = \mathbb{E}[(cX - c\mathbb{E}[X])^2] = c^2 \mathbb{E}[(X - \mathbb{E}[X])^2] = c^2 \text{Var}(X)$$
+> $$
+> \begin{align}
+> \text{Var}(cX) &= \mathbb{E}[(cX - \mathbb{E}[cX])^2] \phantom{= c^2 \mathbb{E}[(X - \mathbb{E}[X])^2]} \\
+> &= \mathbb{E}[(cX - c\mathbb{E}[X])^2] \phantom{= c^2 \text{Var}(X)} \\
+> &= c^2 \mathbb{E}[(X - \mathbb{E}[X])^2] \\
+> &= c^2 \text{Var}(X)
+> \end{align}
+> $$
+> 
 
 #### **求解常数 $c$**
 
