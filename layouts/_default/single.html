@@ -247,7 +247,9 @@
     // 获取当前应该激活的标题
     function getCurrentHeader() {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const offset = 100; // 提前激活的偏移量
+      // 根据屏幕宽度调整偏移量（移动端使用更小的偏移）
+      const isMobile = window.innerWidth <= 768;
+      const offset = isMobile ? 80 : 100; // 移动端提前激活的偏移量更小
       
       // 从下往上找第一个超过偏移量的标题
       for (let i = headers.length - 1; i >= 0; i--) {
@@ -275,6 +277,10 @@
     const visibleHeadersMap = new Map(); // 跟踪所有可见的标题
     
     if ('IntersectionObserver' in window) {
+      // 根据屏幕宽度调整 rootMargin（移动端使用更小的值）
+      const isMobile = window.innerWidth <= 768;
+      const rootMarginTop = isMobile ? '-80px' : '-100px';
+      
       observer = new IntersectionObserver((entries) => {
         // 更新可见标题映射
         entries.forEach(entry => {
@@ -303,7 +309,7 @@
         }
       }, {
         root: null,
-        rootMargin: '-100px 0px -60% 0px',
+        rootMargin: rootMarginTop + ' 0px -60% 0px',
         threshold: [0, 0.1, 0.25, 0.5, 0.75, 1]
       });
       
@@ -344,10 +350,11 @@
         
         e.preventDefault();
         
-        // 平滑滚动到标题
+        // 平滑滚动到标题（根据屏幕宽度调整偏移量）
         const rect = header.getBoundingClientRect();
         const absoluteTop = rect.top + window.pageYOffset;
-        const offset = 90;
+        const isMobile = window.innerWidth <= 768;
+        const offset = isMobile ? 70 : 90; // 移动端使用更小的偏移
         
         window.scrollTo({
           top: Math.max(absoluteTop - offset, 0),
@@ -372,6 +379,23 @@
         }, 100);
       }
     }
+    
+    // 窗口大小改变时重新更新（处理横竖屏切换）
+    let resizeTimer = null;
+    window.addEventListener('resize', function() {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        // 重新计算并更新激活状态
+        updateActive();
+        // 如果当前有激活项，确保它仍然可见
+        if (currentActiveId) {
+          const activeHeader = headerMap.get(currentActiveId);
+          if (activeHeader) {
+            activateHeader(activeHeader);
+          }
+        }
+      }, 150);
+    }, { passive: true });
     
     // 初始更新
     setTimeout(updateActive, 100);

@@ -145,3 +145,104 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* ============================================
+ * 响应式适配：窄屏和移动端
+ * ============================================ */
+
+/* 中等屏幕（平板竖屏、小笔记本）：隐藏侧边栏 TOC，恢复为普通 TOC */
+@media screen and (max-width: 1200px) {
+  .toc-container.wide {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    left: auto !important;
+    top: auto !important;
+    border-right: none !important;
+    pointer-events: auto !important;
+  }
+  
+  .toc-container.wide .toc {
+    position: static !important;
+    border: 1px solid var(--border) !important;
+    background: var(--entry) !important;
+    border-radius: var(--radius) !important;
+    width: 100% !important;
+    margin: 0 2px 40px 2px !important;
+  }
+  
+  .toc-container.wide .toc .inner {
+    margin: 5px 20px !important;
+  }
+}
+
+/* 移动端（手机）：优化 TOC 显示 */
+@media screen and (max-width: 768px) {
+  .toc-container.wide {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    left: auto !important;
+    top: auto !important;
+    border-right: none !important;
+    pointer-events: auto !important;
+  }
+  
+  .toc-container.wide .toc {
+    position: static !important;
+    border: 1px solid var(--border) !important;
+    background: var(--entry) !important;
+    border-radius: var(--radius) !important;
+    width: 100% !important;
+    margin: 0 0 20px 0 !important;
+    padding: 0.3em !important;
+  }
+  
+  .toc-container.wide .toc .inner {
+    margin: 5px 15px !important;
+    padding: 0px 10px 10px 15px !important;
+    font-size: 14px !important;
+    max-height: 60vh !important; /* 移动端限制高度 */
+  }
+  
+  .toc li {
+    font-size: 0.9rem !important;
+    padding-bottom: 4px !important;
+  }
+  
+  .toc li.active a,
+  .toc a.active {
+    font-size: 105% !important; /* 移动端稍微减小放大比例 */
+  }
+  
+  /* 移动端标题滚动偏移调整 */
+  .post-content h1,
+  .post-content h2,
+  .post-content h3,
+  .post-content h4,
+  .post-content h5,
+  .post-content h6 {
+    scroll-margin-top: 70px; /* 移动端头部更小，减少偏移 */
+  }
+}
+
+/* 超小屏幕（小手机）：进一步优化 */
+@media screen and (max-width: 480px) {
+  .toc-container.wide .toc .inner {
+    margin: 5px 10px !important;
+    padding: 0px 8px 8px 10px !important;
+    font-size: 13px !important;
+    max-height: 50vh !important;
+  }
+  
+  .toc li {
+    font-size: 0.85rem !important;
+    padding-bottom: 3px !important;
+  }
+  
+  .toc details summary {
+    margin-inline-start: 10px !important;
+    padding: 10px 0 !important;
+    font-size: 0.9rem !important;
+  }
+}
