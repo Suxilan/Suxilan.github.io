@@ -149,14 +149,14 @@ params:
   - name: email
     url: "mailto:shixulei@whu.edu.cn"
     title: "发送邮件给我"
-    
-  - name: qq
-    url: "/images/qrcode/qq-qrcode.jpg"
-    title: "QQ二维码"
-    
+  
   - name: 500px
     url: "https://500px.com.cn/Asuka0312"
     title: "我的摄影作品"
+
+  - name: xiaohongshu
+    url: "https://www.xiaohongshu.com/user/profile/5f51ba2b0000000001004de7"
+    title: "小红书主页"
   
   # 编辑文章链接（如果使用 GitHub）
   # editPost:

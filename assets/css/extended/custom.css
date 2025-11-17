@@ -387,15 +387,6 @@ body:not(:has(.profile))::-webkit-scrollbar-thumb:hover {
   display: none;
 }
 
-/* 统一社交图标粗细 */
-.social-icons svg {
-  stroke-width: 1.5 !important;
-}
-
-/* QQ 图标特殊处理 - 它内部有独立的 stroke-width */
-.social-icons a[href*="qq"] svg path {
-  stroke-width: 30 !important;  /* 从50降到30 */
-}
 
 /* ============================================
    颜色选择器弹窗样式
