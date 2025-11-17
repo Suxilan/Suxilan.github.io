@@ -15,7 +15,7 @@ Hi，我是 Suxilan。
 
 ### 欢迎在下方留言互换友链
 ```yml
-- title: Suxilan's blog
+- title: Suxilan's Blog
   link: https://suxilan.github.io
   image: https://suxilan.github.io/images/avatar.jpg
   intro: 这里是我的旷野

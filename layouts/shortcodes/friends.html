@@ -1,90 +1,123 @@
 <style type="text/css">
+    .friendurl {
+        text-decoration: none !important;
+        color: black;
+        box-shadow: none !important;
+    }
+    
     .friends {
-        --link-count-per-row: 1;
-    }
-
-    @media screen and (min-width: 576px) {
-        .friends {
-            --link-count-per-row: 2;
-        }
-    }
-
-    @media screen and (min-width: 768px) {
-        .friends {
-            --link-count-per-row: 3;
-        }
-    }
-
-    .friends {
-        display: grid;
-        grid-template-columns: repeat(var(--link-count-per-row), 1fr);
-        grid-gap: 16px;
-    }
-
-    /* 空间占位 */
-    .friend-skeleton {
-        height: 280px;
-        display: inline-block;
-        position: relative;
-    }
-
-    .friend {
-        height: 100%;
-        width: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        transition: 0.67s cubic-bezier(0.19, 1, 0.22, 1);
-        border-radius: var(--radius);
-        box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
-            0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12) !important;
-        overflow: hidden;
         display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: space-between;
+    }
+    
+    .friend-skeleton {
+        width: calc(50% - 5px);
+        margin-bottom: 10px;
+    }
+    
+    .friend {
+        overflow: auto;
+        height: 100px;
+        border-radius: 5px;
+        background: none;
+        -webkit-transition: all ease-out 0.3s;
+        -moz-transition: all ease-out 0.3s;
+        -o-transition: all ease-out 0.3s;
+        transition: all ease-out 0.3s;
+        display: flex;
         align-items: center;
     }
-
+    
+    .dark .friend:hover {
+        background: var(--code-bg);
+    }
+    
     .friend:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
-            0 5px 8px 0 rgba(0, 0, 0, 0.14), 0 1px 14px 0 rgba(0, 0, 0, 0.12) !important;
+        background: var(--theme);
+        transition: transform 1s;
+        webkit-transform: scale(1.1);
+        -moz-transform: scale(1.2);
+        -ms-transform: scale(1.2);
+        -o-transform: scale(1.2);
+        transform: scale(1.1);
     }
-
+    
+    .friend:hover .friend-avatar {
+        transition: 0.9s !important;
+        -webkit-transition: 0.9s !important;
+        -moz-transition: 0.9s !important;
+        -o-transition: 0.9s !important;
+        -ms-transition: 0.9s !important;
+        transform: rotate(360deg) !important;
+        -webkit-transform: rotate(360deg) !important;
+        -moz-transform: rotate(360deg) !important;
+        -o-transform: rotate(360deg) !important;
+        -ms-transform: rotate(360deg) !important;
+    }
+    
     .friend-avatar {
-        object-fit: cover;
-        width: 100%;
-        height: 180px;
-        margin: 0 !important;
-        border-radius: 0 !important;
+        width: 56px !important;
+        height: 56px !important;
+        border-radius: 50% !important;
+        padding: 2px;
+        margin: 20px 14px !important;
+        background-color: #fff;
+        flex-shrink: 0;
     }
+    
     .friend-content {
-        text-align: center;
         flex: 1;
-        width: 100%;
-        padding: 16px;
-        background: var(--entry);
-        transform: translate3d(0, 0, 0);
+        padding-right: 18px;
     }
-
+    
     .friend-name {
-        font-size: 1.2rem;
+        text-overflow: ellipsis;
+        font-size: 100%;
+        margin-bottom: 5px;
+        color: var(--primary);
         font-weight: bold;
-        transform: inherit;
     }
-
+    
     .friend-description {
-        font-size: 0.8rem;
-        color: var(--secondary);
-        transform: translate3d(0, 0, 0);
+        text-overflow: ellipsis;
+        font-size: 70%;
+        color: var(--primary);
+    }
+    
+    @media screen and (max-width: 600px) {
+        .friend-skeleton {
+            width: 100%;
+        }
+        
+        .friend-description {
+            display: none;
+        }
+        
+        .friend-avatar {
+            margin: 10px !important;
+        }
+        
+        .friend-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-right: 10px;
+        }
+        
+        .friend-name {
+            font-size: 18px;
+        }
     }
 </style>
+
 <div class="friends">
     {{ range .Site.Data.friends }}
     <div class="friend-skeleton">
-        <a href="{{ .link }}" target="_blank">
+        <a href="{{ .link }}" target="_blank" class="friendurl">
             <div class="friend">
-                <img class="friend-avatar" src="{{ .image }}" />
+                <img class="friend-avatar" src="{{ .image }}" alt="{{ .title }}" />
                 <div class="friend-content">
                     <div class="friend-name">{{ .title }}</div>
                     <div class="friend-description">{{ .intro }}</div>
@@ -94,5 +127,3 @@
     </div>
     {{ end }}
 </div>
-<!-- style code by https://github.com/fissssssh -->
-<!-- view https://github.com/fissssssh/fissssssh.github.io for more detail -->
