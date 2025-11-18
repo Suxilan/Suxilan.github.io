@@ -1,7 +1,7 @@
 ---
 title: "重温Attention is all you need"
 date: 2025-11-07T14:48:34+08:00
-lastmod: 2024-11-20 18:00:00 +0800
+lastmod: 2024-11-20T18:00:00+08:00
 showLastMod: true
 draft: false
 tags: ["Deep Learning", "Transformer", "NLP", "Attention"]

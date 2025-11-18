@@ -1,7 +1,7 @@
 ---
 title: "Hugo + PaperMod 从零搭建教程"
 date: 2025-11-06T10:00:00+08:00
-lastmod: 2024-11-20 18:00:00 +0800
+lastmod: 2024-11-20T18:00:00+08:00
 showLastMod: true
 draft: false
 tags: ["Hugo", "PaperMod", "教程", "博客搭建"]
