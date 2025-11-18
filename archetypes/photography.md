@@ -5,7 +5,11 @@ draft: true
 tags: ["摄影"]
 categories: ["摄影作品"]
 author: "Suxilan"
-showToc: false
+showLastMod: true
+lastmod: {{ now.Format "2006-01-02T15:04:05+08:00" }}
+ShowToc: true
+TocWide: true
+comments: true 
 description: ""
 summary: ""
 cover:

@@ -1,6 +1,8 @@
 ---
 title: "Scaled Dot-Product Attention 的数学剖析"
 date: 2025-11-07T15:30:00+08:00
+lastmod: 2024-11-20 18:00:00 +0800
+showLastMod: true
 draft: false
 tags: ["SDPA", "Transformer", "Attention", "数学推导"]
 categories: ["技术笔记"]
@@ -364,7 +366,7 @@ $$
 
 #### **2.7.1 Softmax 梯度的推导**
 
-设 $\mathbf{z} = [z_1, z_2, \ldots, z_n]$，$p_j = \text{softmax}(\mathbf{z})_j = \frac{e^{z_j}}{\sum_{i=1}^n e^{z_i}}$。（这里涉及向量求导的雅可比矩阵计算，详情可以到[矩阵微分笔记]({{< relref "matrix_calculus.md" >}})查看）
+设 $\mathbf{z} = [z_1, z_2, \ldots, z_n]$，\(p_j = \text{softmax}(\mathbf{z})_j = \frac{e^{z_j}}{\sum_{i=1}^n e^{z_i}}\)。（这里涉及向量求导的雅可比矩阵计算，详情可以到[矩阵微分笔记]({{< relref "matrix_calculus.md" >}})查看）
 
 我们需要计算：
 

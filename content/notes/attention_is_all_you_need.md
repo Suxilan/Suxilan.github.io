@@ -1,6 +1,8 @@
 ---
 title: "重温Attention is all you need"
 date: 2025-11-07T14:48:34+08:00
+lastmod: 2024-11-20 18:00:00 +0800
+showLastMod: true
 draft: false
 tags: ["Deep Learning", "Transformer", "NLP", "Attention"]
 categories: ["技术笔记"]
@@ -492,4 +494,4 @@ $$
 
 ## 5. Transformer架构
 
-![绘梨衣](https://69A69.github.io/picx-images-hosting/20250313/hly.7egxg4pqnu.webp "绘梨衣 || width=60%; style=border-radius:12px; caption=Sakura & 绘梨衣 の Rilakkuma; attr=照片：Suxilan; attrlink=https://suxilan.github.io"
+![绘梨衣](https://69A69.github.io/picx-images-hosting/20250313/hly.7egxg4pqnu.webp "绘梨衣 || width=60%; style=border-radius:12px; caption=Sakura & 绘梨衣 の Rilakkuma; attr=照片：Suxilan; attrlink=https://suxilan.github.io")

@@ -5,6 +5,8 @@ theme: PaperMod
 # 时区设置为北京时间
 timeZone: Asia/Shanghai
 
+# 启用 Git 信息
+enableGitInfo: true
 # 启用 emoji 支持
 enableEmoji: true
 # 启用 robots.txt
@@ -206,6 +208,7 @@ markup:
             - ['$$', '$$']
           inline:
             - ['\(', '\)']
+
         enable: true
   highlight:
     anchorLineNos: false
