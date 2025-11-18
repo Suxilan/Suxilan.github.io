@@ -88,7 +88,7 @@ params:
   
   # 图片设置
   images: ["/images/avatar.jpg"]  # 默认分享图片
-  
+  fancybox: true
   # Favicon 设置
   assets:
     favicon: "/images/avatar.jpg"
@@ -192,6 +192,12 @@ markup:
   goldmark:
     renderer:
       unsafe: true  # 允许 HTML（数学公式需要）
+    parser:
+      attribute:
+        block: true
+        title: true
+        inline: true
+      wrapStandAloneImageWithinParagraph: false
     extensions:
       passthrough:
         delimiters:
