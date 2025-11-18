@@ -1,7 +1,7 @@
 ---
 title: "重温Attention is all you need"
 date: 2025-11-07T14:48:34+08:00
-showLastMod: true
+showlastmod: true
 draft: false
 tags: ["Deep Learning", "Transformer", "NLP", "Attention"]
 categories: ["技术笔记"]
@@ -493,4 +493,15 @@ $$
 
 ## 5. Transformer架构
 
-![绘梨衣](https://69A69.github.io/picx-images-hosting/20250313/hly.7egxg4pqnu.webp "绘梨衣 || width=60%; style=border-radius:12px; caption=Sakura & 绘梨衣 の Rilakkuma; attr=照片：Suxilan; attrlink=https://suxilan.github.io")
+下图是我们最常见也是最熟悉的Transformer架构，它是典型的**Encoder-Decoder**结构
+
+![Transformer](https://cdn.jsdelivr.net/gh/Suxilan/Cloud-Image-alpha/imagebed/notes/ori_transformer.png "最熟悉的Transformer架构 || width=60%; style=border-radius:12px; attr=原始论文“attention is all you need”; attrlink=https://arxiv.org/abs/1706.03762") 
+
+但是仔细一看不难发现，它和我们在 [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) 网站上看到的Transformer结构完全不同，这是什么原因呢？
+
+#### **答案是：**
+
+这是Transformer最传统的任务——语言翻译（例如从中文翻译到英语），常见的LLM有三种类型：
+
+* **Encoder-Decoder（编码器-解码器）**结构：经典Transformer架构的
+* **Encoder-only (如 BERT):** 只用左边。擅长理解、分类、完形填空

@@ -1,7 +1,7 @@
 ---
 title: "Scaled Dot-Product Attention 的数学剖析"
 date: 2025-11-07T15:30:00+08:00
-showLastMod: true
+showlastmod: true
 draft: false
 tags: ["SDPA", "Transformer", "Attention", "数学推导"]
 categories: ["技术笔记"]

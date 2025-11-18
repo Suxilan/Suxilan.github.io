@@ -1,7 +1,7 @@
 ---
 title: "深度学习中常见的矩阵微分（Matrix Calculus）"
 date: 2025-11-07T16:00:00+08:00
-showLastMod: true
+showlastmod: true
 draft: false
 tags: ["Deep Learning", "矩阵微分", "Matrix Calculus", "反向传播"]
 categories: ["技术笔记"]

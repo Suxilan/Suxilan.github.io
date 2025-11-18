@@ -11,8 +11,9 @@
  * ============================================ */
 
 :root {
+  --nav-width: 1380px;
   --article-width: 650px;
-  --toc-width: 230px;
+  --toc-width: 300px;
   /* TOC 激活项颜色（使用主题色） */
   --toc-active-color: var(--theme-color, #614a85);
 }
@@ -34,8 +35,8 @@
 .toc-container.wide {
   position: absolute;
   height: 100%;
-  border-right: none;
-  left: calc((var(--toc-width) * 0.9 + var(--gap)) * -1);
+  border-right: 1px solid var(--border);
+  left: calc((var(--toc-width) + var(--gap)) * -1);
   top: calc(var(--gap) * 2);
   width: var(--toc-width);
   pointer-events: none; /* 允许点击穿透到正文 */
