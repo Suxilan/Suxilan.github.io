@@ -26,7 +26,7 @@ cover:
 ## 作品1
 
 ![作品1](/images/photography/photo1.jpg)
-*📍 地点: XX | 📅 时间: 2024年 | 📷 器材: Camera + Lens*
+*📍 昆明滇池 | 📅 2023年 | 📷 Nikon D750 + 24-70F2.8G*
 
 作品描述...
 
