@@ -176,7 +176,7 @@ params:
   cover:
     hidden: false  # 在所有页面隐藏封面
     hiddenInList: false  # 在列表中隐藏封面
-    hiddenInSingle: false  # 在单页中隐藏封面
+    hiddenInSingle: true  # 在单页中隐藏封面 (修复重复显示问题)
     linkFullImages: true
     responsiveImages: true
   

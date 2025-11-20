@@ -69,5 +69,29 @@
       });
     }
   });
+
+  // 4. 网站运行时间统计
+  function show_runtime() {
+    window.setTimeout("show_runtime()", 1000);
+    // 请修改这里的建站时间
+    X = new Date("11/20/2025 00:00:00");
+    Y = new Date();
+    T = (Y.getTime() - X.getTime());
+    M = 24 * 60 * 60 * 1000;
+    a = T / M;
+    A = Math.floor(a);
+    b = (a - A) * 24;
+    B = Math.floor(b);
+    c = (b - B) * 60;
+    C = Math.floor(c);
+    d = (c - C) * 60;
+    D = Math.floor(d);
+    
+    const runtimeSpan = document.getElementById("runtime_span");
+    if (runtimeSpan) {
+        runtimeSpan.innerHTML = "本站已运行: " + A + "天 " + B + "小时 " + C + "分 " + D + "秒";
+    }
+  }
+  show_runtime();
 </script>
 
