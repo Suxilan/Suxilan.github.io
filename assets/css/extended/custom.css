@@ -151,6 +151,173 @@
 }
 
 /* ============================================
+   方案 A + B + C：组合拳样式优化 (最终修复版)
+   ============================================ */
+
+/* 1. 全局字体升级：霞鹜文楷 */
+body {
+  font-family: "LXGW WenKai Screen", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* 2. 代码块字体升级：JetBrains Mono (强制覆盖) */
+code, pre, kbd, samp, 
+.post-content pre, 
+.post-content code,
+.highlight,
+.highlight code,
+.highlight pre {
+  font-family: "JetBrains Mono", "Fira Code", monospace !important;
+}
+
+/* 3. 代码块样式优化 - 极客终端风格 */
+
+/* 禁用可能存在的主题冲突 */
+.post-content div.highlight::before,
+.post-content div.highlight::after,
+.post-content pre::before,
+.post-content pre::after {
+  display: none !important;
+  content: none !important;
+}
+
+.post-content div.highlight:hover,
+.post-content pre:hover {
+  animation: none !important;
+  transform: none !important;
+}
+
+/* 代码块容器样式 - 终端风格 */
+.post-content .highlight,
+.post-content pre:not(.highlight pre) {
+  position: relative;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #0d1117 0%, #161b22 100%) !important;
+  margin: 1.5rem 0 !important;
+  padding: 1.2rem !important;
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(var(--theme-color-rgb), 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  border-left: 3px solid var(--theme-color);
+  overflow-x: auto;
+  transition: all 0.3s ease;
+}
+
+/* 悬停效果 - 主题色光晕 */
+.post-content .highlight:hover,
+.post-content pre:not(.highlight pre):hover {
+  box-shadow: 
+    0 12px 24px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(var(--theme-color-rgb), 0.4),
+    0 0 20px rgba(var(--theme-color-rgb), 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* 内部 pre 标签调整 */
+.post-content .highlight pre {
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background-color: transparent !important;
+  border: none !important;
+}
+
+/* 代码块内文字样式 */
+.post-content .highlight code,
+.post-content pre code {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: #c9d1d9;
+  text-shadow: 0 0 1px rgba(var(--theme-color-rgb), 0.1);
+}
+
+/* 复制按钮优化 - 极客风格 */
+.copy-code {
+  top: 8px !important;
+  right: 8px !important;
+  background: linear-gradient(135deg, rgba(var(--theme-color-rgb), 0.1), rgba(var(--theme-color-rgb), 0.05)) !important;
+  color: var(--theme-color) !important;
+  border: 1px solid rgba(var(--theme-color-rgb), 0.3);
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.copy-code:hover {
+  background: linear-gradient(135deg, rgba(var(--theme-color-rgb), 0.25), rgba(var(--theme-color-rgb), 0.15)) !important;
+  border-color: var(--theme-color) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(var(--theme-color-rgb), 0.3);
+}
+
+/* 4. 首页文章卡片悬停上浮效果 */
+.post-entry {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden; /* 确保圆角生效 */
+}
+
+.post-entry:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.dark .post-entry:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* 5. 首页副标题打字机光标效果 */
+/* 注意：JS 会动态操作文本，这里只负责光标样式 */
+.profile_inner > span {
+  display: inline-block;
+  position: relative;
+  min-height: 1.2em; /* 防止文字未出现时高度塌陷 */
+}
+
+.profile_inner > span::after {
+  content: "|";
+  position: absolute;
+  right: -12px;
+  animation: blink 1s step-end infinite;
+  color: var(--theme-color);
+  font-weight: bold;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* 6. 鼠标点击波纹效果 - 优雅透明版（仅首页） */
+.ripple {
+  position: fixed;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple-elegant 0.8s ease-out;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: soft-light; /* 柔和混合模式 */
+}
+
+@keyframes ripple-elegant {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* ============================================
    Profile Mode 全屏背景图片和毛玻璃效果
    ============================================ */
 

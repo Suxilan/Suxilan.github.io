@@ -48,37 +48,19 @@
     }
   };
 </script>
-
-<!-- 加载 MathJax 3 核心库 -->
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-<!-- 优化 MathJax 渲染样式 -->
-<style>
-  /* MathJax 公式容器样式 */
-  mjx-container {
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
-  
-  /* 行内公式对齐 */
-  mjx-container[jax="CHTML"][display="true"] {
-    display: block;
-    text-align: center;
-    margin: 1em 0;
-  }
-  
-  /* 公式可选中（方便复制） */
-  .MathJax {
-    outline: 0;
-  }
-  
-  /* 公式加载时显示原始 LaTeX */
-  .MathJax_Preview {
-    color: #888;
-    font-style: italic;
-  }
-</style>
 {{- end }}
+
+{{- /* ============================================
+     方案 A + B：字体引入
+     1. 霞鹜文楷 (LXGW WenKai Screen) - 用于正文
+     2. JetBrains Mono - 用于代码
+   ============================================ */ -}}
+<link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css" media="print" onload="this.media='all'">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+
+{{- /* 阅读进度条 HTML 结构 */ -}}
+<div id="reading-progress-bar" style="position: fixed; top: 0; left: 0; height: 3px; background: var(--theme-color); width: 0%; z-index: 9999; transition: width 0.1s ease;"></div>
 
 <!-- FancyBox -->
 {{if .Page.Site.Params.fancybox }}
