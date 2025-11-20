@@ -101,6 +101,56 @@
 }
 
 /* ============================================
+   Markdown 渲染优化与移动端适配
+   ============================================ */
+
+/* 1. 优化行内代码块样式，使其更显眼 */
+.post-content code {
+  font-family: "Fira Code", Consolas, monospace;
+  background-color: rgba(175, 184, 193, 0.2);
+  padding: 0.2em 0.4em;
+  border-radius: 6px;
+  font-size: 85%;
+}
+
+/* 3. 优化引用块样式 */
+.post-content blockquote {
+  border-left: 4px solid var(--theme-color);
+  background-color: var(--theme-color-lighter);
+  padding: 1em;
+  margin: 1em 0;
+}
+
+/* ============================================
+   移动端适配与布局修复
+   ============================================ */
+
+/* 修复分割线在移动端溢出的问题 */
+.post-content hr {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 2rem auto;
+}
+
+/* 修复 H2 标题下划线在移动端过长的问题 */
+.post-content h2:after {
+  max-width: 80%; /* 限制最大宽度 */
+}
+
+/* 优化表格在移动端的显示，允许横向滚动 */
+.post-content table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+/* 优化图片在移动端的显示 */
+.post-content img {
+  height: auto !important; /* 保持宽高比 */
+}
+
+/* ============================================
    Profile Mode 全屏背景图片和毛玻璃效果
    ============================================ */
 

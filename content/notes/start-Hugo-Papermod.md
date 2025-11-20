@@ -16,7 +16,7 @@ summary: "万恶之源 —— 记录我的博客搭建之路"
 
 # 一切的开始
 
-最近在用 Gemini 2.5 Pro“**学习辅导**”的时候，总是发现有些问过的问题会一而再、再而三地询问，究其原因可能还是缺少了总结的环节。因此结合我十年寒窗苦读的经验，“**总结本**”和“**错题本**”还是必不可少的。加之最近与师兄同门学习后发现写博客或者笔记记录是一个非常好的习惯，于是狠下心来踩一下这个坑！
+最近在用 Gemini 2.5 Pro“** 学习辅导 **”的时候，总是发现有些问过的问题会一而再、再而三地询问，究其原因可能还是缺少了总结的环节。因此结合我十年寒窗苦读的经验，“** 总结本 **”和“** 错题本 **”还是必不可少的。加之最近与师兄同门学习后发现写博客或者笔记记录是一个非常好的习惯，于是狠下心来踩一下这个坑！
 
 选择 [Hugo-PaperMod](https://github.com/adityatelange/hugo-PaperMod) 的原因是因为我看上了它首页的 Profile Mode，刚好可以用来展示我的摄影作品🤭。加之 AI 大人极力推荐，遂下定决心开始操作！总体而言还是比较简单的，希望按照这个操作可以一遍过~
 
@@ -36,7 +36,7 @@ summary: "万恶之源 —— 记录我的博客搭建之路"
 
 ### 1.1 安装 Hugo
 
-**Windows 用户**（就是我）：
+**Windows 用户 ** （就是我）：
 
 ```powershell
 # 使用 Chocolatey 安装（推荐）
@@ -51,20 +51,20 @@ winget install Hugo.Hugo.Extended
 # 解压后将 hugo.exe 添加到系统环境变量
 ```
 
-**验证安装**：
+** 验证安装 ** ：
 
 ```bash
 hugo version
 # 应该看到类似输出：hugo v0.152.2+extended...
 ```
 
-⚠️ **注意**：一定要安装 **extended** 版本！普通版不支持 SCSS，主题会出问题。
+⚠️ ** 注意 ** ：一定要安装 **extended** 版本！普通版不支持 SCSS，主题会出问题。
 
 ---
 
 ### 1.2 安装 Git
 
-**Windows**：
+**Windows** ：
 
 ```powershell
 # 使用 Chocolatey
@@ -76,14 +76,14 @@ winget install Git.Git
 # 或者直接下载：https://git-scm.com/download/win
 ```
 
-**验证安装**：
+** 验证安装 ** ：
 
 ```bash
 git --version
 # 应该看到：git version 2.x.x
 ```
 
-**配置 Git**（首次使用）：
+** 配置 Git** （首次使用）：
 
 ```bash
 git config --global user.name "你的名字"
@@ -107,7 +107,7 @@ hugo new site MyHomepage
 cd MyHomepage
 ```
 
-**项目结构预览**：
+** 项目结构预览 ** ：
 
 ```bash
 MyHomepage/
@@ -133,13 +133,13 @@ git init
 
 ### 3.2 添加主题为 Git Submodule
 
-**推荐方式**（使用 Submodule，方便更新）：
+** 推荐方式 ** （使用 Submodule，方便更新）：
 
 ```bash
 git submodule add --depth=1 https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
 ```
 
-**或者直接克隆**（不推荐，无法方便更新）：
+** 或者直接克隆 ** （不推荐，无法方便更新）：
 
 ```bash
 git clone https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod --depth=1
@@ -362,7 +362,7 @@ description: "这是我的第一篇测试笔记"
 
 ### 测试功能
 
-- **粗体文字**
+- ** 粗体文字 **
 - *斜体文字*
 - `代码`
 
@@ -392,7 +392,7 @@ hugo server -D
 hugo server
 ```
 
-**看到输出**：
+** 看到输出 ** ：
 
 ```
 Web Server is available at http://localhost:1313/
@@ -400,9 +400,9 @@ Web Server is available at http://localhost:1313/
 
 ### 7.2 访问网站
 
-打开浏览器，访问：**http://localhost:1313/**
+打开浏览器，访问： **http://localhost:1313/**
 
-🎉 **恭喜！你的博客已经跑起来了！**
+🎉 ** 恭喜！你的博客已经跑起来了！ **
 
 ---
 
@@ -450,7 +450,7 @@ mkdir static\images
 
 将你的头像图片重命名为 `avatar.jpg`，放到 `static/images/` 目录。
 
-**目录结构**：
+** 目录结构 ** ：
 
 ```
 static/
@@ -465,7 +465,7 @@ static/
 ![图片描述](/images/photo.jpg)
 ```
 
-⚠️ **注意**：路径以 `/` 开头（根路径），不是相对路径！
+⚠️ ** 注意 ** ：路径以 `/` 开头（根路径），不是相对路径！
 
 ---
 
@@ -473,10 +473,10 @@ static/
 
 现在你已经成功搭建了本地博客！接下来可以：
 
-1. ✅ **自定义主题样式** → 修改 `assets/css/extended/custom.css`
-2. ✅ **部署到 GitHub Pages** → 参考 [部署文档](/notes/deployment-guide/)
-3. ✅ **添加评论系统** → 参考 [Giscus 配置](/notes/comments-setup/)
-4. ✅ **配置 Google Analytics** → 参考 [访问统计](/notes/analytics-setup/)
+1. ✅ ** 自定义主题样式 ** → 修改 `assets/css/extended/custom.css`
+2. ✅ ** 部署到 GitHub Pages** → 参考 [部署文档](/notes/deployment-guide/)
+3. ✅ ** 添加评论系统 ** → 参考 [Giscus 配置](/notes/comments-setup/)
+4. ✅ ** 配置 Google Analytics** → 参考 [访问统计](/notes/analytics-setup/)
 
 ---
 
@@ -516,7 +516,7 @@ git submodule update --remote --merge
 
 博主本人在AI大大的带领下成功实现，该教程大部摘自和其对话的输出，部分参考了官方实力文档。看到这里现在已经基本完成了PaperMod主题网页的搭建啦。
 
-**记住**：最好的博客，是持续更新的博客。✍️
+** 记住 ** ：最好的博客，是持续更新的博客。✍️
 （这句是AI写的，感觉挺有意义，也算是对我的一种鼓励吧）
 
 ---
