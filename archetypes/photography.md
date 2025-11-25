@@ -21,25 +21,12 @@ cover:
 
 # 作品集标题
 
-作品集简介...
-
-## 作品1
-
-![作品1](/images/photography/photo1.jpg)
-*📍 昆明滇池 | 📅 2023年 | 📷 Nikon D750 + 24-70F2.8G*
-
-作品描述...
-
----
-
-## 作品2
-
-![作品2](/images/photography/photo2.jpg)
-*📍 地点: XX | 📅 时间: 2024年 | 📷 器材: Camera + Lens*
-
-作品描述...
-
----
+![冬日夕阳](https://cdn.jsdelivr.net/gh/Suxilan/Cloud-Image-alpha/imagebed/photos/background.jpg 
+"滇池|冬日夕阳 ||
+caption=准备和朋友去滇池看日落，在等了半小时至于的公交未果后只能忍痛打车前往。在心痛昂贵的打车费用难以填补夕阳迟暮的美景之余，捕捉到这一瞬间的美好\
+*📍 昆明滇池 | 📅 2023年 | 📷 Nikon D750 + 24-70F2.8G*; 
+attr=摄影：Suxilan; 
+attrlink=https://suxilan.github.io")
 
 ## 拍摄心得
 
