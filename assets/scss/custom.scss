@@ -57,6 +57,13 @@
   color: var(--body-text-color);
 }
 
+/* 主题默认把 .menu-social svg 的 stroke 写死为 body-text-color，
+   这样 hover 改变 <a> 的 color 时，GitHub/邮件这类 stroke 图标不会变色。
+   这里改成跟随 currentColor。 */
+.menu-social a svg {
+  stroke: currentColor;
+}
+
 .menu-social a:hover {
   color: var(--accent-color);
 }
@@ -70,4 +77,121 @@
 .menu-social a[href*="xiaohongshu.com"] svg.icon-fill {
   transform: translateY(0.5px) scale(0.90);
   transform-origin: center;
+}
+
+/* PaperMod 风格首页（profile mode）：大背景 + 头像 + 标题/副标题 + 快捷按钮 */
+.home-profile {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  min-height: 320px;
+  margin: 0 0 1.25rem 0;
+  border: 1px solid var(--card-separator-color);
+}
+
+.home-profile__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.02);
+  filter: saturate(1.05);
+}
+
+.home-profile__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.55) 55%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+}
+
+.home-profile__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 52px 22px;
+  color: #fff;
+}
+
+.home-profile__avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  object-fit: cover;
+}
+
+.home-profile__title {
+  margin: 18px 0 8px;
+  font-size: 2.1rem;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.home-profile__subtitle {
+  margin: 0 0 18px;
+  opacity: 0.9;
+  font-size: 1.1rem;
+}
+
+.home-profile__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 6px 0 14px;
+}
+
+.home-profile__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  text-decoration: none;
+}
+
+.home-profile__button:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+.home-profile__social {
+  margin-top: 6px;
+}
+
+.home-profile__social a {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.home-profile__social a:hover {
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .home-profile {
+    min-height: 280px;
+  }
+  .home-profile__inner {
+    padding: 42px 18px;
+  }
+  .home-profile__avatar {
+    width: 104px;
+    height: 104px;
+  }
+  .home-profile__title {
+    font-size: 1.85rem;
+  }
 }

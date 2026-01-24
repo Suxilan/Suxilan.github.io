@@ -1,0 +1,98 @@
+{{ define "main" }}
+    {{- $profile := .Site.Params.homepage.profile -}}
+    {{- $enabled := true -}}
+    {{- with $profile -}}
+        {{- with .enabled -}}
+            {{- $enabled = . -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- if and $profile $enabled -}}
+        {{- $bg := (default "/images/background.jpg" $profile.background) -}}
+        {{- $avatar := (default .Site.Params.sidebar.avatar.src $profile.avatar) -}}
+        {{- $title := (default .Site.Title $profile.title) -}}
+        {{- $subtitle := (default .Site.Params.sidebar.subtitle $profile.subtitle) -}}
+        {{- $showSocial := (default true $profile.showSocial) -}}
+        {{- $showRecent := (default true $profile.showRecent) -}}
+
+        <section class="home-profile" aria-label="Home profile">
+            <div class="home-profile__bg" style="background-image:url('{{ $bg | safeURL }}');"></div>
+            <div class="home-profile__overlay"></div>
+            <div class="home-profile__inner">
+                {{- if $avatar -}}
+                    <img class="home-profile__avatar" src="{{ $avatar | safeURL }}" width="160" height="160" loading="lazy" alt="Avatar">
+                {{- end -}}
+
+                <h1 class="home-profile__title">{{ $title }}</h1>
+                {{- with $subtitle -}}
+                    <p class="home-profile__subtitle">{{ . }}</p>
+                {{- end -}}
+
+                <div class="home-profile__buttons">
+                    {{- with $profile.buttons -}}
+                        {{- range . -}}
+                            <a class="home-profile__button" href="{{ .url | safeURL }}">{{ .name }}</a>
+                        {{- end -}}
+                    {{- else -}}
+                        {{- range first 3 .Site.Menus.main -}}
+                            <a class="home-profile__button" href="{{ .URL | safeURL }}">{{ .Name }}</a>
+                        {{- end -}}
+                    {{- end -}}
+                </div>
+
+                {{- if $showSocial -}}
+                    {{- with .Site.Menus.social -}}
+                        <ol class="menu-social home-profile__social">
+                            {{- range . -}}
+                                <li>
+                                    <a href='{{ .URL }}'
+                                       {{ if eq (default true .Params.newTab) true }}target="_blank"{{ end }}
+                                       {{ with .Name }}title="{{ . }}"{{ end }}
+                                       rel="me">
+                                        {{- $icon := default "link" .Params.Icon -}}
+                                        {{- with $icon -}}
+                                            {{ partial "helper/icon" . }}
+                                        {{- end -}}
+                                    </a>
+                                </li>
+                            {{- end -}}
+                        </ol>
+                    {{- end -}}
+                {{- end -}}
+            </div>
+        </section>
+
+        {{- if $showRecent -}}
+            {{ $pages := where .Site.RegularPages "Type" "in" .Site.Params.mainSections }}
+            {{ $filtered := where $pages "Params.hidden" "!=" true }}
+            {{ $pag := .Paginate ($filtered) }}
+
+            <section class="article-list">
+                {{ range $index, $element := $pag.Pages }}
+                    {{ partial "article-list/default" . }}
+                {{ end }}
+            </section>
+
+            {{- partial "pagination.html" . -}}
+        {{- end -}}
+
+        {{- partial "footer/footer" . -}}
+    {{- else -}}
+        {{ $pages := where .Site.RegularPages "Type" "in" .Site.Params.mainSections }}
+        {{ $filtered := where $pages "Params.hidden" "!=" true }}
+        {{ $pag := .Paginate ($filtered) }}
+
+        <section class="article-list">
+            {{ range $index, $element := $pag.Pages }}
+                {{ partial "article-list/default" . }}
+            {{ end }}
+        </section>
+
+        {{- partial "pagination.html" . -}}
+        {{- partial "footer/footer" . -}}
+    {{- end -}}
+{{ end }}
+
+{{ define "right-sidebar" }}
+    {{ partial "sidebar/right.html" (dict "Context" . "Scope" "homepage") }}
+{{ end }}

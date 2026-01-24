@@ -35,7 +35,7 @@ params:
     subtitle: "记录、思考、探索"
     # 头像右下角的小图案（官方模板同款位置）
     # 留空/删除则不显示
-    emoji: "🍥"
+    emoji: "🐦︎"
     avatar:
       enabled: true
       local: false
@@ -67,6 +67,19 @@ params:
   colorScheme:
     toggle: true
     default: auto
+
+  homepage:
+    profile:
+      enabled: true
+      # 大背景图（可替换为你 backup 里的同款）
+      background: /images/background.jpg
+      # 为空则复用 sidebar.avatar.src
+      # avatar: /images/avatar.jpg
+      # 为空则复用站点 title / sidebar.subtitle
+      # title: "Suxilan's Blog"
+      # subtitle: "记录、思考、探索"
+      showSocial: true
+      showRecent: true
 
 menu:
   main:
