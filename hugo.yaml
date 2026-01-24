@@ -71,15 +71,16 @@ params:
   homepage:
     profile:
       enabled: true
-      # 大背景图（可替换为你 backup 里的同款）
-      background: /images/background.jpg
-      # 为空则复用 sidebar.avatar.src
-      # avatar: /images/avatar.jpg
-      # 为空则复用站点 title / sidebar.subtitle
-      # title: "Suxilan's Blog"
-      # subtitle: "记录、思考、探索"
+      title: "My Wilderness"
+      subtitle: "记录、思考、探索"
+      imageUrl: "/images/avatar.jpg"
+      background: "/images/background.jpg"
       showSocial: true
-      showRecent: true
+      buttons:
+        - name: 博客
+          url: /blog/
+        - name: 关于
+          url: /about/
 
 menu:
   main:
