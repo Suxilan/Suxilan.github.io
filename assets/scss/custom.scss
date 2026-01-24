@@ -56,10 +56,52 @@
   background: var(--card-background);
   border: 1px solid var(--card-separator-color);
   margin: 1em 0;
+  line-height: 1.65;
 }
 .notice-title {
   display: inline-block;
   margin-bottom: 6px;
+  font-weight: 700;
+}
+.notice-content > :first-child { margin-top: 0; }
+.notice-content > :last-child { margin-bottom: 0; }
+
+.notice.notice-info {
+  border-left: 4px solid #3b82f6;
+}
+.notice.notice-note,
+.notice.notice-tip {
+  border-left: 4px solid #10b981;
+}
+.notice.notice-warning {
+  border-left: 4px solid #f59e0b;
+}
+.notice.notice-danger {
+  border-left: 4px solid #ef4444;
+}
+
+.sidenote {
+  opacity: 0.9;
+  font-size: .95em;
+  border-bottom: 1px dashed var(--accent-color);
+}
+
+/* PaperMod 风格图注（配合 render-image.html） */
+.pm-figure {
+  margin: 1.2rem auto;
+}
+.pm-figure a {
+  display: inline-block;
+}
+.pm-caption {
+  margin-top: .5rem;
+  font-size: .95rem;
+  color: var(--card-text-color-secondary);
+  text-align: center;
+}
+.pm-caption .pm-attr {
+  margin-left: .4rem;
+  opacity: .9;
 }
 .sidenote {
   opacity: .85;

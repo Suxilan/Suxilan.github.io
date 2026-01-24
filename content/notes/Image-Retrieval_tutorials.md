@@ -27,7 +27,7 @@ cover:
 
 ![](https://cdn.jsdelivr.net/gh/Suxilan/Cloud-Image-alpha/imagebed/notes/All%20You%20Need%20to%20Know%20About%20Training%20Image%20Retrieval%20Models.png "All You Need to Know About Training Image Retrieval Models || caption=Gabriele Berton大佬的技术手册; attr=gmberton; attrlink=https://gmberton.github.io/")
 
-{{< notice note >}}
+{{< notice info >}}
 
 Gmberton 还是出手了，作者通过成千上万次实验以及根据他个人多年在图像检索领域的经验，总结了训练图像检索模型时的“黄金法则。算是一篇非常扎实的实战指南了，非常值得一看！
 

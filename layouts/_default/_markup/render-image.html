@@ -1,0 +1,91 @@
+{{- $image := .Page.Resources.GetMatch (printf "%s" (.Destination | safeURL)) -}}
+{{- $permalink := .Destination | relURL | safeURL -}}
+{{- $alt := .PlainText | safeHTML -}}
+{{- $width := 0 -}}
+{{- $height := 0 -}}
+{{- $srcset := "" -}}
+
+{{- if $image -}}
+  {{- $notSVG := ne (path.Ext .Destination) ".svg" -}}
+  {{- $permalink = $image.RelPermalink -}}
+
+  {{- if $notSVG -}}
+    {{- $width = $image.Width -}}
+    {{- $height = $image.Height -}}
+
+    {{- if (default true .Page.Site.Params.imageProcessing.content.enabled) -}}
+      {{- $small := $image.Resize `480x` -}}
+      {{- $big := $image.Resize `1024x` -}}
+      {{- $srcset = printf `%s 480w, %s 1024w` $small.RelPermalink $big.RelPermalink -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* 解析 PaperMod 的 "|| key=value; ..." 语法，用于 caption/attr/样式 */}}
+{{- $rawTitle := .Title | default "" -}}
+{{- $mainTitle := $rawTitle -}}
+{{- $opts := "" -}}
+{{- $parts := split $rawTitle "||" -}}
+{{- if ge (len $parts) 2 -}}
+  {{- $mainTitle = trim (index $parts 0) " " -}}
+  {{- $opts = trim (index $parts 1) " " -}}
+{{- end -}}
+
+{{- $scratch := newScratch -}}
+{{- range (split $opts ";") -}}
+  {{- $p := trim . " \t\n\r" -}}
+  {{- if $p -}}
+    {{- if findRE `^([^=]+)=(.*)$` $p -}}
+      {{- $k := (lower (trim (replaceRE `^([^=]+)=(.*)$` `$1` $p) " \t")) -}}
+      {{- $v := trim (replaceRE `^([^=]+)=(.*)$` `$2` $p) " \t" -}}
+      {{- $scratch.Set $k $v -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $caption := $scratch.Get "caption" | default "" -}}
+{{- $attr := $scratch.Get "attr" | default "" -}}
+{{- $attrlink := $scratch.Get "attrlink" | default "" -}}
+{{- $style := $scratch.Get "style" | default "" -}}
+{{- $imgWidth := $scratch.Get "width" | default "" -}}
+
+{{- $finalCaption := "" -}}
+{{- if $caption -}}
+  {{- $finalCaption = $caption -}}
+{{- else if $alt -}}
+  {{- $finalCaption = $alt -}}
+{{- end -}}
+
+{{- $captionHTML := "" -}}
+{{- if $finalCaption -}}
+  {{- $captionHTML = $finalCaption -}}
+{{- end -}}
+{{- if $attr -}}
+  {{- if $attrlink -}}
+    {{- $captionHTML = printf `%s <span class="pm-attr">%s</span>` $captionHTML (printf `<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>` ($attrlink | safeURL) ($attr | safeHTML)) -}}
+  {{- else -}}
+    {{- $captionHTML = printf `%s <span class="pm-attr">%s</span>` $captionHTML ($attr | safeHTML) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $figureStyle := "" -}}
+{{- if $imgWidth -}}
+  {{- $figureStyle = printf "max-width:%s;" $imgWidth -}}
+{{- end -}}
+
+<figure class="pm-figure"{{ with $figureStyle }} style="{{ . }}"{{ end }}>
+  <a href="{{ $permalink }}" data-fancybox="gallery"{{ with $captionHTML }} data-caption="{{ . | safeHTMLAttr }}"{{ end }}>
+    <img src="{{ $permalink }}"
+      {{ with $width }}width="{{ . }}"{{ end }}
+      {{ with $height }}height="{{ . }}"{{ end }}
+      {{ with $srcset }}srcset="{{ . }}"{{ end }}
+      loading="lazy"
+      {{ with $alt }}alt="{{ . }}"{{ end }}
+      {{ with $style }}style="{{ . | safeCSS }}"{{ end }}
+    />
+  </a>
+
+  {{- if $captionHTML -}}
+    <figcaption class="pm-caption">{{ $captionHTML | safeHTML }}</figcaption>
+  {{- end -}}
+</figure>

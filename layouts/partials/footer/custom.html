@@ -3,3 +3,15 @@
   <script defer src="{{ "/js/custom/home-typewriter.js" | relURL }}"></script>
   <script defer src="{{ "/js/custom/home-ripple.js" | relURL }}"></script>
 {{ end }}
+
+{{/* PaperMod-style image zoom (Fancybox) */}}
+<script defer src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    if (!window.Fancybox) return;
+    window.Fancybox.bind('[data-fancybox]', {
+      hideScrollbar: true,
+      placeFocusBack: false,
+    });
+  });
+</script>
