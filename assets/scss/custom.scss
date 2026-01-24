@@ -51,6 +51,16 @@
   fill: currentColor;
 }
 
+/* 主题的社交图标默认通过 svg stroke 固定为 body-text-color（灰）。
+   我们的品牌图标使用 fill + currentColor，会继承 <a> 的颜色（可能是 accent-color），导致“色差”。 */
+.menu-social a {
+  color: var(--body-text-color);
+}
+
+.menu-social a:hover {
+  color: var(--accent-color);
+}
+
 /* 细调视觉对齐：不同站点的品牌图标留白不同，单独微调 */
 .menu-social a[href*="500px.com"] svg.icon-fill {
   transform: translateY(0.5px) scale(0.92);
