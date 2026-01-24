@@ -1,47 +1,67 @@
-baseURL: https://Suxilan.github.io/
+baseurl: https://Suxilan.github.io/
 languageCode: zh-cn
-title: Suxilan's Blog  # 你的网站标题
-theme: PaperMod
-# 时区设置为北京时间
+title: "Suxilan's Blog"
+theme: hugo-theme-stack
 timeZone: Asia/Shanghai
 
-# 启用 Git 信息
 enableGitInfo: true
-# 启用 emoji 支持
 enableEmoji: true
-# 启用 robots.txt
 enableRobotsTXT: true
-# 构建草稿
-buildDrafts: false
-buildFuture: true  # 允许构建未来时间的文章
-buildExpired: false
+hasCJKLanguage: true
 
-# Google Analytics 4 (GA4)
-# 获取方法：https://analytics.google.com/ → 管理 → 数据流 → 衡量ID
-# 格式：G-XXXXXXXXXX
-googleAnalytics: G-4VWKRYTFHP # 替换为你的实际衡量ID
-
-# 每页显示的文章数
 pagination:
-  pagerSize: 10
+  pagerSize: 5
 
-# 最小化输出
-minify:
-  disableXML: true
-  minifyOutput: true
+taxonomies:
+  category: categories
+  tag: tags
+  series: series
 
-# 在 hugo.yaml 添加
-hasCJKLanguage: true  # 启用中文统计
+services:
+  googleAnalytics:
+    id: G-4VWKRYTFHP
 
-# 语言设置
-languages:
-  zh:
-    languageName: "中文"
-    weight: 1
-    taxonomies:
-      category: categories
-      tag: tags
-      series: series
+params:
+  mainSections:
+    - notes
+    - posts
+
+  rssFullContent: true
+
+  sidebar:
+    subtitle: "记录、思考、探索"
+    avatar:
+      enabled: true
+      local: false
+      src: /images/avatar.jpg
+
+  article:
+    math: true
+    toc: true
+    readingTime: true
+
+  comments:
+    enabled: false
+
+  widgets:
+    homepage:
+      - type: search
+      - type: archives
+        params:
+          limit: 5
+      - type: categories
+        params:
+          limit: 10
+      - type: tag-cloud
+        params:
+          limit: 10
+    page:
+      - type: toc
+
+  colorScheme:
+    toggle: true
+    default: auto
+
 menu:
   main:
     - identifier: posts
@@ -56,189 +76,44 @@ menu:
       name: 摄影
       url: /photography/
       weight: 30
-    - identifier: about
-      name: 关于
-      url: /about/
-      weight: 40
-    - identifier: archives
-      name: 归档
-      url: /archives/
-      weight: 50
-    - identifier: search
-      name: 搜索
-      url: /search/
-      weight: 60
 
-# 输出格式（用于搜索功能）
-outputs:
-  home:
-    - HTML
-    - RSS
-    - JSON
+  social:
+    - identifier: github
+      name: GitHub
+      url: https://github.com/Suxilan
+      params:
+        icon: brand-github
+    - identifier: email
+      name: Email
+      url: mailto:shixulei@whu.edu.cn
+      params:
+        icon: messages
 
-# PaperMod 主题参数
-params:
-  env: production  # 使用 production 以隐藏调试信息
-  
-  # 网站描述
-  description: "Suxilan的个人主页 - CV展示、学习笔记、发表与摄影作品"
-  keywords: [Blog, Portfolio, Photography, CV, Notes]
-  author: Suxilan
-  
-  # 数学公式支持（全局启用，可在文章中用 math: false 关闭）
-  math: true
-  
-  # 图片设置
-  images: ["/images/avatar.jpg"]  # 默认分享图片
-  fancybox: true
-  # Favicon 设置
-  assets:
-    favicon: "/images/avatar.jpg"
-    favicon16x16: "/images/avatar.jpg"
-    favicon32x32: "/images/avatar.jpg"
-    apple_touch_icon: "/images/avatar.jpg"
-  
-  # 日期格式
-  DateFormat: "2006-01-02"
-  
-  # 默认主题：auto, dark, light
-  defaultTheme: auto
-  # 禁用主题切换按钮
-  disableThemeToggle: false
-  
-  # 显示阅读时间
-  ShowReadingTime: true
-  # 显示分享按钮
-  ShowShareButtons: false  # 关闭文章底部的社交分享图标
-  # 显示文章导航（上一篇/下一篇）
-  ShowPostNavLinks: true
-  # 显示面包屑导航
-  ShowBreadCrumbs: true
-  # 显示代码复制按钮
-  ShowCodeCopyButtons: true
-  # 显示文章字数统计
-  ShowWordCount: true
-  # 在列表中显示完整内容
-  ShowFullTextinRSS: true
-  # 显示目录
-  ShowToc: true
-  # 默认展开目录
-  TocOpen: false
-  UseHugoToc: true
-
-  # 评论系统（可选，多种选择）
-  comments: false  # 全局默认不启用，在需要的文章中单独开启
-  
-  # Profile Mode - 首页个人资料模式
-  profileMode:
-    enabled: true
-    title: "My Wilderness"
-    subtitle: "记录、思考、探索"
-    imageUrl: "/images/avatar.jpg"
-    imageWidth: 120
-    imageHeight: 120
-    buttons:
-      - name: 旷野
-        url: /posts/
-      - name: 关于
-        url: /about/
-  
-  # 社交图标
-  socialIcons:
-  - name: github
-    url: "https://github.com/Suxilan"
-    title: "访问我的 GitHub"
-    
-  - name: email
-    url: "mailto:shixulei@whu.edu.cn"
-    title: "发送邮件给我"
-  
-  - name: 500px
-    url: "https://500px.com.cn/Asuka0312"
-    title: "我的摄影作品"
-
-  - name: xiaohongshu
-    url: "https://www.xiaohongshu.com/user/profile/5f51ba2b0000000001004de7"
-    title: "小红书主页"
-  
-  # 编辑文章链接（如果使用 GitHub）
-  # editPost:
-  #   URL: "https://github.com/yourusername/yourrepo/tree/main/content"
-  #   Text: "建议修改"
-  #   appendFilePath: true
-  
-  # 分析工具（可选）
-  analytics:
-    google:
-      SiteVerificationTag: ""  # Google Search Console 验证
-  
-  # 封面图片设置
-  cover:
-    hidden: false  # 在所有页面隐藏封面
-    hiddenInList: false  # 在列表中隐藏封面
-    hiddenInSingle: true  # 在单页中隐藏封面 (修复重复显示问题)
-    linkFullImages: true
-    responsiveImages: true
-  
-  # 搜索设置
-  fuseOpts:
-    isCaseSensitive: false
-    shouldSort: true
-    location: 0
-    distance: 1000
-    threshold: 0.4
-    minMatchCharLength: 0
-    keys: ["title", "permalink", "summary", "content"]
-
-# Markdown 渲染设置
 markup:
   goldmark:
-    renderer:
-      unsafe: true  # 允许 HTML（数学公式需要）
-    parser:
-      attribute:
-        block: true
-        title: true
-      autoHeadingID: true
-      autoHeadingIDType: github
-      wrapStandAloneImageWithinParagraph: false
     extensions:
       passthrough:
+        enable: true
         delimiters:
           block:
-            - ['\[', '\]']
-            - ['$$', '$$']
+            - - \\[ 
+              - \\]
+            - - $$
+              - $$
           inline:
-            - ['\(', '\)']
-
-        enable: true
+            - - \\( 
+              - \\)
+    renderer:
+      unsafe: true
+  tableOfContents:
+    endLevel: 4
+    ordered: true
+    startLevel: 2
   highlight:
-    anchorLineNos: false
-    codeFences: true
-    guessSyntax: false
-    lineNos: true
     noClasses: false
-    style: monokai  # 代码高亮主题
-
-# 隐私设置
-privacy:
-  vimeo:
-    disabled: false
-    simple: true
-  x:  # Twitter 已更名为 X
-    disabled: false
-    enableDNT: true
-    simple: true
-  instagram:
-    disabled: false
-    simple: true
-  youtube:
-    disabled: false
-    privacyEnhanced: true
-
-# 服务设置
-services:
-  instagram:
-    disableInlineCSS: true
-  x:  # Twitter 已更名为 X
-    disableInlineCSS: true
+    codeFences: true
+    guessSyntax: true
+    lineNoStart: 1
+    lineNos: true
+    lineNumbersInTable: true
+    tabWidth: 4
