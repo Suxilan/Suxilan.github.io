@@ -1,0 +1,67 @@
+<div class="article-details">
+    {{ if .Params.categories }}
+    <header class="article-category">
+        {{ range (.GetTerms "categories") }}
+            <a href="{{ .RelPermalink }}" {{ with .Params.style }}style="background-color: {{ .background }}; color: {{ .color }};"{{ end }}>
+                {{ .LinkTitle }}
+            </a>
+        {{ end }}
+    </header>
+    {{ end }}
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="{{ .RelPermalink }}">
+                {{- .Title -}}
+            </a>
+        </h2>
+    
+        {{ with .Params.description }}
+        <h3 class="article-subtitle">
+            {{ . }}
+        </h3>
+        {{ end }}
+    </div>
+
+    {{ $showReadingTime := .Params.readingTime | default (.Site.Params.article.readingTime) }}
+    {{ $showDate := not .Date.IsZero }}
+    {{ $showFooter := or $showDate $showReadingTime }}
+    
+    {{ if $showFooter }}
+    <footer class="article-time">
+        {{ if $showDate }}
+            <div class="article-time--published">
+                {{ partial "helper/icon" "date" }}
+                <time datetime='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'>
+                    {{- .Date | time.Format (or .Site.Params.dateFormat.published "2006-01-02") -}}
+                </time>
+            </div>
+        {{ end }}
+
+        {{/* Last Modified - Added */}}
+        {{ if ne .Lastmod .Date }}
+            <div class="article-time--updated">
+                {{ partial "helper/icon" "refresh" }}
+                <time datetime='{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}'>
+                    {{- .Lastmod | time.Format (or .Site.Params.dateFormat.published "2006-01-02") -}}
+                </time>
+            </div>
+        {{ end }}
+
+        {{/* Word Count - Added */}}
+        <div class="article-time--words">
+            {{ partial "helper/icon" "edit" }}
+            <span>{{ .WordCount }} 字</span>
+        </div>
+
+        {{ if $showReadingTime }}
+            <div class="article-time--reading">
+                {{ partial "helper/icon" "clock" }}
+                <time>
+                    {{ T "article.readingTime" .ReadingTime }}
+                </time>
+            </div>
+        {{ end }}
+    </footer>
+    {{ end }}
+</div>

@@ -47,7 +47,22 @@ params:
     readingTime: true
 
   comments:
-    enabled: false
+    enabled: true
+    provider: giscus
+
+    giscus:
+      repo: Suxilan/Suxilan.github.io
+      repoID: R_kgDOQO0zsQ
+      category: Announcements
+      categoryID: DIC_kwDOQO0zsc4CxdT7
+      mapping: pathname
+      strict: 0
+      lightTheme: light
+      darkTheme: dark
+      reactionsEnabled: 1
+      emitMetadata: 0
+      inputPosition: bottom
+      lang: zh-CN
 
   widgets:
     homepage:
@@ -86,7 +101,7 @@ menu:
   main:
     - identifier: home
       name: 首页
-      url: /
+      url: /blog/
       weight: 1
       params:
         icon: home

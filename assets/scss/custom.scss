@@ -6,19 +6,48 @@
    规则覆盖 themes/hugo-theme-stack/assets/scss/grid.scss 里的 extended 布局。 */
 @media (min-width: 1024px) {
   .container.extended {
-    max-width: 1180px;
-    --left-sidebar-max-width: 24%;
+    max-width: 1280px; /* 加大整体宽度 (原 1180px) */
+    --left-sidebar-max-width: 28%; /* 加大左侧栏 (原 24%) */
     --right-sidebar-max-width: 28%;
   }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1440px) { /* 增加更大屏幕的断点 */
   .container.extended {
-    max-width: 1320px;
-    --left-sidebar-max-width: 20%;
-    --right-sidebar-max-width: 26%;
+    max-width: 1536px;
+    --left-sidebar-max-width: 25%;
+    --right-sidebar-max-width: 25%;
   }
 }
+
+/* 修复 details.html 中新增元数据的样式 */
+.article-time--updated,
+.article-time--words {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Stack 这里可能是 gap: var(--section-gap) 或 margin */
+}
+
+/* 统一 article-time 下的子元素样式 */
+.article-time > div {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 15px; /* 间距 */
+    color: var(--body-text-color-light); /* 与原来的 time 颜色一致 */
+}
+
+.article-time > div svg {
+    margin-right: 4px;
+    width: 20px;
+    height: 20px;
+    stroke-width: 1.5;
+}
+
+/* 美化文章列表 (Blog Stack) */
+.article-details {
+    /* 稍微调整 padding 或间距 */
+}
+
 
 /* 轻量美化：让旧笔记里的 notice/sidenote 短代码在 Stack 下也更自然 */
 .notice {
@@ -81,7 +110,6 @@
 
 /* PaperMod profileMode 风格首页：全屏背景 + hover 毛玻璃 + 打字机 + 点击波纹（仅首页作用域） */
 body.home-profile-page {
-  /* overflow: hidden; Removed to fix scroll issues on blog pages */
   margin: 0;
   padding: 0;
   width: 100%;
@@ -95,6 +123,57 @@ body.home-profile-page aside,
 body.home-profile-page .sidebar {
     display: none !important;
 }
+
+/* 字体定义：LXGW Bright */
+@font-face {
+  font-family: 'LXGW Bright';
+  src: url('/fonts/LXGWBright-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LXGW Bright';
+  src: url('/fonts/LXGWBright-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LXGW Bright';
+  src: url('/fonts/LXGWBright-Italic.woff2') format('woff2');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LXGW Bright';
+  src: url('/fonts/LXGWBright-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 全局应用字体 */
+:root {
+    --font-family-body: 'LXGW Bright', sans-serif;
+    --font-family-heading: 'LXGW Bright', sans-serif;
+    --font-family-code: 'LXGW Bright', monospace; /* 暂用同一字体，或保留 monospace */
+}
+
+/* 确保 h1-h6 也应用 */
+body, h1, h2, h3, h4, h5, h6, .article-title, .section-title {
+    font-family: var(--font-family-body);
+}
+
+/* 覆盖 Stack 变量无法覆盖的部分（如有） */
+body {
+    font-family: 'LXGW Bright', sans-serif !important;
+}
+
 
 body.home-profile-page .container.main-container {
   max-width: 100% !important;
@@ -199,7 +278,7 @@ body.home-profile-page main.main {
 
 .profile h1 {
   margin-top: 1.5rem;
-  font-size: 2.5rem;
+  font-size: 3.2rem; /* 再次加大 (原 2.5rem) */
   font-weight: 700;
   letter-spacing: 1px;
   color: rgba(255, 255, 255, 0.95);
@@ -210,8 +289,8 @@ body.home-profile-page main.main {
   position: relative;
   min-height: 1.2em;
   opacity: 0.9;
-  font-size: 1.35rem;
-  margin-bottom: 24px;
+  font-size: 1.6rem; /* 再次加大 (原 1.35rem) */
+  margin-bottom: 28px;
   color: rgba(255, 255, 255, 0.95);
 }
 
