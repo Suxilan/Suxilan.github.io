@@ -28,8 +28,14 @@ params:
 
   rssFullContent: true
 
+  # 浏览器标签页/收藏夹图标
+  favicon: /images/avatar.jpg
+
   sidebar:
     subtitle: "记录、思考、探索"
+    # 头像右下角的小图案（官方模板同款位置）
+    # 留空/删除则不显示
+    emoji: "🍥"
     avatar:
       enabled: true
       local: false
@@ -68,14 +74,20 @@ menu:
       name: 随笔
       url: /posts/
       weight: 10
+      params:
+        icon: pencil
     - identifier: notes
       name: 笔记
       url: /notes/
       weight: 20
+      params:
+        icon: book
     - identifier: photography
       name: 摄影
       url: /photography/
       weight: 30
+      params:
+        icon: camera
 
   social:
     - identifier: github
@@ -88,6 +100,16 @@ menu:
       url: mailto:shixulei@whu.edu.cn
       params:
         icon: messages
+    - identifier: 500px
+      name: 500px
+      url: https://500px.com.cn/Asuka0312
+      params:
+        icon: brand-500px
+    - identifier: xiaohongshu
+      name: 小红书
+      url: https://www.xiaohongshu.com/user/profile/5f51ba2b0000000001004de7
+      params:
+        icon: brand-rednote
 
 markup:
   goldmark:

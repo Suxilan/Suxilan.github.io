@@ -1,0 +1,63 @@
+/* Stack supports overriding styles here:
+ * HUGO_SITE_FOLDER/assets/scss/custom.scss
+ */
+
+/* 让文章区域不要太“通栏”，给左侧栏留更多空间。
+   规则覆盖 themes/hugo-theme-stack/assets/scss/grid.scss 里的 extended 布局。 */
+@media (min-width: 1024px) {
+  .container.extended {
+    max-width: 1180px;
+    --left-sidebar-max-width: 24%;
+    --right-sidebar-max-width: 28%;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container.extended {
+    max-width: 1320px;
+    --left-sidebar-max-width: 20%;
+    --right-sidebar-max-width: 26%;
+  }
+}
+
+/* 轻量美化：让旧笔记里的 notice/sidenote 短代码在 Stack 下也更自然 */
+.notice {
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--card-background);
+  border: 1px solid var(--card-separator-color);
+  margin: 1em 0;
+}
+.notice-title {
+  display: inline-block;
+  margin-bottom: 6px;
+}
+.sidenote {
+  opacity: .85;
+  font-size: .95em;
+}
+
+/* Stack 默认会给 svg 设置 stroke/stroke-width。
+   对于品牌类实心图标（我们用 currentColor fill）需要显式关闭 stroke，避免“变粗/糊成块”。 */
+.menu-social svg.icon-fill,
+.menu svg.icon-fill {
+  stroke: none !important;
+  stroke-width: 0 !important;
+  fill: currentColor;
+}
+
+.menu-social svg.icon-fill path,
+.menu svg.icon-fill path {
+  fill: currentColor;
+}
+
+/* 细调视觉对齐：不同站点的品牌图标留白不同，单独微调 */
+.menu-social a[href*="500px.com"] svg.icon-fill {
+  transform: translateY(0.5px) scale(0.92);
+  transform-origin: center;
+}
+
+.menu-social a[href*="xiaohongshu.com"] svg.icon-fill {
+  transform: translateY(0.5px) scale(0.90);
+  transform-origin: center;
+}
