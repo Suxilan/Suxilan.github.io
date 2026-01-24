@@ -1,5 +1,8 @@
 {{ define "body-class" }}home-profile-page{{ end }}
 
+{{ define "left-sidebar" }}{{ end }}
+{{ define "right-sidebar" }}{{ end }}
+
 {{ define "main" }}
     {{- $profile := .Site.Params.homepage.profile -}}
     {{- $enabled := true -}}
@@ -16,51 +19,43 @@
         {{- $subtitle := (default .Site.Params.sidebar.subtitle $profile.subtitle) -}}
         {{- $showSocial := (default true $profile.showSocial) -}}
 
-        <div class="pm-profile__bg" style="background-image:url('{{ $bg | safeURL }}');"></div>
-
-        <section class="pm-profile" aria-label="Profile">
-            <div class="pm-profile__inner">
+        <section class="profile" aria-label="Profile" style="--pm-bg: url('{{ $bg | safeURL }}');">
+            <div class="profile_inner">
                 {{- if $avatar -}}
-                    <img class="pm-profile__avatar" src="{{ $avatar | safeURL }}" width="120" height="120" loading="lazy" alt="Avatar">
+                    <img src="{{ $avatar | safeURL }}" width="120" height="120" loading="lazy" alt="Avatar">
                 {{- end -}}
 
-                <h1 class="pm-profile__title">{{ $title }}</h1>
+                <h1>{{ $title }}</h1>
                 {{- with $subtitle -}}
-                    <p class="pm-profile__subtitle">{{ . }}</p>
+                    <span>{{ . }}</span>
                 {{- end -}}
 
                 {{- with $profile.buttons -}}
-                    <div class="pm-profile__buttons">
+                    <div class="buttons">
                         {{- range . -}}
-                            <a class="pm-profile__button" href="{{ .url | safeURL }}">{{ .name }}</a>
+                            <a href="{{ .url | safeURL }}">{{ .name }}</a>
                         {{- end -}}
                     </div>
                 {{- end -}}
 
                 {{- if $showSocial -}}
                     {{- with .Site.Menus.social -}}
-                        <ol class="menu-social pm-profile__social">
+                        <div class="social-icons">
                             {{- range . -}}
-                                <li>
-                                    <a href='{{ .URL }}'
-                                       {{ if eq (default true .Params.newTab) true }}target="_blank"{{ end }}
-                                       {{ with .Name }}title="{{ . }}"{{ end }}
-                                       rel="me">
-                                        {{- $icon := default "link" .Params.Icon -}}
-                                        {{- with $icon -}}
-                                            {{ partial "helper/icon" . }}
-                                        {{- end -}}
-                                    </a>
-                                </li>
+                                <a href='{{ .URL }}'
+                                   {{ if eq (default true .Params.newTab) true }}target="_blank"{{ end }}
+                                   {{ with .Name }}title="{{ . }}"{{ end }}
+                                   rel="me">
+                                    {{- $icon := default "link" .Params.Icon -}}
+                                    {{- with $icon -}}
+                                        {{ partial "helper/icon" . }}
+                                    {{- end -}}
+                                </a>
                             {{- end -}}
-                        </ol>
+                        </div>
                     {{- end -}}
                 {{- end -}}
             </div>
         </section>
     {{- end -}}
-{{ end }}
-
-{{ define "right-sidebar" }}
-    {{ partial "sidebar/right.html" (dict "Context" . "Scope" "homepage") }}
 {{ end }}

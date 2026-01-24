@@ -84,6 +84,12 @@ params:
 
 menu:
   main:
+    - identifier: home
+      name: 首页
+      url: /
+      weight: 1
+      params:
+        icon: home
     - identifier: posts
       name: 随笔
       url: /posts/

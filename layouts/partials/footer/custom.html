@@ -1,0 +1,5 @@
+{{/* Only load PaperMod-style home effects on the profile homepage */}}
+{{ if .IsHome }}
+  <script defer src="{{ "/js/custom/home-typewriter.js" | relURL }}"></script>
+  <script defer src="{{ "/js/custom/home-ripple.js" | relURL }}"></script>
+{{ end }}

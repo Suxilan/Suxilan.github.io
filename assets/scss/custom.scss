@@ -79,19 +79,14 @@
   transform-origin: center;
 }
 
-/* PaperMod profileMode 风格首页：全屏背景 + hover 毛玻璃（仅首页作用域） */
+/* PaperMod profileMode 风格首页：全屏背景 + hover 毛玻璃 + 打字机 + 点击波纹（仅首页作用域） */
 html,
 body.home-profile-page {
-  height: 100%;
-}
-
-body.home-profile-page {
   overflow: hidden;
-}
-
-body.home-profile-page .left-sidebar,
-body.home-profile-page .right-sidebar {
-  display: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
 }
 
 body.home-profile-page .container.main-container {
@@ -100,12 +95,34 @@ body.home-profile-page .container.main-container {
 }
 
 body.home-profile-page main.main {
+  margin: 0 !important;
+  padding: 0 !important;
   width: 100% !important;
+  max-width: 100% !important;
 }
 
-.pm-profile__bg {
+.profile {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 0;
+}
+
+.profile::before {
+  content: "";
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  background-image: var(--pm-bg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -113,25 +130,23 @@ body.home-profile-page main.main {
   z-index: -999;
 }
 
-.pm-profile {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-}
-
-.pm-profile__inner {
-  text-align: center;
-  padding: 3rem 2rem;
-  border-radius: 16px;
+/* 内容区域 - 默认完全透明 */
+.profile .profile_inner {
+  position: relative;
   background: transparent;
-  border: 1px solid transparent;
-  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-radius: 16px;
+  padding: 3rem 2rem;
   transition: all 0.3s ease;
+  box-shadow: none;
+  border: none;
+  text-align: center;
+  max-width: clamp(0px, calc(100vw - 40px), 760px);
 }
 
-.pm-profile__inner:hover {
+/* hover 才出现毛玻璃 */
+.profile .profile_inner:hover {
   background: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
@@ -139,76 +154,91 @@ body.home-profile-page main.main {
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-[data-theme="dark"] .pm-profile__inner:hover,
-.dark .pm-profile__inner:hover {
+.dark .profile .profile_inner:hover,
+[data-theme="dark"] .profile .profile_inner:hover {
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-.pm-profile__avatar,
-.pm-profile__title,
-.pm-profile__subtitle,
-.pm-profile__buttons,
-.pm-profile__social {
-  position: relative;
-  z-index: 1;
+/* 头像圆 -> 方 hover（复刻） */
+.profile img,
+.profile_inner img {
+  border-radius: 50%;
+  transition: transform 0.15s ease, border-radius 0.15s ease, box-shadow 0.3s ease;
 }
 
-.pm-profile__avatar {
-  width: 120px;
-  height: 120px;
-  border-radius: 999px;
+.profile img:hover,
+.profile_inner img:hover {
+  transform: scale(1.01);
+  border-radius: 0;
+}
+
+/* 头像阴影（复刻 + 稍微美化） */
+.profile img {
   border: 4px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-  object-fit: cover;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.32);
 }
 
-[data-theme="dark"] .pm-profile__avatar,
-.dark .pm-profile__avatar {
+.dark .profile img,
+[data-theme="dark"] .profile img {
   border-color: rgba(255, 255, 255, 0.4);
 }
 
-.pm-profile__inner:hover .pm-profile__avatar {
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+.profile .profile_inner:hover img {
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.42);
   transform: scale(1.05);
 }
 
-.pm-profile__title {
-  margin: 1.2rem 0 0.35rem;
-  font-size: 2.1rem;
-  line-height: 1.1;
+.profile h1 {
+  margin-top: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
   color: rgba(255, 255, 255, 0.95);
 }
 
-.pm-profile__subtitle {
-  margin: 0 0 1.15rem;
-  color: rgba(255, 255, 255, 0.85);
+.profile .profile_inner > span {
+  display: inline-block;
+  position: relative;
+  min-height: 1.2em;
+  opacity: 0.85;
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.9);
 }
 
-.pm-profile__buttons {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin: 0 0 1rem;
-  flex-wrap: wrap;
+/* 打字机光标（复刻） */
+.profile .profile_inner > span::after {
+  content: "|";
+  position: absolute;
+  right: -12px;
+  animation: blink 1s step-end infinite;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: bold;
 }
 
-.pm-profile__button {
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* 按钮（复刻） */
+.profile .buttons a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  margin: 0 6px;
   padding: 8px 16px;
   border-radius: 999px;
   background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
   color: rgba(255, 255, 255, 0.92);
   text-decoration: none;
-  transition: all 0.3s ease;
 }
 
-.pm-profile__button:hover {
+.profile .buttons a:hover {
   background: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -217,26 +247,55 @@ body.home-profile-page main.main {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
-[data-theme="dark"] .pm-profile__button:hover,
-.dark .pm-profile__button:hover {
+.dark .profile .buttons a:hover,
+[data-theme="dark"] .profile .buttons a:hover {
   background: rgba(0, 0, 0, 0.4);
   border-color: rgba(255, 255, 255, 0.5);
 }
 
-.pm-profile__social {
+/* 社交图标（复刻） */
+.profile .social-icons {
+  margin-top: 1.5rem;
+  display: flex;
   justify-content: center;
+  gap: 12px;
 }
 
-.pm-profile__social a {
+.profile .social-icons a {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+  transition: all 0.3s ease;
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
   color: rgba(255, 255, 255, 0.9);
 }
 
-.pm-profile__social a svg {
+.profile .social-icons a svg {
+  width: 20px;
+  height: 20px;
+}
+
+.profile .social-icons a svg:not(.icon-fill) {
   stroke: currentColor;
 }
 
-.pm-profile__social a:hover {
-  color: rgba(255, 255, 255, 1);
+.profile .social-icons a svg.icon-fill {
+  stroke: none !important;
+  stroke-width: 0 !important;
+  fill: currentColor;
+}
+
+.profile .social-icons a svg.icon-fill path {
+  fill: currentColor;
+}
+
+.profile .social-icons a:hover {
   background: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -245,17 +304,43 @@ body.home-profile-page main.main {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-[data-theme="dark"] .pm-profile__social a:hover,
-.dark .pm-profile__social a:hover {
+.dark .profile .social-icons a:hover,
+[data-theme="dark"] .profile .social-icons a:hover {
   background: rgba(0, 0, 0, 0.4);
-  border-color: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 点击波纹（复刻） */
+.ripple {
+  position: fixed;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple-elegant 0.8s ease-out;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: soft-light;
+}
+
+@keyframes ripple-elegant {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
 }
 
 @media (max-width: 768px) {
-  .pm-profile__inner {
+  .profile {
+    padding: 4.5rem 0;
+  }
+  .profile .profile_inner {
     padding: 2.5rem 1.5rem;
   }
-  .pm-profile__title {
+  .profile h1 {
     font-size: 1.9rem;
   }
 }
