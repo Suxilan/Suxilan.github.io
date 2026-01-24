@@ -42,6 +42,12 @@ params:
     avatar:
       enabled: true
       local: false
+      src: /images/avatar.jpg
+
+  article:
+    math: true
+    toc: true
+    readingTime: true
 
   comments:
     enabled: true
@@ -89,7 +95,7 @@ params:
       background: "/images/background.jpg"
       showSocial: true
       buttons:
-        - name: 博客
+        - name: 首页
           url: /blog/
         - name: 关于
           url: /about/
@@ -98,16 +104,10 @@ menu:
   main:
     - identifier: home
       name: 首页
-      url: /
+      url: /blog/
       weight: 1
       params:
         icon: home
-    - identifier: blog
-      name: 博客
-      url: /blog/
-      weight: 5
-      params:
-        icon: hash
     - identifier: posts
       name: 随笔
       url: /posts/
@@ -126,24 +126,6 @@ menu:
       weight: 30
       params:
         icon: camera
-    - identifier: about
-      name: 关于
-      url: /about/
-      weight: 40
-      params:
-        icon: user
-    - identifier: archives
-      name: 归档
-      url: /archives/
-      weight: 50
-      params:
-        icon: archives
-    - identifier: search
-      name: 搜索
-      url: /search/
-      weight: 60
-      params:
-        icon: search
     - identifier: about
       name: 关于
       url: /about/

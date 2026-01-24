@@ -33,9 +33,10 @@
 {{- $scratch := newScratch -}}
 {{- range (split $opts ";") -}}
   {{- $p := trim . " \t\n\r" -}}
-  {{- if and $p (findRE `^([^=]+)=(.*)$` $p) -}}
-    {{- $k := lower (trim (replaceRE `^([^=]+)=(.*)$` `$1` $p) " \t" ) -}}
-    {{- $v := trim (replaceRE `^([^=]+)=(.*)$` `$2` $p) " \t" -}}
+  {{- /* Use dotall so values may contain newlines (long captions) */ -}}
+  {{- if and $p (findRE `(?s)^([^=]+)=(.*)$` $p) -}}
+    {{- $k := lower (trim (replaceRE `(?s)^([^=]+)=(.*)$` `$1` $p) " \t" ) -}}
+    {{- $v := trim (replaceRE `(?s)^([^=]+)=(.*)$` `$2` $p) " \t" -}}
     {{- $scratch.Set $k $v -}}
   {{- end -}}
 {{- end -}}
@@ -68,6 +69,7 @@
 
   <img loading="lazy" src="{{ $permalink }}"
     {{ with $alt }}alt="{{ . }}"{{ end }}
+    {{ with $title }}title="{{ . | plainify }}"{{ end }}
     {{ with $width }}width="{{ . }}"{{ end }}
     {{ with $height }}height="{{ . }}"{{ end }}
     {{ with $srcset }}srcset="{{ . }}"{{ end }}
@@ -79,7 +81,7 @@
   {{- if or (or $title $caption) $attr -}}
     <figcaption class="pm-caption">
       {{- with $title -}}
-        {{ . }}
+        <span class="pm-title">{{ . }}</span>
       {{- end -}}
 
       {{- if or $caption $attr -}}
@@ -88,7 +90,8 @@
             {{- $.Page.RenderString (dict "display" "inline") . -}}
           {{- end -}}
           {{- with $attr -}}
-            {{- if $attrlink -}} <a href="{{ $attrlink | safeURL }}" target="_blank" rel="noopener noreferrer">{{- end -}}
+            {{- if $caption -}}&nbsp;{{- end -}}
+            {{- if $attrlink -}}<a href="{{ $attrlink | safeURL }}" target="_blank" rel="noopener noreferrer">{{- end -}}
             {{- $.Page.RenderString (dict "display" "inline") . -}}
             {{- if $attrlink -}}</a>{{- end -}}
           {{- end -}}

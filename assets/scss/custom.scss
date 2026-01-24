@@ -12,6 +12,15 @@
   }
 }
 
+/* 某些页面（搜索/归档/关于）主区域可能覆盖到侧边栏，导致暗黑模式切换不可点击。
+   提升侧边栏层级，保证按钮可交互。 */
+@media (min-width: 768px) {
+  .sidebar {
+    position: relative;
+    z-index: 50;
+  }
+}
+
 @media (min-width: 1440px) { /* 增加更大屏幕的断点 */
   .container.extended {
     max-width: 1536px;
@@ -89,23 +98,128 @@
 /* PaperMod 风格图注（配合 render-image.html） */
 .pm-figure {
   margin: 1.2rem auto;
+  width: fit-content;
+  max-width: 100%;
+  text-align: left;
+}
+
+/* Stack 会把文章里的 figure 强制拉满宽度；对 pm-figure 单独取消 */
+.article-content figure.pm-figure {
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+  max-width: 100%;
+  text-align: left;
 }
 .pm-figure a {
   display: inline-block;
+}
+.pm-figure img {
+  max-width: 100%;
+  height: auto;
 }
 .pm-caption {
   margin-top: .5rem;
   font-size: .95rem;
   color: var(--card-text-color-secondary);
-  text-align: center;
+  text-align: left;
+}
+.pm-caption .pm-title {
+  display: block;
+  font-weight: 700;
+  color: var(--card-text-color-main);
+  margin-bottom: .15rem;
 }
 .pm-caption .pm-attr {
   margin-left: .4rem;
   opacity: .9;
 }
+.pm-caption a {
+  color: #38bdf8;
+  text-decoration-color: color-mix(in srgb, currentColor 60%, transparent);
+}
+[data-scheme='dark'] .pm-caption a {
+  color: #67e8f9;
+}
+.pm-caption a:hover {
+  filter: brightness(1.05);
+}
 .sidenote {
   opacity: .85;
   font-size: .95em;
+}
+
+/* Photography 栏目：正文宽度更窄（约 840px） */
+body.section-photography.article-page .main-article {
+  max-width: 840px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Photography 栏目：瀑布流列表（仿照 backup 的 photo-gallery + hover 标题） */
+body.section-photography .photo-gallery {
+  column-gap: 18px;
+  column-count: 1;
+}
+
+@media (min-width: 640px) {
+  body.section-photography .photo-gallery { column-count: 2; }
+}
+
+@media (min-width: 1024px) {
+  body.section-photography .photo-gallery { column-count: 2; }
+}
+
+@media (min-width: 1536px) {
+  body.section-photography .photo-gallery { column-count: 3; }
+}
+
+body.section-photography .photo-item {
+  break-inside: avoid;
+  margin: 0 0 18px;
+}
+
+body.section-photography .photo-item a {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--shadow-l1);
+}
+
+body.section-photography .photo-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transform: scale(1);
+  transition: transform .25s ease;
+}
+
+body.section-photography .photo-item a:hover img {
+  transform: scale(1.02);
+}
+
+body.section-photography .photo-title-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 14px;
+  opacity: 0;
+  transition: opacity .25s ease;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,.68) 100%);
+}
+
+body.section-photography .photo-item a:hover .photo-title-overlay {
+  opacity: 1;
+}
+
+body.section-photography .photo-title-overlay span {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1.3;
+  text-shadow: 0 2px 12px rgba(0,0,0,.55);
 }
 
 /* Stack 默认会给 svg 设置 stroke/stroke-width。

@@ -1,0 +1,104 @@
+{{ define "main" }}
+    <header>
+        <h3 class="section-title">
+            {{ if eq .Parent (.GetPage "/") }}
+                {{ T "list.section" }}
+            {{ else }}
+                {{ .Parent.Title }}
+            {{ end }}
+        </h3>
+
+        <div class="section-card">
+            <div class="section-details">
+                <h3 class="section-count">{{ T "list.page" (len .Pages) }}</h3>
+                <h1 class="section-term">{{ .Title }}</h1>
+                {{ with .Params.description }}
+                    <h2 class="section-description">{{ . }}</h2>
+                {{ end }}
+            </div>
+
+            {{- $image := partialCached "helper/image" (dict "Context" . "Type" "section") .RelPermalink "section" -}}
+            {{ if $image.exists }}
+                <div class="section-image">
+                    {{ if $image.resource }}
+                        {{- $Permalink := $image.resource.RelPermalink -}}
+                        {{- $Width := $image.resource.Width -}}
+                        {{- $Height := $image.resource.Height -}}
+
+                        {{- if (default true .Page.Site.Params.imageProcessing.cover.enabled) -}}
+                            {{- $thumbnail := $image.resource.Fill "120x120" -}}
+                            {{- $Permalink = $thumbnail.RelPermalink -}}
+                            {{- $Width = $thumbnail.Width -}}
+                            {{- $Height = $thumbnail.Height -}}
+                        {{- end -}}
+
+                        <img src="{{ $Permalink }}"
+                            width="{{ $Width }}"
+                            height="{{ $Height }}"
+                            loading="lazy">
+                    {{ else }}
+                        <img src="{{ $image.permalink }}" loading="lazy" />
+                    {{ end }}
+                </div>
+            {{ end }}
+        </div>
+    </header>
+
+    {{- $paginator := .Paginate (.Pages.ByDate.Reverse) -}}
+
+    <div class="photo-gallery">
+        {{- range $paginator.Pages -}}
+            {{- $alt := .Title -}}
+            {{- $coverParam := "" -}}
+            {{- $coverRes := .Resources.GetMatch "__no_such_resource__" -}}
+
+            {{- with .Params.cover -}}
+                {{- with .image -}}{{- $coverParam = . -}}{{- end -}}
+                {{- with .alt -}}{{- $alt = . -}}{{- end -}}
+            {{- end -}}
+
+            {{- if not $coverParam -}}
+                {{- with .Params.image -}}{{- $coverParam = . -}}{{- end -}}
+            {{- end -}}
+
+            {{- /* If coverParam is a local path inside a page bundle, try to resolve it as a Page Resource */ -}}
+            {{- if and $coverParam (not (or (hasPrefix $coverParam "http://") (hasPrefix $coverParam "https://") (hasPrefix $coverParam "//"))) -}}
+                {{- $coverRes = .Resources.GetMatch $coverParam -}}
+                {{- if not $coverRes -}}
+                    {{- $coverRes = .Resources.GetMatch (printf "*%s*" $coverParam) -}}
+                {{- end -}}
+            {{- end -}}
+
+            {{- /* Fallback: first image in Page Resources (leaf/branch bundle) */ -}}
+            {{- if not $coverRes -}}
+                {{- $imgs := .Resources.ByType "image" -}}
+                {{- if gt (len $imgs) 0 -}}
+                    {{- $coverRes = index $imgs 0 -}}
+                {{- end -}}
+            {{- end -}}
+
+            <div class="photo-item">
+                <a href="{{ .RelPermalink }}">
+                    {{- if $coverRes -}}
+                        {{- $thumb := $coverRes.Resize "1200x" -}}
+                        <img src="{{ $thumb.RelPermalink }}"
+                             width="{{ $thumb.Width }}"
+                             height="{{ $thumb.Height }}"
+                             alt="{{ $alt | plainify }}"
+                             loading="lazy">
+                    {{- else if $coverParam -}}
+                        <img src="{{ $coverParam | safeURL }}" alt="{{ $alt | plainify }}" loading="lazy">
+                    {{- end -}}
+                    <div class="photo-title-overlay"><span>{{ .Title }}</span></div>
+                </a>
+            </div>
+        {{- end -}}
+    </div>
+
+    {{- partial "pagination.html" . -}}
+    {{ partialCached "footer/footer" . }}
+{{ end }}
+
+{{ define "right-sidebar" }}
+    {{ partial "sidebar/right.html" (dict "Context" . "Scope" "homepage") }}
+{{ end }}
