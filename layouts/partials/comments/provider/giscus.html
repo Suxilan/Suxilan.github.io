@@ -1,0 +1,55 @@
+{{- with .Site.Params.comments.giscus -}}
+<script
+    src="https://giscus.app/client.js"
+    data-repo="{{- .repo -}}"
+    data-repo-id="{{- .repoID -}}"
+    data-category="{{- .category -}}"
+    data-category-id="{{- .categoryID -}}"
+    data-mapping="{{- default `title` .mapping -}}"
+    data-strict="{{- default 0 .strict -}}"
+    data-reactions-enabled="{{- default 1 .reactionsEnabled -}}"
+    data-emit-metadata="{{- default 0 .emitMetadata -}}"
+    data-input-position="{{- default `top` .inputPosition -}}"
+    data-theme="{{- default `light` .lightTheme -}}"
+    data-lang="{{- default `en` .lang -}}"
+    {{- with .loading -}}data-loading="{{- . -}}"{{- end -}}
+    crossorigin="anonymous"
+    async
+></script>
+
+<script>
+(function () {
+  const GISCUS_ORIGIN = "https://giscus.app";
+  const LIGHT_THEME = "{{- default `light` .lightTheme -}}";
+  const DARK_THEME = "{{- default `dark_dimmed` .darkTheme -}}";
+
+  function setGiscusTheme(theme) {
+    const frame = document.querySelector("iframe.giscus-frame");
+    if (!frame || !frame.contentWindow) return;
+
+    frame.contentWindow.postMessage(
+      { giscus: { setConfig: { theme } } },
+      GISCUS_ORIGIN
+    );
+  }
+
+  function currentTheme() {
+    return document.documentElement.dataset.scheme === "dark" ? DARK_THEME : LIGHT_THEME;
+  }
+
+  function handler() {
+    // 使用 rAF 避免频繁切换时抖动
+    window.requestAnimationFrame(() => setGiscusTheme(currentTheme()));
+  }
+
+  // Stack 主题会派发 onColorSchemeChange
+  window.addEventListener("onColorSchemeChange", handler);
+
+  // 当 giscus iframe 完成加载会 postMessage；收到后同步一次即可
+  window.addEventListener("message", (e) => {
+    if (e.origin !== GISCUS_ORIGIN) return;
+    handler();
+  });
+})();
+</script>
+{{- end -}}

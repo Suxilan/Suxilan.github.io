@@ -174,6 +174,30 @@ body {
     font-family: 'LXGW Bright', sans-serif !important;
 }
 
+/* 评论区：用 Stack 卡片风格包裹（兼容 giscus 等 provider） */
+.comments-wrap {
+  margin-top: 2rem;
+}
+
+.comments-card {
+  border-radius: var(--card-border-radius);
+  background-color: var(--card-background);
+  padding: var(--card-padding);
+  box-shadow: var(--shadow-l1);
+}
+
+.comments-title {
+  margin: 0 0 1rem 0;
+  font-size: 1.8rem;
+  color: var(--card-text-color-main);
+}
+
+/* giscus iframe 默认带自己的背景；这里让它更贴合 Stack */
+.comments-card iframe.giscus-frame {
+  width: 100%;
+  border: 0;
+}
+
 
 body.home-profile-page .container.main-container {
   max-width: 100% !important;

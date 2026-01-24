@@ -1,0 +1,10 @@
+{{ if .Site.Params.comments.enabled }}
+<section class="comments-wrap" aria-label="Comments">
+  <div class="comments-card">
+    <h2 class="comments-title">评论</h2>
+    <div class="comments-container">
+      {{ partial (printf "comments/provider/%s" .Site.Params.comments.provider) . }}
+    </div>
+  </div>
+</section>
+{{ end }}
