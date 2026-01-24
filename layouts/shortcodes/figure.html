@@ -1,0 +1,39 @@
+<figure{{ if or (.Get "class") (eq (.Get "align") "center") }} class="
+           {{- if eq (.Get "align") "center" }}align-center {{ end }}
+           {{- with .Get "class" }}{{ . }}{{- end }}"
+{{- end -}}>
+    {{- $hasLink := .Get "link" -}}
+    {{- $useFancybox := and (.Page.Site.Params.fancybox) (not $hasLink) -}}
+    {{- if or $hasLink $useFancybox -}}
+        <a
+            {{- if $useFancybox }} data-fancybox="gallery"{{ end -}}
+            href="{{ if $hasLink }}{{ $hasLink }}{{ else }}{{ .Get "src" | safeURL }}{{ end }}"
+            {{- with .Get "target" }} target="{{ . }}"{{ end -}}
+            {{- with .Get "rel" }} rel="{{ . }}"{{ end -}}
+        >
+    {{- end }}
+    <img loading="lazy" src="{{ .Get "src" }}{{- if eq (.Get "align") "center" }}#center{{- end }}"
+         {{- if or (.Get "alt") (.Get "caption") }}
+         alt="{{ with .Get "alt" }}{{ . }}{{ else }}{{ .Get "caption" | markdownify | plainify }}{{ end }}"
+         {{- end -}}
+         {{- with .Get "width" }} width="{{ . }}"{{ end -}}
+         {{- with .Get "height" }} height="{{ . }}"{{ end -}}
+         {{- with .Get "style" }} style="{{ . }}"{{ end -}}
+    />
+    {{- if or $hasLink $useFancybox }}</a>{{ end -}}
+    {{- if or (or (.Get "title") (.Get "caption")) (.Get "attr") -}}
+        <figcaption>
+            {{ with (.Get "title") -}}
+                {{ . }}
+            {{- end -}}
+            {{- if or (.Get "caption") (.Get "attr") -}}<p>
+                {{- .Get "caption" | markdownify -}}
+                {{- with .Get "attrlink" }}
+                    <a href="{{ . }}" target="_blank" rel="noopener noreferrer">
+                {{- end -}}
+                {{- .Get "attr" | markdownify -}}
+                {{- if .Get "attrlink" }}</a>{{ end }}</p>
+            {{- end }}
+        </figcaption>
+    {{- end }}
+</figure>

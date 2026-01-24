@@ -28,6 +28,9 @@ params:
 
   rssFullContent: true
 
+  # PaperMod 风格：图片点击放大（fancybox）
+  fancybox: true
+
   # 浏览器标签页/收藏夹图标
   favicon: /images/avatar.jpg
 
@@ -39,12 +42,6 @@ params:
     avatar:
       enabled: true
       local: false
-      src: /images/avatar.jpg
-
-  article:
-    math: true
-    toc: true
-    readingTime: true
 
   comments:
     enabled: true
@@ -129,6 +126,24 @@ menu:
       weight: 30
       params:
         icon: camera
+    - identifier: about
+      name: 关于
+      url: /about/
+      weight: 40
+      params:
+        icon: user
+    - identifier: archives
+      name: 归档
+      url: /archives/
+      weight: 50
+      params:
+        icon: archives
+    - identifier: search
+      name: 搜索
+      url: /search/
+      weight: 60
+      params:
+        icon: search
     - identifier: about
       name: 关于
       url: /about/
