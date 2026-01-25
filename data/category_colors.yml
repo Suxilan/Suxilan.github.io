@@ -1,51 +1,53 @@
 pool:
-  # 基于 Stack 默认 5 色 + 扩充一组（文本默认白色），分类会按名称哈希稳定取色
-  - background: "#8ea885" # Stack default
+  # 使用 Stack 官方的 5 个默认色为基础，再用更饱和、醒目的色彩进行扩展
+  # 文本颜色保持白色，便于标签在深色背景下可读
+  - background: "#8ea885" # Stack default (muted green)
     color: "#ffffff"
-  - background: "#df7988" # Stack default
+  - background: "#df7988" # Stack default (muted rose)
     color: "#ffffff"
-  - background: "#0177b8" # Stack default
+  - background: "#0177b8" # Stack default (deep blue)
     color: "#ffffff"
-  - background: "#ffb900" # Stack default
+  - background: "#ffb900" # Stack default (amber)
     color: "#ffffff"
-  - background: "#6b69d6" # Stack default
-    color: "#ffffff"
-
-  - background: "#3b82f6"
-    color: "#ffffff"
-  - background: "#ef4444"
-    color: "#ffffff"
-  - background: "#10b981"
-    color: "#ffffff"
-  - background: "#f59e0b"
-    color: "#ffffff"
-  - background: "#8b5cf6"
+  - background: "#6b69d6" # Stack default (purple)
     color: "#ffffff"
 
-  - background: "#06b6d4"
+  # 扩展为更鲜艳醒目的配色（避免过多重复，保证视觉冲击）
+  - background: "#2563eb" # vivid blue
     color: "#ffffff"
-  - background: "#f97316"
+  - background: "#ef4444" # vivid red
     color: "#ffffff"
-  - background: "#22c55e"
+  - background: "#10b981" # vivid green
     color: "#ffffff"
-  - background: "#e11d48"
+  - background: "#f97316" # vivid orange
     color: "#ffffff"
-  - background: "#0ea5e9"
+  - background: "#8b5cf6" # vivid violet
     color: "#ffffff"
 
-  - background: "#64748b"
+  - background: "#06b6d4" # teal
     color: "#ffffff"
-  - background: "#14b8a6"
+  - background: "#ef3b7a" # hot pink
     color: "#ffffff"
-  - background: "#a855f7"
+  - background: "#22c55e" # emerald
     color: "#ffffff"
-  - background: "#84cc16"
+  - background: "#e11d48" # crimson
     color: "#ffffff"
-  - background: "#f43f5e"
+  - background: "#0ea5e9" # sky
+    color: "#ffffff"
+
+  - background: "#f43f5e" # rose
+    color: "#ffffff"
+  - background: "#7c3aed" # purple
+    color: "#ffffff"
+  - background: "#06b6d4" # cyan (备用)
+    color: "#ffffff"
+  - background: "#84cc16" # lime
+    color: "#ffffff"
+  - background: "#f59e0b" # amber (warm)
     color: "#ffffff"
 
 # 可选：如未来想手动钉死某些分类颜色，可启用 overrides（默认不需要）
 # overrides:
-#   技术笔记:
-#     background: "#3b82f6"
+#   算法博客:
+#     background: "#2563eb"
 #     color: "#ffffff"
