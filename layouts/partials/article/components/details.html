@@ -35,32 +35,10 @@
         {{- if $inList -}}
             {{- with .Params.summary -}}
                 {{- $subtitle = . -}}
-            {{- else -}}
-                {{- with .Summary -}}
-                    {{- $subtitle = . -}}
-                {{- end -}}
-            {{- end -}}
-            {{- if not $subtitle -}}
-                {{- with .Params.description -}}
-                    {{- $subtitle = . -}}
-                {{- end -}}
             {{- end -}}
         {{- else -}}
             {{- with .Params.description -}}
                 {{- $subtitle = . -}}
-            {{- else -}}
-                {{- with .Description -}}
-                    {{- $subtitle = . -}}
-                {{- end -}}
-            {{- end -}}
-            {{- if not $subtitle -}}
-                {{- with .Params.summary -}}
-                    {{- $subtitle = . -}}
-                {{- else -}}
-                    {{- with .Summary -}}
-                        {{- $subtitle = . -}}
-                    {{- end -}}
-                {{- end -}}
             {{- end -}}
         {{- end -}}
 
