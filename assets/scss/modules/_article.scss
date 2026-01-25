@@ -22,6 +22,22 @@
   stroke-width: 1.5;
 }
 
+/* ToC：禁用自动编号，避免与标题手写编号叠加 */
+.widget--toc #TableOfContents ul,
+.widget--toc #TableOfContents ol {
+  list-style: none;
+}
+
+.widget--toc #TableOfContents ol {
+  counter-reset: none !important;
+}
+
+.widget--toc #TableOfContents ol li a:first-of-type::before {
+  content: none !important;
+  counter-increment: none !important;
+  margin-right: 0 !important;
+}
+
 /* PaperMod风格图注 */
 .pm-figure {
   margin: 1.2rem auto;
