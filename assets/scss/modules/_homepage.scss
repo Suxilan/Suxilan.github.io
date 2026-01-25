@@ -1,0 +1,278 @@
+/* ========== PaperMod风格首页 ========== */
+
+body.home-profile-page {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* 隐藏侧边栏 */
+body.home-profile-page .left-sidebar,
+body.home-profile-page .right-sidebar,
+body.home-profile-page aside,
+body.home-profile-page .sidebar {
+  display: none !important;
+}
+
+body.home-profile-page .container.main-container {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+body.home-profile-page main.main {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Profile容器 */
+.profile {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 0;
+}
+
+/* 背景图 */
+.profile::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  background-image: var(--pm-bg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  z-index: -999;
+}
+
+/* 内容区域 */
+.profile .profile_inner {
+  position: relative;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  transition: all 0.3s ease;
+  box-shadow: none;
+  border: none;
+  text-align: center;
+  max-width: clamp(0px, calc(100vw - 40px), 760px);
+}
+
+/* Hover毛玻璃效果 */
+.profile .profile_inner:hover {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark .profile .profile_inner:hover,
+[data-theme="dark"] .profile .profile_inner:hover {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* 头像效果 */
+.profile img,
+.profile_inner img {
+  border-radius: 50%;
+  transition: transform 0.15s ease, border-radius 0.15s ease, box-shadow 0.3s ease;
+}
+
+.profile img:hover,
+.profile_inner img:hover {
+  transform: scale(1.01);
+  border-radius: 0;
+}
+
+.profile img {
+  border: 4px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.32);
+}
+
+.dark .profile img,
+[data-theme="dark"] .profile img {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.profile .profile_inner:hover img {
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.42);
+  transform: scale(1.05);
+}
+
+/* 标题 */
+.profile h1 {
+  margin-top: 1.5rem;
+  font-size: 3.2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.profile .profile_inner > span {
+  display: inline-block;
+  position: relative;
+  min-height: 1.2em;
+  opacity: 0.9;
+  font-size: 1.6rem;
+  margin-bottom: 28px;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* 打字机光标 */
+.profile .profile_inner > span::after {
+  content: "|";
+  position: absolute;
+  right: -12px;
+  animation: blink 1s step-end infinite;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: bold;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* 按钮 */
+.profile .buttons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+  padding: 12px 34px;
+  border-radius: 999px;
+  font-size: 1.15rem;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  color: rgba(255, 255, 255, 0.92);
+  text-decoration: none;
+}
+
+.profile .buttons a:hover {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.dark .profile .buttons a:hover,
+[data-theme="dark"] .profile .buttons a:hover {
+  background: rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* 社交图标 */
+.profile .social-icons {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.profile .social-icons a {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+  transition: all 0.3s ease;
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.profile .social-icons a svg {
+  width: 26px;
+  height: 26px;
+}
+
+.profile .social-icons a svg:not(.icon-fill) {
+  stroke: currentColor;
+}
+
+.profile .social-icons a svg.icon-fill {
+  stroke: none !important;
+  stroke-width: 0 !important;
+  fill: currentColor;
+}
+
+.profile .social-icons a svg.icon-fill path {
+  fill: currentColor;
+}
+
+.profile .social-icons a:hover {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.dark .profile .social-icons a:hover,
+[data-theme="dark"] .profile .social-icons a:hover {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 点击波纹 */
+.ripple {
+  position: fixed;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple-elegant 0.8s ease-out;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: soft-light;
+}
+
+@keyframes ripple-elegant {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .profile {
+    padding: 4.5rem 0;
+  }
+  .profile .profile_inner {
+    padding: 2.5rem 1.5rem;
+  }
+  .profile h1 {
+    font-size: 1.9rem;
+  }
+}

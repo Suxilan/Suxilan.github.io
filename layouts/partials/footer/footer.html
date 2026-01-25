@@ -1,0 +1,36 @@
+{{- $ThemeVersion := "3.33.0" -}}
+<footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        {{ if and (.Site.Params.footer.since) (ne .Site.Params.footer.since (int (now.Format "2006"))) }}
+            {{ .Site.Params.footer.since }} - 
+        {{ end }}
+        {{ now.Format "2006" }} <a href="{{ .Site.BaseURL | relLangURL }}">{{ .Site.Title }}</a>
+        
+        {{/* 运行时间 */}}
+        {{ $startDate := time "2025-11-05T00:00:00+08:00" }}
+        {{ $now := now }}
+        {{ $duration := $now.Sub $startDate }}
+        {{ $totalDays := div (int $duration.Hours) 24 }}
+        · <span class="runtime"><span class="stat-value">{{ $totalDays }}</span>Days</span>
+        
+        {{/* 文章总数和总字数 */}}
+        {{ $pages := where .Site.RegularPages "Type" "in" .Site.Params.mainSections }}
+        {{ $filtered := where $pages "Params.hidden" "!=" true }}
+        {{ $totalWords := 0 }}
+        {{ range $filtered }}
+            {{ $totalWords = add $totalWords .WordCount }}
+        {{ end }}
+        {{ $totalWordsK := div $totalWords 1000 }}
+        {{ $totalWordsDecimal := div (mod $totalWords 1000) 100 }}
+        · 共编写了 <span class="stat-value">{{ $totalWordsK }}.{{ $totalWordsDecimal }}k</span> 字
+        · 共 <span class="stat-value">{{ len $filtered }}</span> 篇文章
+        
+        {{/* 浏览量 - 不蒜子统计 */}}
+        {{ if hugo.IsServer }}
+            · 共 <span class="stat-value">本地预览不统计</span>
+        {{ else }}
+            · 共 <span class="stat-value"><span id="busuanzi_value_site_pv">-</span></span> 次浏览
+        {{ end }}
+    </section>
+</footer>

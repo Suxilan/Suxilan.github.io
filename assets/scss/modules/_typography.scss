@@ -1,0 +1,49 @@
+/* ========== 字体样式 ========== */
+
+/* LXGW Bright 字体定义 */
+@font-face {
+  font-family: 'LXGW Bright';
+  src: url('/fonts/LXGWBright-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LXGW Bright';
+  src: url('/fonts/LXGWBright-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LXGW Bright';
+  src: url('/fonts/LXGWBright-Italic.woff2') format('woff2');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LXGW Bright';
+  src: url('/fonts/LXGWBright-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 全局字体应用 */
+:root {
+  --font-family-body: 'LXGW Bright', sans-serif;
+  --font-family-heading: 'LXGW Bright', sans-serif;
+  --font-family-code: 'LXGW Bright', monospace;
+}
+
+body, h1, h2, h3, h4, h5, h6, .article-title, .section-title {
+  font-family: var(--font-family-body);
+}
+
+body {
+  font-family: 'LXGW Bright', sans-serif !important;
+}

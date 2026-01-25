@@ -1,0 +1,38 @@
+/* ========== 社交图标样式 ========== */
+
+/* SVG图标修复 */
+.menu-social svg.icon-fill,
+.menu svg.icon-fill {
+  stroke: none !important;
+  stroke-width: 0 !important;
+  fill: currentColor;
+}
+
+.menu-social svg.icon-fill path,
+.menu svg.icon-fill path {
+  fill: currentColor;
+}
+
+/* 社交图标颜色 */
+.menu-social a {
+  color: var(--body-text-color);
+}
+
+.menu-social a svg {
+  stroke: currentColor;
+}
+
+.menu-social a:hover {
+  color: var(--accent-color);
+}
+
+/* 品牌图标微调 */
+.menu-social a[href*="500px.com"] svg.icon-fill {
+  transform: translateY(0.5px) scale(0.92);
+  transform-origin: center;
+}
+
+.menu-social a[href*="xiaohongshu.com"] svg.icon-fill {
+  transform: translateY(0.5px) scale(0.90);
+  transform-origin: center;
+}

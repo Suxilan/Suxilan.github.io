@@ -1,8 +1,10 @@
 <div class="article-details">
     {{ if .Params.categories }}
     <header class="article-category">
+        {{- $categoryColors := $.Site.Data.category_colors -}}
         {{ range (.GetTerms "categories") }}
-            <a href="{{ .RelPermalink }}" {{ with .Params.style }}style="background-color: {{ .background }}; color: {{ .color }};"{{ end }}>
+            {{- $c := cond (and $categoryColors (isset $categoryColors .LinkTitle)) (index $categoryColors .LinkTitle) nil -}}
+            <a href="{{ .RelPermalink }}" {{ if $c }}style="background-color: {{ $c.background }}; color: {{ $c.color }};"{{ else }}{{ with .Params.style }}style="background-color: {{ .background }}; color: {{ .color }};"{{ end }}{{ end }}>
                 {{ .LinkTitle }}
             </a>
         {{ end }}
@@ -62,6 +64,18 @@
                 </time>
             </div>
         {{ end }}
+
+        {{/* 不蒜子单页浏览量 */}}
+        <div class="article-time--views">
+            {{ partial "helper/icon" "eye" }}
+            {{ if hugo.IsServer }}
+                <span>本地预览不统计</span>
+            {{ else }}
+                <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv">-</span> 次阅读
+                </span>
+            {{ end }}
+        </div>
     </footer>
     {{ end }}
 </div>

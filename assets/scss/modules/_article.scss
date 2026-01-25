@@ -1,0 +1,80 @@
+/* ========== 文章相关样式 ========== */
+
+/* 文章元数据样式 */
+.article-time--updated,
+.article-time--words {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.article-time > div {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 15px;
+  color: var(--body-text-color-light);
+}
+
+.article-time > div svg {
+  margin-right: 4px;
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.5;
+}
+
+/* PaperMod风格图注 */
+.pm-figure {
+  margin: 1.2rem auto;
+  width: fit-content;
+  max-width: 100%;
+  text-align: left;
+}
+
+.article-content figure.pm-figure {
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+  max-width: 100%;
+  text-align: left;
+}
+
+.pm-figure a {
+  display: inline-block;
+}
+
+.pm-figure img {
+  max-width: 100%;
+  height: auto;
+}
+
+.pm-caption {
+  margin-top: .5rem;
+  font-size: .95rem;
+  color: var(--card-text-color-secondary);
+  text-align: left;
+}
+
+.pm-caption .pm-title {
+  display: block;
+  font-weight: 700;
+  color: var(--card-text-color-main);
+  margin-bottom: .15rem;
+}
+
+.pm-caption .pm-attr {
+  margin-left: .4rem;
+  opacity: .9;
+}
+
+.pm-caption a {
+  color: #38bdf8;
+  text-decoration-color: color-mix(in srgb, currentColor 60%, transparent);
+}
+
+[data-scheme='dark'] .pm-caption a {
+  color: #67e8f9;
+}
+
+.pm-caption a:hover {
+  filter: brightness(1.05);
+}

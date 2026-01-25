@@ -1,0 +1,67 @@
+/* ========== 布局相关样式 ========== */
+
+/* 容器宽度调整 */
+@media (min-width: 1024px) {
+  .container.extended {
+    max-width: 1480px;
+    --left-sidebar-max-width: 320px;
+    --right-sidebar-max-width: 320px;
+  }
+
+  @media (min-width: 1600px) {
+    .container.extended {
+      max-width: 1620px;
+      --left-sidebar-max-width: 340px;
+      --right-sidebar-max-width: 340px;
+    }
+  }
+}
+
+/* 侧边栏层级修复 */
+@media (min-width: 768px) {
+  .sidebar {
+    position: relative;
+    z-index: 50;
+  }
+}
+
+/* 统一主内容区域最大宽度 */
+@media (min-width: 1024px) {
+  /* 核心：统一设置主内容区域的最大宽度 */
+  main.main {
+    max-width: 1000px !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* 摄影栏只有pagination和footer保持限宽居中 */
+  body.section-photography main.main > .pagination,
+  body.section-photography main.main > footer {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* 侧边栏标题居中 */
+.left-sidebar header {
+  align-items: center !important;
+}
+
+.left-sidebar header .site-avatar {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.left-sidebar header .site-meta {
+  text-align: center !important;
+  align-items: center !important;
+}
+
+.left-sidebar header .site-meta .site-name {
+  text-align: center !important;
+}
+
+.left-sidebar header .site-meta .site-description {
+  text-align: center !important;
+}

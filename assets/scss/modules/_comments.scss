@@ -1,0 +1,23 @@
+/* ========== 评论区样式 ========== */
+
+.comments-wrap {
+  margin-top: 2rem;
+}
+
+.comments-card {
+  border-radius: var(--card-border-radius);
+  background-color: var(--card-background);
+  padding: var(--card-padding);
+  box-shadow: var(--shadow-l1);
+}
+
+.comments-title {
+  margin: 0 0 1rem 0;
+  font-size: 1.8rem;
+  color: var(--card-text-color-main);
+}
+
+.comments-card iframe.giscus-frame {
+  width: 100%;
+  border: 0;
+}

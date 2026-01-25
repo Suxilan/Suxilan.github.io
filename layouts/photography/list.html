@@ -77,20 +77,52 @@
                 {{- end -}}
             {{- end -}}
 
+            {{- /* Smart Remote Image Processing (Hugo >= 0.141)
+                  注意：hugo server 下如果网络/图床不可达，GetRemote 会阻塞到超时，导致每次热重载都“卡”。
+                  因此开发态跳过 GetRemote，直接用远程 URL 渲染；生产构建再做远程处理/压缩。 */ -}}
+            {{- if and (not hugo.IsServer) (not $coverRes) $coverParam -}}
+                {{- if or (hasPrefix $coverParam "http://") (hasPrefix $coverParam "https://") (hasPrefix $coverParam "//") -}}
+                    {{- $remoteTry := try (resources.GetRemote $coverParam) -}}
+                    {{- with $remoteTry.Err -}}
+                        {{- warnf "Log: Failed to fetch remote image %s: %s" $coverParam . -}}
+                    {{- else -}}
+                        {{- with $remoteTry.Value -}}
+                            {{- $coverRes = . -}}
+                        {{- end -}}
+                    {{- end -}}
+                {{- end -}}
+            {{- end -}}
+
             <div class="photo-item">
-                <a href="{{ .RelPermalink }}">
+                {{- $fullSizeURL := "" -}}
+                {{- if $coverRes -}}
+                    {{- $fullSizeURL = $coverRes.RelPermalink -}}
+                {{- else if $coverParam -}}
+                    {{- $fullSizeURL = $coverParam | safeURL -}}
+                {{- end -}}
+
+                {{- /* Fancybox Link: Always points to the full size image */ -}}
+                <a href="{{ $fullSizeURL }}" data-fancybox="gallery" data-caption="{{ .Title }}">
                     {{- if $coverRes -}}
-                        {{- $thumb := $coverRes.Resize "1200x" -}}
+                        {{- /* Resize to 800px width (webp) for efficient list loading */ -}}
+                        {{- $thumb := $coverRes.Resize "800x webp" -}}
                         <img src="{{ $thumb.RelPermalink }}"
                              width="{{ $thumb.Width }}"
                              height="{{ $thumb.Height }}"
                              alt="{{ $alt | plainify }}"
                              loading="lazy">
                     {{- else if $coverParam -}}
+                        {{- /* Fallback for remote images that couldn't be fetched or processed */ -}}
                         <img src="{{ $coverParam | safeURL }}" alt="{{ $alt | plainify }}" loading="lazy">
                     {{- end -}}
-                    <div class="photo-title-overlay"><span>{{ .Title }}</span></div>
                 </a>
+                
+                {{/* Separate link for the post content */}}
+                <div class="photo-title-overlay">
+                    <a href="{{ .RelPermalink }}">
+                        <span>{{ .Title }}</span>
+                    </a>
+                </div>
             </div>
         {{- end -}}
     </div>

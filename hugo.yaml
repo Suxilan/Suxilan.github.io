@@ -17,10 +17,6 @@ taxonomies:
   tag: tags
   series: series
 
-services:
-  googleAnalytics:
-    id: G-4VWKRYTFHP
-
 params:
   mainSections:
     - notes
@@ -81,6 +77,17 @@ params:
           limit: 10
     page:
       - type: toc
+    archives:
+      - type: search
+      - type: archives
+        params:
+          limit: 5
+      - type: categories
+        params:
+          limit: 10
+      - type: tag-cloud
+        params:
+          limit: 10
 
   colorScheme:
     toggle: true

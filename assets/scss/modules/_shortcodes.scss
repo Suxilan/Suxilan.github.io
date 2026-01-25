@@ -1,0 +1,73 @@
+/* ========== 短代码样式 ========== */
+
+/* Notice 告示框 */
+.notice {
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--card-background);
+  border: 1px solid var(--card-separator-color);
+  margin: 1em 0;
+  line-height: 1.65;
+}
+
+.notice-title {
+  display: inline-block;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.notice-content > :first-child { 
+  margin-top: 0; 
+}
+
+.notice-content > :last-child { 
+  margin-bottom: 0; 
+}
+
+/* Notice 类型样式 */
+.notice.notice-info {
+  border-left: 4px solid #3b82f6;
+}
+
+.notice.notice-note,
+.notice.notice-tip {
+  border-left: 4px solid #10b981;
+}
+
+.notice.notice-warning {
+  border-left: 4px solid #f59e0b;
+}
+
+.notice.notice-danger {
+  border-left: 4px solid #ef4444;
+}
+
+/* Notice 图标 */
+.notice .notice-title::before {
+  margin-right: 6px;
+  font-size: 1.1em;
+}
+
+.notice.notice-info .notice-title::before { 
+  content: "ℹ️"; 
+}
+
+.notice.notice-note .notice-title::before,
+.notice.notice-tip .notice-title::before { 
+  content: "💡"; 
+}
+
+.notice.notice-warning .notice-title::before { 
+  content: "⚠️"; 
+}
+
+.notice.notice-danger .notice-title::before { 
+  content: "🔥"; 
+}
+
+/* Sidenote 边注 */
+.sidenote {
+  opacity: 0.88;
+  font-size: .95em;
+  border-bottom: 1px dashed var(--accent-color);
+}

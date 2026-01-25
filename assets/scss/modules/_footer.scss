@@ -1,0 +1,49 @@
+/* ========== Footer样式 - 简约设计 ========== */
+
+.site-footer {
+  text-align: left;
+  padding: 2rem 0;
+}
+
+.site-footer .copyright {
+  font-size: 1.4rem;
+  color: var(--card-text-color-secondary);
+  line-height: 1.8;
+  margin: 0;
+}
+
+.site-footer .copyright a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+.site-footer .copyright a:hover {
+  text-decoration: underline;
+}
+
+/* 统计信息行内显示 */
+.site-footer .site-stats {
+  display: inline;
+}
+
+.site-footer .runtime,
+.site-footer .stats-grid {
+  display: inline;
+}
+
+.site-footer .stat-item {
+  display: inline;
+}
+
+/* 分隔符 */
+.site-footer .copyright::before,
+.site-footer .site-stats::before,
+.site-footer .stat-item::before {
+  content: " · ";
+  margin: 0 0.3em;
+}
+
+.site-footer .copyright::before {
+  content: "";
+  margin: 0;
+}
