@@ -4,7 +4,7 @@ date: 2025-11-07T14:48:34+08:00
 showlastmod: true
 draft: false
 tags: ["Deep Learning", "Transformer", "NLP", "Attention"]
-categories: ["技术笔记"]
+categories: ["算法博客"]
 series: []
 author: "Suxilan"
 ShowToc: true

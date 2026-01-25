@@ -3,7 +3,7 @@ title: "白化（Whitening）及其可微分做法"
 date: 2025-11-25T20:52:47+08:00
 draft: false
 tags: ['Data science','Whitening','数据白化','Deep learning']
-categories: ["技术笔记"]
+categories: ["算法博客"]
 series: []
 author: "Suxilan"
 showlastmod: true

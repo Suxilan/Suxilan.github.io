@@ -12,6 +12,17 @@ pool:
   - background: "#6b69d6" # Stack default (purple)
     color: "#ffffff"
 
+  - background: "#f43f5e" # rose
+    color: "#ffffff"
+  - background: "#7c3aed" # purple
+    color: "#ffffff"
+  - background: "#06b6d4" # cyan (备用)
+    color: "#ffffff"
+  - background: "#84cc16" # lime
+    color: "#ffffff"
+  - background: "#f59e0b" # amber (warm)
+    color: "#ffffff"
+
   # 扩展为更鲜艳醒目的配色（避免过多重复，保证视觉冲击）
   - background: "#2563eb" # vivid blue
     color: "#ffffff"
@@ -35,16 +46,7 @@ pool:
   - background: "#0ea5e9" # sky
     color: "#ffffff"
 
-  - background: "#f43f5e" # rose
-    color: "#ffffff"
-  - background: "#7c3aed" # purple
-    color: "#ffffff"
-  - background: "#06b6d4" # cyan (备用)
-    color: "#ffffff"
-  - background: "#84cc16" # lime
-    color: "#ffffff"
-  - background: "#f59e0b" # amber (warm)
-    color: "#ffffff"
+
 
 # 可选：如未来想手动钉死某些分类颜色，可启用 overrides（默认不需要）
 # overrides:

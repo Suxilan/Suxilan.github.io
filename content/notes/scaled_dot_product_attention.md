@@ -4,7 +4,7 @@ date: 2025-11-07T15:30:00+08:00
 showlastmod: true
 draft: false
 tags: ["SDPA", "Transformer", "Attention", "数学推导"]
-categories: ["技术笔记"]
+categories: ["算法博客"]
 series: []
 author: "Suxilan"
 ShowToc: true
