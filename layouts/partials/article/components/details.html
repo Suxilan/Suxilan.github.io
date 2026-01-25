@@ -29,12 +29,44 @@
                 {{- .Title -}}
             </a>
         </h2>
-    
-        {{ with .Params.description }}
-        <h3 class="article-subtitle">
-            {{ . }}
-        </h3>
-        {{ end }}
+	
+        {{- $inList := eq (.Scratch.Get "inList") true -}}
+        {{- $subtitle := "" -}}
+        {{- if $inList -}}
+            {{- with .Params.summary -}}
+                {{- $subtitle = . -}}
+            {{- else -}}
+                {{- with .Summary -}}
+                    {{- $subtitle = . -}}
+                {{- end -}}
+            {{- end -}}
+            {{- if not $subtitle -}}
+                {{- with .Params.description -}}
+                    {{- $subtitle = . -}}
+                {{- end -}}
+            {{- end -}}
+        {{- else -}}
+            {{- with .Params.description -}}
+                {{- $subtitle = . -}}
+            {{- else -}}
+                {{- with .Description -}}
+                    {{- $subtitle = . -}}
+                {{- end -}}
+            {{- end -}}
+            {{- if not $subtitle -}}
+                {{- with .Params.summary -}}
+                    {{- $subtitle = . -}}
+                {{- else -}}
+                    {{- with .Summary -}}
+                        {{- $subtitle = . -}}
+                    {{- end -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+
+        {{- with $subtitle -}}
+            <h3 class="article-subtitle">{{ . | plainify }}</h3>
+        {{- end -}}
     </div>
 
     {{ $showReadingTime := .Params.readingTime | default (.Site.Params.article.readingTime) }}

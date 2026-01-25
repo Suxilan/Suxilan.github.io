@@ -1,0 +1,7 @@
+{{ $image := partialCached "helper/image" (dict "Context" . "Type" "articleList") .RelPermalink "articleList" }}
+<article class="{{ if $image.exists }}has-image{{ end }}">
+    {{/* Mark this page as being rendered inside a list/card context */}}
+    {{ .Scratch.Set "inList" true }}
+    {{ partial "article/components/header" . }}
+    {{ .Scratch.Delete "inList" }}
+</article>
