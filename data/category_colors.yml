@@ -1,12 +1,51 @@
-技术笔记:
-  background: "#3b82f6"
-  color: "#ffffff"
-论文阅读:
-  background: "#ef4444"
-  color: "#ffffff"
-教程笔记:
-  background: "#10b981"
-  color: "#ffffff"
-摄影作品:
-  background: "#f59e0b"
-  color: "#ffffff"
+pool:
+  # 基于 Stack 默认 5 色 + 扩充一组（文本默认白色），分类会按名称哈希稳定取色
+  - background: "#8ea885" # Stack default
+    color: "#ffffff"
+  - background: "#df7988" # Stack default
+    color: "#ffffff"
+  - background: "#0177b8" # Stack default
+    color: "#ffffff"
+  - background: "#ffb900" # Stack default
+    color: "#ffffff"
+  - background: "#6b69d6" # Stack default
+    color: "#ffffff"
+
+  - background: "#3b82f6"
+    color: "#ffffff"
+  - background: "#ef4444"
+    color: "#ffffff"
+  - background: "#10b981"
+    color: "#ffffff"
+  - background: "#f59e0b"
+    color: "#ffffff"
+  - background: "#8b5cf6"
+    color: "#ffffff"
+
+  - background: "#06b6d4"
+    color: "#ffffff"
+  - background: "#f97316"
+    color: "#ffffff"
+  - background: "#22c55e"
+    color: "#ffffff"
+  - background: "#e11d48"
+    color: "#ffffff"
+  - background: "#0ea5e9"
+    color: "#ffffff"
+
+  - background: "#64748b"
+    color: "#ffffff"
+  - background: "#14b8a6"
+    color: "#ffffff"
+  - background: "#a855f7"
+    color: "#ffffff"
+  - background: "#84cc16"
+    color: "#ffffff"
+  - background: "#f43f5e"
+    color: "#ffffff"
+
+# 可选：如未来想手动钉死某些分类颜色，可启用 overrides（默认不需要）
+# overrides:
+#   技术笔记:
+#     background: "#3b82f6"
+#     color: "#ffffff"

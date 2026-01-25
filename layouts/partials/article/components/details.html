@@ -1,10 +1,22 @@
 <div class="article-details">
     {{ if .Params.categories }}
     <header class="article-category">
-        {{- $categoryColors := $.Site.Data.category_colors -}}
+        {{- $cc := $.Site.Data.category_colors -}}
+        {{- $pool := slice -}}
+        {{- $overrides := dict -}}
+        {{- with $cc -}}
+            {{- with index . "pool" -}}{{- $pool = . -}}{{- end -}}
+            {{- with index . "overrides" -}}{{- $overrides = . -}}{{- end -}}
+        {{- end -}}
         {{ range (.GetTerms "categories") }}
-            {{- $c := cond (and $categoryColors (isset $categoryColors .LinkTitle)) (index $categoryColors .LinkTitle) nil -}}
-            <a href="{{ .RelPermalink }}" {{ if $c }}style="background-color: {{ $c.background }}; color: {{ $c.color }};"{{ else }}{{ with .Params.style }}style="background-color: {{ .background }}; color: {{ .color }};"{{ end }}{{ end }}>
+            {{- $c := cond (isset $overrides .LinkTitle) (index $overrides .LinkTitle) nil -}}
+            {{- if (and (not $c) (gt (len $pool) 0)) -}}
+                {{- $idx := mod (int (hash.FNV32a (lower .LinkTitle))) (len $pool) -}}
+                {{- $c = index $pool $idx -}}
+            {{- end -}}
+            {{- $bg := cond $c (index $c "background") nil -}}
+            {{- $fg := cond $c (default "#ffffff" (index $c "color")) nil -}}
+            <a href="{{ .RelPermalink }}" {{ if $bg }}style="background-color: {{ $bg }}; color: {{ $fg }};"{{ else }}{{ with .Params.style }}style="background-color: {{ .background }}; color: {{ .color }};"{{ end }}{{ end }}>
                 {{ .LinkTitle }}
             </a>
         {{ end }}
