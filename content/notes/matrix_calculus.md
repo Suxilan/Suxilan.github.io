@@ -4,7 +4,7 @@ date: 2025-11-07T16:00:00+08:00
 showlastmod: true
 draft: false
 tags: ["Deep Learning", "矩阵微分", "Matrix Calculus", "反向传播"]
-categories: ["技术笔记"]
+categories: ["算法博客"]
 series: []
 author: "Suxilan"
 ShowToc: true
@@ -104,23 +104,27 @@ $$
 \frac{\partial (\mathbf{a}^\mathrm{T} \mathbf{x})}{\partial \mathbf{x}} = \frac{\partial (\mathbf{x}^\mathrm{T} \mathbf{a})}{\partial \mathbf{x}} = \mathbf{a}
 $$
 
->  对于向量、梯度，通常以列向量的形式进行表达，比如上述的$\mathbf{a}$、$\mathbf{x}$。因此规定以下“读数规则”
->
->  **向量全微分读数规则：** 对**标量**函数 $f(\mathbf{x})$，若能把全微分写成
->
->  $$
->  \mathrm{d}f = \mathbf{v}^\mathrm{T} \mathrm{d}\mathbf{x},
->  $$
->
->  则有 $\nabla_{\mathbf{x}} f = \mathbf{v}$。若一开始得到的不是这个形状，比如 $(\mathrm{d}\mathbf{x})^\mathrm{T} \mathbf{u}$，由于这是标量，可转置为 $\mathbf{u}^\mathrm{T} \mathrm{d}\mathbf{x}$，再按上式读出梯度。
->
->  **矩阵全微分读数规则：** 对**标量**函数 $f(X)$，若能写成
->
->  $$
->  \mathrm{d}f = \mathrm{tr}(A^\mathrm{T} \mathrm{d}X),
->  $$
->
->  则 $\partial f / \partial X = A$。这里同样利用了“迹是标量，标量可以转置、可以循环”的性质来把 $\mathrm{d}X$ 调到最后。
+<blockquote>
+
+对于向量、梯度，通常以列向量的形式进行表达，比如上述的$\mathbf{a}$、$\mathbf{x}$。因此规定以下"读数规则"
+
+**向量全微分读数规则：** 对**标量**函数 $f(\mathbf{x})$，若能把全微分写成
+
+$$
+\mathrm{d}f = \mathbf{v}^\mathrm{T} \mathrm{d}\mathbf{x},
+$$
+
+则有 $\nabla_{\mathbf{x}} f = \mathbf{v}$。若一开始得到的不是这个形状，比如 $(\mathrm{d}\mathbf{x})^\mathrm{T} \mathbf{u}$，由于这是标量，可转置为 $\mathbf{u}^\mathrm{T} \mathrm{d}\mathbf{x}$，再按上式读出梯度。
+
+**矩阵全微分读数规则：** 对**标量**函数 $f(X)$，若能写成
+
+$$
+\mathrm{d}f = \mathrm{tr}(A^\mathrm{T} \mathrm{d}X),
+$$
+
+则 $\partial f / \partial X = A$。这里同样利用了"迹是标量，标量可以转置、可以循环"的性质来把 $\mathrm{d}X$ 调到最后。
+
+</blockquote>
 
 ---
 
@@ -323,22 +327,25 @@ $$
 **问题**：在反向传播中，我们经常遇到一个向量（如激活值 $\mathbf{a}$）依赖于另一个向量（如 $\mathbf{z}$）的情况。这就需要使用“向量对向量”的求导，其结果是一个**雅可比矩阵**。设 $\mathbf{z}$ 是 $n \times 1$ 向量，激活函数 $\sigma(\cdot)$ 逐元素（element-wise）作用于 $\mathbf{z}$ 得到 $\mathbf{a} = \sigma(\mathbf{z})$。
 已知 $\frac{\partial L}{\partial \mathbf{a}}$，求 $\frac{\partial L}{\partial \mathbf{z}}$。
 
-> #### 定义：雅可比矩阵 (Jacobian Matrix)
->
-> 
->
-> 向量 $\mathbf{y} \in \mathbb{R}^m$ 对向量 $\mathbf{x} \in \mathbb{R}^n$ 求导，在我们的**分母布局**下（导数形状由分母$\mathbf{x}$决定），结果是一个 $n \times m$ 的雅可比矩阵。
-> $$
-> \frac{\partial \mathbf{y}}{\partial \mathbf{x}} = \begin{bmatrix} \frac{\partial y_1}{\partial x_1} & \frac{\partial y_2}{\partial x_1} & \dots & \frac{\partial y_m}{\partial x_1} \\ \frac{\partial y_1}{\partial x_2} & \frac{\partial y_2}{\partial x_2} & \dots & \frac{\partial y_m}{\partial x_2} \\ \vdots & \vdots & \ddots & \vdots \\ \frac{\partial y_1}{\partial x_n} & \frac{\partial y_2}{\partial x_n} & \dots & \frac{\partial y_m}{\partial x_n} \end{bmatrix}_{n \times m}
-> $$
->
-> 链式法则应用：
->
-> 假设有 $L \to \mathbf{y} \to \mathbf{x}$（$L$是标量），我们有：
->
-> $$
-> \frac{\partial L}{\partial \mathbf{x}} = \frac{\partial \mathbf{y}}{\partial \mathbf{x}} \frac{\partial L}{\partial \mathbf{y}}
-> $$
+<blockquote>
+
+#### 定义：雅可比矩阵 (Jacobian Matrix)
+
+向量 $\mathbf{y} \in \mathbb{R}^m$ 对向量 $\mathbf{x} \in \mathbb{R}^n$ 求导，在我们的**分母布局**下（导数形状由分母$\mathbf{x}$决定），结果是一个 $n \times m$ 的雅可比矩阵。
+
+$$
+\frac{\partial \mathbf{y}}{\partial \mathbf{x}} = \begin{bmatrix} \frac{\partial y_1}{\partial x_1} & \frac{\partial y_2}{\partial x_1} & \dots & \frac{\partial y_m}{\partial x_1} \\ \frac{\partial y_1}{\partial x_2} & \frac{\partial y_2}{\partial x_2} & \dots & \frac{\partial y_m}{\partial x_2} \\ \vdots & \vdots & \ddots & \vdots \\ \frac{\partial y_1}{\partial x_n} & \frac{\partial y_2}{\partial x_n} & \dots & \frac{\partial y_m}{\partial x_n} \end{bmatrix}_{n \times m}
+$$
+
+链式法则应用：
+
+假设有 $L \to \mathbf{y} \to \mathbf{x}$（$L$是标量），我们有：
+
+$$
+\frac{\partial L}{\partial \mathbf{x}} = \frac{\partial \mathbf{y}}{\partial \mathbf{x}} \frac{\partial L}{\partial \mathbf{y}}
+$$
+
+</blockquote>
 
 **推导**：
 
@@ -372,112 +379,143 @@ $$
 
 *其中 $\odot$ 表示逐元素乘法（Hadamard 积）。*
 
-> 注：逐元素函数的雅可比是对角矩阵。但并非所有向量函数都如此。例如在推导 Softmax 梯度时，$\frac{\partial \mathbf{p}}{\partial \mathbf{z}}$ (Softmax 的雅可比) 是一个满矩阵（非对角），因为 $\mathbf{p}$ 的每个分量都依赖于 $\mathbf{z}$ 的所有分量。 此外有趣的是，当将其与Cross-Entropy 损失函数组合在一起时，其反向传播的梯度会惊人地简化。
->
-> 目标：
->
-> 给定 $L \to \mathbf{p} \to \mathbf{z}$，其中：
->
-> 1. $\mathbf{p} = \text{Softmax}(\mathbf{z})$
->
-> 2. $L = \text{CrossEntropy}(\mathbf{p}, \mathbf{y}) = -\sum_{i} y_i \log(p_i)$（$\mathbf{y}$ 是 one-hot 标签向量）
->
->    我们要求解 $\frac{\partial L}{\partial \mathbf{z}}$。
->
-> 根据链式法则：$\frac{\partial L}{\partial \mathbf{z}} = \frac{\partial \mathbf{p}}{\partial \mathbf{z}} \frac{\partial L}{\partial \mathbf{p}}$
->
-> ------
->
-> **步骤 1：求 $\frac{\partial L}{\partial \mathbf{p}}$ (损失对 Softmax 输出的梯度)**
-> $$
-> L = -\sum_{k} y_k \log(p_k)\
-> $$
-> 我们求 $L$ 对 $p_j$ 的偏导：
-> $$
-> \frac{\partial L}{\partial p_j} = \frac{\partial}{\partial p_j} \left( -\sum_{k} y_k \log(p_k) \right)
-> $$
-> 将 $L$ 视为 $p_1, \dots, p_n$ 的多元函数，只有 $k=j$ 的那一项求导不为零：
-> $$
-> \frac{\partial L}{\partial p_j} = -y_j \frac{1}{p_j}
-> $$
-> 将所有 $j$ 组合成一个列向量（分母布局）：
-> $$
-> \frac{\partial L}{\partial \mathbf{p}} = \begin{bmatrix} -y_1/p_1 \\ -y_2/p_2 \\ \vdots \\ -y_n/p_n \end{bmatrix}
-> $$
->
-> ------
->
-> **步骤 2：求 $\frac{\partial \mathbf{p}}{\partial \mathbf{z}}$ (Softmax 的雅可比矩阵)**
-> $$
-> p_j = \frac{e^{z_j}}{\sum_{k} e^{z_k}}
-> $$
-> 我们需要求解雅可比矩阵的 $(i, j)$ 项，即 $\frac{\partial p_j}{\partial z_i}$（注意分母布局，$i$ 是行索引，$j$ 是列索引）。
->
-> 情况 1：$i = j$ (对角线元素)
-> $$
-> \frac{\partial p_i}{\partial z_i} = \frac{\partial}{\partial z_i} \left( \frac{e^{z_i}}{\sum_{k} e^{z_k}} \right)
-> $$
-> 使用商法则：
-> $$
-> \begin{aligned}
-> &\frac{\partial p_i}{\partial z_i} = \frac{e^{z_i}(\sum_{k} e^{z_k}) - e^{z_i}(e^{z_i})}{(\sum_{k} e^{z_k})^2}  \\
-> &\frac{\partial p_i}{\partial z_i} = \frac{e^{z_i}}{\sum_{k} e^{z_k}} \left( \frac{(\sum_{k} e^{z_k}) - e^{z_i}}{\sum_{k} e^{z_k}} \right)  \\
-> &\frac{\partial p_i}{\partial z_i} = p_i (1 - p_i)
-> \end{aligned}
-> $$
-> 情况 2：$i \neq j$ (非对角线元素)
-> $$
-> \frac{\partial p_j}{\partial z_i} = \frac{\partial}{\partial z_i} \left( \frac{e^{z_j}}{\sum_{k} e^{z_k}} \right)
-> $$
-> 使用商法则：
-> $$
-> \begin{aligned}
-> &\frac{\partial p_j}{\partial z_i} = \frac{0 \cdot (\sum_{k} e^{z_k}) - e^{z_j}(e^{z_i})}{(\sum_{k} e^{z_k})^2}\\
-> &\frac{\partial p_j}{\partial z_i} = - \left( \frac{e^{z_j}}{\sum_{k} e^{z_k}} \right) \left( \frac{e^{z_i}}{\sum_{k} e^{z_k}} \right)\\
-> &\frac{\partial p_j}{\partial z_i} = -p_j p_i
-> \end{aligned}
-> $$
-> 所以，Softmax 的雅可比矩阵 $\mathbf{J} = \frac{\partial \mathbf{p}}{\partial \mathbf{z}}$ 是一个满矩阵，其 $(i, j)$ 项为：
-> $$
-> \mathbf{J}_{ij} = \frac{\partial p_j}{\partial z_i} = \begin{cases} p_i(1 - p_i) & \text{if } i = j \\ -p_i p_j & \text{if } i \neq j \end{cases}
-> $$
->
-> ------
->
-> **步骤 3：链式法则计算 $\frac{\partial L}{\partial \mathbf{z}} = \mathbf{J} \frac{\partial L}{\partial \mathbf{p}}$**
->
-> 根据向量链式法则：
-> $$
-> \frac{\partial L}{\partial \mathbf{z}}
-> = \frac{\partial \mathbf{p}}{\partial \mathbf{z}} \frac{\partial L}{\partial \mathbf{p}}
-> $$
-> 也就是对每个 $j$：
-> $$
-> \frac{\partial L}{\partial z_j}
-> = \sum_{i=1}^K \frac{\partial p_i}{\partial z_j} \frac{\partial L}{\partial p_i}
-> $$
-> 将 $j=i$ 和 $j=i$ 的情况代入：
-> $$
-> \begin{aligned}
-> \frac{\partial L}{\partial z_j}
-> &= \frac{\partial p_j}{\partial z_j} \frac{\partial L}{\partial p_j} + \sum_{i \neq j} \frac{\partial p_i}{\partial z_j} \frac{\partial L}{\partial p_i} \\
-> &= p_j(1-p_j)\left(-\frac{y_j}{p_j}\right) + \sum_{i\neq j} (-p_i p_j)\left(-\frac{y_i}{p_i}\right) \\
-> &= -(1-p_j)y_j + \sum_{i\neq j} p_j y_i \\
-> &= -y_j + p_j y_j + p_j \sum_{i\neq j} y_i
-> \end{aligned}
-> $$
-> 因为 $\mathbf{y}$ 是一个 one-hot 标签向量，所以 $\sum_{j} y_j = 1$。
-> $$
-> \frac{\partial L}{\partial z_j}
-> = -y_j + p_j y_j + p_j (1 - y_j)
-> = -y_j + p_j
-> $$
-> 所以向量形式就是极其常用的那条（实在是太优美了！！！）：
-> $$
-> \boxed{
-> \frac{\partial L}{\partial \mathbf{z}} = \mathbf{p} - \mathbf{y}
-> }
-> $$
+<blockquote>
+
+注：逐元素函数的雅可比是对角矩阵。但并非所有向量函数都如此。例如在推导 Softmax 梯度时，$\frac{\partial \mathbf{p}}{\partial \mathbf{z}}$ (Softmax 的雅可比) 是一个满矩阵（非对角），因为 $\mathbf{p}$ 的每个分量都依赖于 $\mathbf{z}$ 的所有分量。 此外有趣的是，当将其与Cross-Entropy 损失函数组合在一起时，其反向传播的梯度会惊人地简化。
+
+目标：
+
+给定 $L \to \mathbf{p} \to \mathbf{z}$，其中：
+
+1. $\mathbf{p} = \text{Softmax}(\mathbf{z})$
+
+2. $L = \text{CrossEntropy}(\mathbf{p}, \mathbf{y}) = -\sum_{i} y_i \log(p_i)$（$\mathbf{y}$ 是 one-hot 标签向量）
+
+   我们要求解 $\frac{\partial L}{\partial \mathbf{z}}$。
+
+根据链式法则：$\frac{\partial L}{\partial \mathbf{z}} = \frac{\partial \mathbf{p}}{\partial \mathbf{z}} \frac{\partial L}{\partial \mathbf{p}}$
+
+------
+
+**步骤 1：求 $\frac{\partial L}{\partial \mathbf{p}}$ (损失对 Softmax 输出的梯度)**
+
+$$
+L = -\sum_{k} y_k \log(p_k)\
+$$
+
+我们求 $L$ 对 $p_j$ 的偏导：
+
+$$
+\frac{\partial L}{\partial p_j} = \frac{\partial}{\partial p_j} \left( -\sum_{k} y_k \log(p_k) \right)
+$$
+
+将 $L$ 视为 $p_1, \dots, p_n$ 的多元函数，只有 $k=j$ 的那一项求导不为零：
+
+$$
+\frac{\partial L}{\partial p_j} = -y_j \frac{1}{p_j}
+$$
+
+将所有 $j$ 组合成一个列向量（分母布局）：
+
+$$
+\frac{\partial L}{\partial \mathbf{p}} = \begin{bmatrix} -y_1/p_1 \\ -y_2/p_2 \\ \vdots \\ -y_n/p_n \end{bmatrix}
+$$
+
+------
+
+**步骤 2：求 $\frac{\partial \mathbf{p}}{\partial \mathbf{z}}$ (Softmax 的雅可比矩阵)**
+
+$$
+p_j = \frac{e^{z_j}}{\sum_{k} e^{z_k}}
+$$
+
+我们需要求解雅可比矩阵的 $(i, j)$ 项，即 $\frac{\partial p_j}{\partial z_i}$（注意分母布局，$i$ 是行索引，$j$ 是列索引）。
+
+情况 1：$i = j$ (对角线元素)
+
+$$
+\frac{\partial p_i}{\partial z_i} = \frac{\partial}{\partial z_i} \left( \frac{e^{z_i}}{\sum_{k} e^{z_k}} \right)
+$$
+
+使用商法则：
+
+$$
+\begin{aligned}
+&\frac{\partial p_i}{\partial z_i} = \frac{e^{z_i}(\sum_{k} e^{z_k}) - e^{z_i}(e^{z_i})}{(\sum_{k} e^{z_k})^2}  \\
+&\frac{\partial p_i}{\partial z_i} = \frac{e^{z_i}}{\sum_{k} e^{z_k}} \left( \frac{(\sum_{k} e^{z_k}) - e^{z_i}}{\sum_{k} e^{z_k}} \right)  \\
+&\frac{\partial p_i}{\partial z_i} = p_i (1 - p_i)
+\end{aligned}
+$$
+
+情况 2：$i \neq j$ (非对角线元素)
+
+$$
+\frac{\partial p_j}{\partial z_i} = \frac{\partial}{\partial z_i} \left( \frac{e^{z_j}}{\sum_{k} e^{z_k}} \right)
+$$
+
+使用商法则：
+
+$$
+\begin{aligned}
+&\frac{\partial p_j}{\partial z_i} = \frac{0 \cdot (\sum_{k} e^{z_k}) - e^{z_j}(e^{z_i})}{(\sum_{k} e^{z_k})^2}\\
+&\frac{\partial p_j}{\partial z_i} = - \left( \frac{e^{z_j}}{\sum_{k} e^{z_k}} \right) \left( \frac{e^{z_i}}{\sum_{k} e^{z_k}} \right)\\
+&\frac{\partial p_j}{\partial z_i} = -p_j p_i
+\end{aligned}
+$$
+
+所以，Softmax 的雅可比矩阵 $\mathbf{J} = \frac{\partial \mathbf{p}}{\partial \mathbf{z}}$ 是一个满矩阵，其 $(i, j)$ 项为：
+
+$$
+\mathbf{J}_{ij} = \frac{\partial p_j}{\partial z_i} = \begin{cases} p_i(1 - p_i) & \text{if } i = j \\ -p_i p_j & \text{if } i \neq j \end{cases}
+$$
+
+------
+
+**步骤 3：链式法则计算 $\frac{\partial L}{\partial \mathbf{z}} = \mathbf{J} \frac{\partial L}{\partial \mathbf{p}}$**
+
+根据向量链式法则：
+
+$$
+\frac{\partial L}{\partial \mathbf{z}}
+= \frac{\partial \mathbf{p}}{\partial \mathbf{z}} \frac{\partial L}{\partial \mathbf{p}}
+$$
+
+也就是对每个 $j$：
+
+$$
+\frac{\partial L}{\partial z_j}
+= \sum_{i=1}^K \frac{\partial p_i}{\partial z_j} \frac{\partial L}{\partial p_i}
+$$
+
+将 $j=i$ 和 $j=i$ 的情况代入：
+
+$$
+\begin{aligned}
+\frac{\partial L}{\partial z_j}
+&= \frac{\partial p_j}{\partial z_j} \frac{\partial L}{\partial p_j} + \sum_{i \neq j} \frac{\partial p_i}{\partial z_j} \frac{\partial L}{\partial p_i} \\
+&= p_j(1-p_j)\left(-\frac{y_j}{p_j}\right) + \sum_{i\neq j} (-p_i p_j)\left(-\frac{y_i}{p_i}\right) \\
+&= -(1-p_j)y_j + \sum_{i\neq j} p_j y_i \\
+&= -y_j + p_j y_j + p_j \sum_{i\neq j} y_i
+\end{aligned}
+$$
+
+因为 $\mathbf{y}$ 是一个 one-hot 标签向量，所以 $\sum_{j} y_j = 1$。
+
+$$
+\frac{\partial L}{\partial z_j}
+= -y_j + p_j y_j + p_j (1 - y_j)
+= -y_j + p_j
+$$
+
+所以向量形式就是极其常用的那条（实在是太优美了！！！）：
+
+$$
+\boxed{
+\frac{\partial L}{\partial \mathbf{z}} = \mathbf{p} - \mathbf{y}
+}
+$$
+
+</blockquote>
 
 ---
 
