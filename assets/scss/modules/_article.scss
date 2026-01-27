@@ -5,21 +5,21 @@
 .article-time--words {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
 }
 
 .article-time > div {
   display: inline-flex;
   align-items: center;
-  margin-right: 15px;
+  margin-right: 0px;
   color: var(--body-text-color-light);
 }
 
 .article-time > div svg {
-  margin-right: 4px;
-  width: 20px;
-  height: 20px;
-  stroke-width: 1.5;
+  margin-right: -5px;
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.35;
 }
 
 /* ToC：禁用自动编号，避免与标题手写编号叠加 */
@@ -93,4 +93,37 @@
 
 .pm-caption a:hover {
   filter: brightness(1.05);
+}
+
+/* ========== 代码块美化（Dracula 主题） ========== */
+
+/* 覆盖 Stack 主题的代码块背景色变量，使用 Dracula 主题色 */
+:root,
+:root[data-scheme='light'],
+:root[data-scheme='dark'] {
+  --pre-background-color: #282a36;
+  --pre-text-color: #f8f8f2;
+}
+
+/* Copy 按钮样式（融入 Dracula 风格） */
+.article-content .copyCodeButton {
+  background: rgba(68, 71, 90, 0.9);
+  color: #f8f8f2;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: var(--code-font-family);
+  font-size: 13px;
+  padding: 6px 12px;
+}
+
+.article-content .copyCodeButton:hover {
+  background: rgba(68, 71, 90, 1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* 微调：代码块字体略小，提升密度 */
+.article-content .chroma,
+.article-content pre,
+.article-content code {
+  font-size: 1.4rem;
+  line-height: 1.5;
 }

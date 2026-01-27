@@ -13,7 +13,6 @@ TocWide: true
 comments: true  # 默认启用评论
 description: ""
 summary: ""
-weight: 1
 cover:
     image: "https://cdn.jsdelivr.net/gh/Suxilan/Cloud-Image-alpha/imagebed/notes/All%20You%20Need%20to%20Know%20About%20Training%20Image%20Retrieval%20Models.png"
     alt: "image retrieval"

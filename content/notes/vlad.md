@@ -4,7 +4,7 @@ date: 2026-01-23T18:29:39+08:00
 draft: false
 tags: ["NetVLAD","VLAD","影像检索","特征聚合","End2end Learning"]
 categories: ["算法博客"]
-series: []
+series: ["VLAD族系"]
 author: "Suxilan"
 showlastmod: true
 lastmod: 2026-01-23T18:29:39+08:00
@@ -13,7 +13,6 @@ TocWide: false
 comments: true  # 默认启用评论
 description: 深入挖掘VLAD到NetVLAD演进的过程，以及NetVLAD的实现细节
 summary: NetVLAD实现细节
-weight: 1
 image: "https://cdn.jsdelivr.net/gh/Suxilan/Cloud-Image-alpha/imagebed/covers/netvladlayer.png"
 ---
 
@@ -216,7 +215,7 @@ $$
 
 {{< notice info>}}
 
-在实际使用NetVLAD的时候，不必完全追寻其VLAD的理论范式（这里涉及NetVLAD的 $w、b、c$ 解耦问题）。当输入特征使用了LN或者白化的时候通常也不太需要进行Input L2-norm，首先对于LN
+在实际使用NetVLAD的时候，不必完全追寻其VLAD的理论范式（这里涉及NetVLAD的 $w、b、c$ [解耦问题](/notes/netvlad/#methodology)）。当输入特征使用了LN或者白化的时候通常也不太需要进行Input L2-norm，首先对于LN
 $$
 LN(x) = \frac{x - \mu}{\sigma} \cdot \gamma + \beta
 $$

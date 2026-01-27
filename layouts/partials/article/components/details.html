@@ -72,18 +72,16 @@
             </div>
         {{ end }}
 
-        {{/* Word Count - Added */}}
-        <div class="article-time--words">
-            {{ partial "helper/icon" "edit" }}
-            <span>{{ .WordCount }} 字</span>
-        </div>
-
+        {{/* Reading time + Word Count (merged) */}}
         {{ if $showReadingTime }}
             <div class="article-time--reading">
                 {{ partial "helper/icon" "clock" }}
-                <time>
-                    {{ T "article.readingTime" .ReadingTime }}
-                </time>
+                <span>{{ .ReadingTime }} 分钟，共 {{ .WordCount }} 字</span>
+            </div>
+        {{ else }}
+            <div class="article-time--words">
+                {{ partial "helper/icon" "edit" }}
+                <span>{{ .WordCount }} 字</span>
             </div>
         {{ end }}
 
@@ -98,6 +96,14 @@
                 </span>
             {{ end }}
         </div>
+
+        {{/* Comments (count placeholder; giscus 不支持无 token 获取评论数) */}}
+        {{ if not (eq .Params.comments false) }}
+            <div class="article-time--comments">
+                {{ partial "helper/icon" "messages" }}
+                <span><span class="comment-count">-</span> 条评论</span>
+            </div>
+        {{ end }}
     </footer>
     {{ end }}
 </div>

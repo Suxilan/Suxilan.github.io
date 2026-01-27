@@ -13,7 +13,6 @@ TocWide: true
 comments: true  # 默认启用评论
 description: "特征白化的方法、效果，及其在检索任务的现代化设计"
 summary: "数据白化Whitening及其在Deep learning的应用"
-weight: 1
 ---
 
 # 特征白化

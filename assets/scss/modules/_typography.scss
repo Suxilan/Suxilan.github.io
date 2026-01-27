@@ -33,17 +33,25 @@
   font-display: swap;
 }
 
-/* 全局字体应用 */
+/*
+  全局字体应用（覆盖 Stack 主题变量）
+
+  Stack 默认使用：
+  - --base-font-family（全站 UI & 正文基础）
+  - --article-font-family（文章正文）
+  - --code-font-family（代码/等宽）
+*/
 :root {
-  --font-family-body: 'LXGW Bright', sans-serif;
-  --font-family-heading: 'LXGW Bright', sans-serif;
-  --font-family-code: 'LXGW Bright', monospace;
-}
+  /* 补齐中文系统字体兜底，避免部分组件没继承 body 时出现中英混排断裂 */
+  --sys-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC",
+    "Droid Sans", "Helvetica Neue", Arial, sans-serif;
 
-body, h1, h2, h3, h4, h5, h6, .article-title, .section-title {
-  font-family: var(--font-family-body);
-}
+  /* 当前方案：LXGW Bright（你已自托管 woff2） */
+  --base-font-family: "LXGW Bright", var(--sys-font-family);
+  --article-font-family: var(--base-font-family);
 
-body {
-  font-family: 'LXGW Bright', sans-serif !important;
+  /* 代码字体建议保持等宽（LXGW Bright 非等宽，不适合 code） */
+  --code-font-family: ui-monospace, "JetBrains Mono", "Cascadia Mono", "SFMono-Regular",
+    Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }

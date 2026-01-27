@@ -195,10 +195,11 @@ markup:
     ordered: false
     startLevel: 1
   highlight:
-    noClasses: false
+    style: dracula
+    noClasses: true
     codeFences: true
     guessSyntax: true
     lineNoStart: 1
-    lineNos: true
-    lineNumbersInTable: true
+    lineNos: false
+    lineNumbersInTable: false
     tabWidth: 4
