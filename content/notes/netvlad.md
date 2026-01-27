@@ -19,6 +19,8 @@ math: true
 image: "https://cdn.jsdelivr.net/gh/Suxilan/Cloud-Image-alpha/imagebed/covers/netvlad.png"   # Stack 原生封面字段（推荐）
 ---
 
+---
+
 # 摘要 (Abstract)
 
 > &emsp;<u>We tackle the problem of large scale visual place recognition, where the task is to quickly and accurately recognize the location of a given query photograph</u>. We present the following three principal contributions. First, we develop a convolutional neural network (CNN) architecture that is trainable in an end-to-end manner directly for the place recognition task. The main component of this architecture, NetVLAD, is a new generalized VLAD layer, inspired by the “Vector of Locally Aggregated Descriptors” image representation commonly used in image retrieval.  The layer is readily pluggable into any CNN architecture and amenable to training via backpropagation. Second, we  develop a training procedure, based on a new weakly supervised ranking loss, to learn parameters of the architecture in an end-to-end manner from images depicting the same places over time downloaded from Google Street View Time Machine. Finally, we show that the proposed architecture significantly outperforms non-learnt image representations and off-the-shelf CNN descriptors on two challenging place recognition benchmarks, and improves over current state-of-the-art compact image representations on standard image retrieval benchmarks.
@@ -31,6 +33,8 @@ image: "https://cdn.jsdelivr.net/gh/Suxilan/Cloud-Image-alpha/imagebed/covers/ne
 2. **弱监督损失+端到端训练策略**：想要训练深度网络需要海量数据，但人工标注地点识别数据太贵太慢。谷歌街景虽然有 GPS，但 GPS 是有误差的（Noisy），而且两张照片即使 GPS 很近，拍的角度可能完全不同（这就叫 Weak Supervision）。作者必须设计一种机制来“容忍”这种噪声。
 
 这里其实已经能看到作者的叙事思路了，The Gap+Contris都已经明确，现在去读intro应该会更清晰！
+
+---
 
 # 引言(Introduction)
 
@@ -89,7 +93,10 @@ NetVLAD诞生的时候才是2016年，这个时候CNN才刚起步，很多重量
 | :----------------------: | :-----------------------------------------: | :----------------------------------------------------------: |
 | 可微分VLAD<br />即插即用 | GPS Tagged data<br />with weaky supervision | 网络学会聚焦于位置识别的内容<br />如建筑物、天际线<br />而忽略变化的元素“汽车”、“行人” |
 
+---
+
 # 方法(Methodology)
+
 <a id="methodology"></a>
 
 具体的NetVLAD网络架构、前向过程和工程细节这里就不探讨了，[详细见另一篇博客](/notes/vlad)。这里主要从写作和数学上分析一下作者是怎么叙事的。
@@ -193,6 +200,8 @@ $$
 
 从今天看，我们显然有了更好的框架——PML，更好的损失（InfoNCELoss、CircleLoss、MultisimilarityLoss等），以及更好的挖掘策略（Online Mining）。但是NetVLAD由于其架构的优势依然活跃在各大SOTA榜上，成为稳定必刷的baseline。
 
+---
+
 # 实验(Experiments)
 
 **NetVLAD 实验设计与故事线梳理**
@@ -206,6 +215,8 @@ $$
 | **Exp 5**    | **泛化能力 (Generalization)：** 证明“不仅能认路，还能用来做通用的图像检索”。 | **State-of-the-Art** (SOTA)  vs. **NetVLAD**                 | 在 Oxford 5k / Paris 6k 等标准数据集上，全面超越当时的 SOTA  | **结论：** (这是一个 Bonus) 我们的方法是通用的，**它学到了图像匹配的本质**，而不只是记住了几条街道。 |
 
 此时再回过头来看，这篇论文之所以能成为 VPR（Visual Place Recognition）领域的“万恶之源”或“开山之作”，是因为它**极其完整**。它没有留下明显的短板——从理论推导（VLAD微分化），到工程实现（弱监督挖掘），再到实验验证（全方位吊打 Baseline），形成了一个无懈可击的逻辑堡垒，基本上每一个issue、每一个Innovation都有回应，都给出了proof！
+
+---
 
 # 参考文献(八卦)
 
@@ -224,6 +235,8 @@ $$
 3. **计算机视觉与机器人的跨界 (Vision meets Robotics):**
    -  FAB-MAP (Cummins & Newman): 这是机器人领域做 SLAM 回环检测的神作。
    - **彩蛋:** 引用这些论文表明，NetVLAD 的野心不仅仅是做“图像检索”（像百度搜图那样），而是想解决“机器人定位”（Robotics Localization）的问题。这也是为什么它后来在自动驾驶领域（如 Apollo）如此火爆的原因。
+
+---
 
 # 插曲-NetVLAD的梯度流
 
