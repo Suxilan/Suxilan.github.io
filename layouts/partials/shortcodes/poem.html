@@ -1,0 +1,13 @@
+{{- $text := strings.TrimSpace .Inner -}}
+
+{{- $class := "poem" -}}
+{{- with (.Get "class") -}}
+  {{- $class = printf "%s %s" $class . -}}
+{{- end -}}
+
+{{- $align := .Get "align" | default "" -}}
+{{- if eq $align "center" -}}
+  {{- $class = printf "%s poem--center" $class -}}
+{{- end -}}
+
+<div class="{{ $class }}">{{- $text | markdownify -}}</div>

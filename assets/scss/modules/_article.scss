@@ -127,3 +127,73 @@
   font-size: 1.4rem;
   line-height: 1.5;
 }
+
+/* ========== poem：紧凑块（轻底色、不缩进，可选居中） ========== */
+/* 用法（新）：
+  {{< poem >}}
+  第一行
+  第二行
+  {{< /poem >}}
+
+  可选居中：
+  {{< poem align="center" >}}...{{< /poem >}}
+
+*/
+.article-content .poem {
+  margin: 0em 0;
+  padding: 1em 1em;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--card-background) 85%, transparent);
+  color: var(--card-text-color-main);
+
+  border: 5px solid rgba(28, 127, 167, 0.06);
+  /* 保留换行，但压缩多余空白 */
+  white-space: pre-line;
+
+  /* 比正文更紧凑 */
+  font-size: 0.98em;
+  line-height: 1.06;
+  letter-spacing: 0.02em;
+
+  /* 默认跟随正文（已在全局偏向宋体/衬线） */
+  font-family: var(--article-font-family);
+}
+
+/* poem 内用 markdownify 渲染后会生成 p/ul/ol 等标签，这里把段间距压紧一些 */
+.article-content .poem p {
+  margin: 0;
+}
+
+.article-content .poem p + p {
+  margin-top: 0.25em;
+}
+
+.article-content .poem--center {
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+  max-width: 100%;
+  text-align: center;
+}
+
+:root[data-scheme='dark'] .article-content .poem {
+  background: color-mix(in srgb, var(--card-background) 75%, transparent);
+  border-color: rgba(255, 116, 116, 0.08);
+}
+
+/* ========== prose：仅调整换行/段距（不改背景/边框/字体） ========== */
+.article-content .prose {
+  /* 保留换行（配合 markdownify 输出的文本节点换行） */
+  white-space: pre-line;
+
+  /* 比正文更紧凑，但不要像 poem 那么极端 */
+  line-height: 1.5;
+}
+
+.article-content .prose p {
+  margin: 0;
+}
+
+.article-content .prose p + p {
+  margin-top: -0.8em;
+}

@@ -47,9 +47,17 @@
     "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC",
     "Droid Sans", "Helvetica Neue", Arial, sans-serif;
 
+  /* 宋体/衬线正文优先（未安装就自动回退） */
+  --article-serif-font-family: "梦源宋体", "DreamSource Song", "DreamSource Serif",
+    "Source Han Serif SC", "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
+
   /* 当前方案：LXGW Bright（你已自托管 woff2） */
   --base-font-family: "LXGW Bright", var(--sys-font-family);
-  --article-font-family: var(--base-font-family);
+  /* 正文使用宋体风格，更适合长文阅读；UI 仍保持 LXGW Bright */
+  --article-font-family: var(--article-serif-font-family);
+
+  /* 全局正文行距（Stack 默认 1.85 偏松） */
+  --article-line-height: 1.85;
 
   /* 代码字体建议保持等宽（LXGW Bright 非等宽，不适合 code） */
   --code-font-family: ui-monospace, "JetBrains Mono", "Cascadia Mono", "SFMono-Regular",

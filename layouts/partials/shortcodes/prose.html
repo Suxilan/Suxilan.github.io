@@ -1,0 +1,8 @@
+{{- $text := strings.TrimSpace .Inner -}}
+
+{{- $class := "prose" -}}
+{{- with (.Get "class") -}}
+  {{- $class = printf "%s %s" $class . -}}
+{{- end -}}
+
+<div class="{{ $class }}">{{- $text | markdownify -}}</div>
