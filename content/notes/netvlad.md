@@ -1,11 +1,11 @@
 ---
-title: "Netvlad论文阅读"
+title: "NetVLAD论文阅读"
 date: 2026-01-26T01:19:40+08:00
 draft: false
 
 tags: ["NetVLAD","Visual Place Recognition"]
 categories: ["算法博客","论文阅读"]
-series: ["VLAD族系"]
+series: ["VLAD族系","VPR必读经典"]
 author: "Suxilan"
 
 comments: true

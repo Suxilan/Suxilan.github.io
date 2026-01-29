@@ -27,7 +27,7 @@ caption=准备和朋友去滇池看日落，在等了半小时至于的公交未
 attr=摄影：Suxilan; 
 attrlink=https://suxilan.github.io")
 
-**为什么选用这样一张封面？**
+# 为什么选用这样一张封面？
 
 {{< poem>}}
 
@@ -67,10 +67,3 @@ attrlink=https://suxilan.github.io")
 
 {{< /poem >}}
 
-{{< prose>}}
-
-十九点hi是的u速度加快速度飞快时间多久哦覅为佛教嘻哈时间可能你卡上你的空间教案设计的阿萨的借记卡时间哦i撒对焦速度就
-
-静安寺大数据的i哦啊随机打散觉得啊水浇地事件都i阿斯加德
-
-{{< /prose>}}

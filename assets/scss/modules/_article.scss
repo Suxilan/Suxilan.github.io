@@ -183,11 +183,16 @@
 
 /* ========== prose：仅调整换行/段距（不改背景/边框/字体） ========== */
 .article-content .prose {
+  margin: 0em 0;
+  padding: 0.5em 0.5em;
   /* 保留换行（配合 markdownify 输出的文本节点换行） */
   white-space: pre-line;
 
   /* 比正文更紧凑，但不要像 poem 那么极端 */
-  line-height: 1.5;
+  line-height: 1.85;
+  font-size: 0.98em;
+  line-height: 1.35;
+  letter-spacing: 0.03em;
 }
 
 .article-content .prose p {
@@ -195,5 +200,5 @@
 }
 
 .article-content .prose p + p {
-  margin-top: -0.8em;
+  margin-top: -0.5em;
 }

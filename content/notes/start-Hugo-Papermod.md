@@ -5,7 +5,7 @@ showlastmod: true
 draft: false
 tags: ["Hugo", "PaperMod", "教程", "博客搭建"]
 categories: ["教程笔记"]
-series: ["Hugo 博客搭建"]
+series: []
 author: "Suxilan"
 ShowToc: true
 TocWide: true

@@ -72,6 +72,9 @@ params:
       - type: categories
         params:
           limit: 10
+      - type: series
+        params:
+          limit: 10
       - type: tag-cloud
         params:
           limit: 10
@@ -83,6 +86,9 @@ params:
         params:
           limit: 5
       - type: categories
+        params:
+          limit: 10
+      - type: series
         params:
           limit: 10
       - type: tag-cloud
@@ -145,6 +151,12 @@ menu:
       weight: 50
       params:
         icon: archives
+    - identifier: series
+      name: 系列
+      url: /series/
+      weight: 55
+      params:
+        icon: infinity
     - identifier: search
       name: 搜索
       url: /search/

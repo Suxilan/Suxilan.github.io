@@ -5,7 +5,7 @@ showlastmod: true
 draft: false
 tags: ["SDPA", "Transformer", "Attention", "数学推导"]
 categories: ["算法博客"]
-series: []
+series: ["DL&Math"]
 author: "Suxilan"
 ShowToc: true
 TocWide: true

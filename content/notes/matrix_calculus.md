@@ -5,7 +5,7 @@ showlastmod: true
 draft: false
 tags: ["Deep Learning", "矩阵微分", "Matrix Calculus", "反向传播"]
 categories: ["算法博客"]
-series: []
+series: ["DL&Math"]
 author: "Suxilan"
 ShowToc: true
 TocWide: true
