@@ -1,7 +1,7 @@
 ---
 title: "SuperVLAD论文阅读"
 date: 2026-01-29T17:20:06+08:00
-draft: true
+draft: False
 
 tags: ["SuperVLAD","NetVLAD","GhostVLAD","VPR"]
 categories: ["算法博客","论文阅读"]
