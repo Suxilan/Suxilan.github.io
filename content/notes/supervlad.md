@@ -3,9 +3,9 @@ title: "SuperVLAD论文阅读"
 date: 2026-01-29T17:20:06+08:00
 draft: False
 
-tags: ["SuperVLAD","NetVLAD","GhostVLAD","VPR"]
+tags: ["SuperVLAD","NetVLAD","GhostVLAD","VPR","影像检索"]
 categories: ["算法博客","论文阅读"]
-series: ["VLAD族系","VPR必读经典"]
+series: ["VLAD族系","VPR-Series"]
 author: "Suxilan"
 
 comments: true

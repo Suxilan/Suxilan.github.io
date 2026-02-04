@@ -5,7 +5,7 @@ draft: false
 
 tags: ["NetVLAD","Visual Place Recognition"]
 categories: ["算法博客","论文阅读"]
-series: ["VLAD族系","VPR必读经典"]
+series: ["VLAD族系","VPR-Series"]
 author: "Suxilan"
 
 comments: true
